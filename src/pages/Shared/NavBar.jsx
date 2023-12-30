@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import { FaHome, FaSortDown, FaUserFriends  } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
@@ -8,6 +8,7 @@ import { MdNotificationsActive } from "react-icons/md";
 
 const NavBar = () => {
     const {user,logOut} = useContext(AuthContext);
+    const navigate = useNavigate();
     // const [cart]=useCart();
     // console.log(user);
     // console.log('hello from navbar')
@@ -15,6 +16,7 @@ const NavBar = () => {
         logOut()
         .then(()=>{})
         .catch(e => console.log(e))
+        navigate("login" ,{replace:true});
     }
     // console.log(user);
     const navOptions = <>
@@ -106,7 +108,7 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="hidden md:block navbar-end text-gray-500">
-                <a className="btn text-gray-500">{user?.email}</a>
+                <a className="btn text-gray-500">{user?.displayName}</a>
             </div>
         </div>
     </>

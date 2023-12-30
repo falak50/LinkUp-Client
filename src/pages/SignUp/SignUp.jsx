@@ -2,13 +2,14 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../providers/AuthProviders";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/loginPic2.svg"
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const {register,handleSubmit,reset,formState: { errors }} = useForm(); 
-    const {createUser} = useContext(AuthContext);
-    // const navigate = useNavigate();
+    const {createUser,updateUserProfile} = useContext(AuthContext);
+    const navigate = useNavigate();
     const onSubmit = data => {
      console.log("data---->",data);
      console.log('in submit')
@@ -19,6 +20,35 @@ const SignUp = () => {
          console.log(loggedUsed);
          console.log('signup->createuser->then->name,url',data.name,data.photoURL)
          console.log('in create user sing in  ')
+         updateUserProfile(data.name)
+         .then(()=>{
+           console.log('in update user');
+           const saveUser = {name:data.name,email:data.email}
+           fetch('http://localhost:5000/users',{
+            method:'POST',
+            headers:{
+              'content-type':'application/json'
+            },
+            body: JSON.stringify(saveUser)
+
+           })
+           .then(res=>res.json())
+           .then(data => {
+               if(data.insertedId)
+               {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User created successfully.",
+                  showConfirmButton: false,
+                  timer: 1000
+                });
+                navigate('/');
+                reset();
+               }
+           })
+          
+         })
         
      })
     };
