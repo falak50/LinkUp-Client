@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import loginImg from "../../assets/loginPic.svg"
 import { AuthContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 const Login = () => {
     // const [disabled,setDisabled] = useState(true);//todo add disabled 
     // const {signIn} = useContext(AuthContext);
@@ -109,7 +110,7 @@ return(
               <p><small>New Here? <Link to="/signup">Create an acount</Link> </small></p>
              
              {/* social lonin add here  */}
-             {/* <SocialLogin></SocialLogin> */}
+             <SocialLogin></SocialLogin>
   
             </div>
           </div>

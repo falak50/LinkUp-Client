@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/loginPic2.svg"
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const {register,handleSubmit,reset,formState: { errors }} = useForm(); 
@@ -118,7 +119,7 @@ const SignUp = () => {
               </div>
             </form>
             <p><small>Already have an acount <Link to="/login">Login</Link> </small></p>
-            {/* <SocialLogin></SocialLogin> */}
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

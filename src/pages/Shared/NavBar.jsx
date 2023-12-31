@@ -107,7 +107,8 @@ const NavBar = () => {
                     {navOptions}
                 </ul>
             </div>
-            <div className="hidden md:block navbar-end text-gray-500">
+            <div className="divider lg:divider-horizontal"></div> 
+            <div className="mx-20 navbar-end hidden md:block text-gray-500">
                 <a className="btn text-gray-500">{user?.displayName}</a>
             </div>
         </div>
