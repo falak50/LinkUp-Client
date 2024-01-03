@@ -7,6 +7,7 @@ import Profile from "../pages/Profile/Profile/Profile";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
+import Settings from "../pages/Settings/Settings";
 
 
  export const  router = createBrowserRouter([
@@ -29,6 +30,10 @@ import PrivateRoute from "./PrivateRoute";
         {
             path:'signup',
             element:<SignUp></SignUp>
+        },
+        {
+          path:'settings',
+          element:<Settings></Settings>
         }
       ]
     },

@@ -1,13 +1,19 @@
-import { Helmet } from 'react-helmet-async';
+
+// import Modal from '../../../components/Modal';
+import Modalfrm from '../../../components/Modal/Modalfrm';
+
 const Home = () => {
-    // console.log("check",import.meta.env.VITE_apiKey);
     return (
-        <div>
-            <Helmet>
-                <title>LinkUp</title>
-            </Helmet>
-           <h2>this is Home</h2> 
-        </div>
+       <div>
+           <h1>modal from </h1>
+           <br /><br />
+            <Modalfrm></Modalfrm>
+{/* 
+            <h1>modal bal</h1>
+            <br />
+            <Modal></Modal> */}
+           
+       </div>
     );
 };
 
