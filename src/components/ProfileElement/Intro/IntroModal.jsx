@@ -6,10 +6,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
+import useUserinfo from '../../../hooks/useUserinfo';
+import { toast } from 'react-toastify'
 const IntroModal = ({title = 'uppdate here' }) => {
     const [open, setOpen] = React.useState(false);
     const formRef = React.useRef(null);
-   
+    const [userInfo, refetch] = useUserinfo();
+    console.log(userInfo);
     const handleClickOpen = () => () => {
       setOpen(true);
     };
@@ -17,10 +20,52 @@ const IntroModal = ({title = 'uppdate here' }) => {
     const handleClose = () => {
       setOpen(false);
     };
-    const {register,handleSubmit,formState: { errors }} = useForm();
+    const {register,handleSubmit} = useForm({
+      defaultValues:{
+        first_name:userInfo?.first_name,
+        last_name: userInfo?.last_namee,
+        additional_name:userInfo?.additional_name,
+        headline: userInfo?.headline,
+        education:userInfo?.education,
+        country:userInfo?.country,
+        city:userInfo?.country
+      },
+      
+    });
     const onSubmit = data => {
         console.log("data---->",data);
-        setOpen(false);
+        // const saveUser = {last_name:data.name,email:data.email}
+           fetch(`http://localhost:5000/users/${userInfo._id}`,{
+            method:'PATCH', 
+            headers:{
+              'content-type':'application/json'
+            },
+            body: JSON.stringify(data)
+
+           })
+           .then(res=>res.json())
+           .then(data => {
+               
+             console.log("back end id ",data)
+                refetch();
+                // Swal.fire({
+                //   position: "top-end",
+                //   icon: "success",
+                //   title: "User created successfully.",
+                //   showConfirmButton: false,
+                //   timer: 1000
+                // });
+                toast.success("User updated successfully")
+                
+                
+               /// here add 
+               setOpen(false);
+               
+           })
+
+
+        // setOpen(false);
+
     }
     const handleExternalSubmit = () => {
         // Trigger form submission from outside the form
@@ -142,6 +187,7 @@ const IntroModal = ({title = 'uppdate here' }) => {
       {...register("city")}
       placeholder="City"
       className="input input-bordered"
+      // value={register("headline", { required: true }).value || ''}
     />
   </div>
 </form>

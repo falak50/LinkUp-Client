@@ -1,12 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import { Navigate, useLocation } from "react-router-dom";
+import useUserinfo from "../hooks/useUserinfo";
 
 const PrivateRoute =  ({children}) => {
-   
-        const {user,loading}=useContext(AuthContext);
+    //    const {loading}=useContext(AuthContext);
+    //    here i am not use own made loader , if need then open it
+        const {user}=useContext(AuthContext);
         const location = useLocation();
-        if(loading){
+        const [isLoading] = useUserinfo();
+       
+        if(!isLoading){
            return <>
            <progress className="progress w-56"></progress> 
                   <div className="flex gap-4 items-center">

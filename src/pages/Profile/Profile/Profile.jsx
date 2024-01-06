@@ -1,15 +1,16 @@
 // import { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 // import { AuthContext } from '../../../providers/AuthProviders';
-import { MdOutlineModeEditOutline } from "react-icons/md";
-import bkimg from '../../../assets/backgroudPIC.jpg'
-import profileimg from '../../../assets/profilePic.jpg'
-import Modalfrm from '../../../components/Modal/Modalfrm';
-import { Button } from '@mui/base';
+// import { MdOutlineModeEditOutline } from "react-icons/md";
+// import bkimg from '../../../assets/backgroudPIC.jpg'
+// import profileimg from '../../../assets/profilePic.jpg'
+// import Modalfrm from '../../../components/Modal/Modalfrm';
+// import { Button } from '@mui/base';
 import Intro from '../../../components/ProfileElement/Intro/Intro';
 
 const Profile = () => {
     // const {user} = useContext(AuthContext);
+    
     
     return (
         <div>

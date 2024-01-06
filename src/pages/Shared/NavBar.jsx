@@ -5,9 +5,11 @@ import { FaHome, FaSortDown, FaUserFriends  } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { AiFillMessage } from "react-icons/ai";
 import { MdNotificationsActive } from "react-icons/md";
+import useUserinfo from "../../hooks/useUserinfo";
 
 const NavBar = () => {
-    const {user,logOut} = useContext(AuthContext);
+    const {logOut} = useContext(AuthContext);
+    const [userInfo] = useUserinfo();
     const navigate = useNavigate();
     // const [cart]=useCart();
     // console.log(user);
@@ -42,7 +44,7 @@ const NavBar = () => {
         <li><Link to="/profile">
           <a className="justify-between">
             Profile
-            <span className="badge">check</span>
+            <span className="badge">{userInfo.first_name}</span>
           </a>
           </Link>
         </li>
@@ -109,7 +111,7 @@ const NavBar = () => {
             </div>
             <div className="divider lg:divider-horizontal"></div> 
             <div className="mx-20 navbar-end hidden md:block text-gray-500">
-                <a className="btn text-gray-500">{user?.displayName}</a>
+                <a className="btn text-gray-500">{userInfo.first_name} {userInfo.last_name}</a>
             </div>
         </div>
     </>

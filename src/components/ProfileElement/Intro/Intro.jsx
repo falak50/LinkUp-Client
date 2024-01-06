@@ -2,8 +2,10 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 import bkimg from '../../../assets/backgroudPIC.jpg'
 import profileimg from '../../../assets/profilePic.jpg'
 import IntroModal from "./IntroModal";
+import useUserinfo from "../../../hooks/useUserinfo";
 
 const Intro = () => {
+    const [userInfo] = useUserinfo();
     return (
         <div className='md:w-[72%] bg-[white] rounded-lg relative'>
 
@@ -24,10 +26,19 @@ const Intro = () => {
     </div>
     <div className='mx-4 flex'>
     <div>
-    <h1 className='text-3xl font-[600]'>Falak Ahmed Shakib</h1>
-    <p>MERN Stack Web Developer || Competitive Programmer</p>
+  <h1 className='text-3xl font-[600]'>
+  {userInfo?.first_name} {userInfo?.last_name}
+  {userInfo?.additional_name && (
+    <span className="badge">{userInfo.additional_name}</span>
+  )}
+</h1>
+    {/* <p>MERN Stack Web Developer || Competitive Programmer</p> */}
+    <div className=" w-[60%]">
+    <p>{userInfo?.headline}</p>
+    </div>
+   
      <div className='flex'>
-     <span>Sylhet, Bangladesh .</span> 
+     <span>{userInfo.city} {userInfo.country}</span> 
      <div className='mx-4 font-[600] text-[#2779c9]'>
      <a href="" > Contact info</a>
      </div>

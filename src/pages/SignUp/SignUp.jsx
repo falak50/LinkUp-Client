@@ -24,7 +24,7 @@ const SignUp = () => {
          updateUserProfile(data.name)
          .then(()=>{
            console.log('in update user');
-           const saveUser = {name:data.name,email:data.email}
+           const saveUser = {firstname:data.name,email:data.email}
            fetch('http://localhost:5000/users',{
             method:'POST',
             headers:{
@@ -35,6 +35,7 @@ const SignUp = () => {
            })
            .then(res=>res.json())
            .then(data => {
+             console.log("back end id ",data.insertedId)
                if(data.insertedId)
                {
                 Swal.fire({
