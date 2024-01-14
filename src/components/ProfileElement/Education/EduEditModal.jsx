@@ -5,28 +5,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
-import { MenuItem, TextField } from '@mui/material';
+import {  MenuItem, TextField } from '@mui/material';
 import { RiAddCircleFill } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import useUserinfo from '../../../hooks/useUserinfo';
 import useEduinfo from '../../../hooks/useEduinfo';
 import { FiEdit } from "react-icons/fi";
+import Swal from 'sweetalert2';
 const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    'January','February','March','April','May','June',
+    'July','August','September','October','November','December',
   ];
 const years = Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i);
 const EduEditModal = ({ title = 'Edit education' , edu}) => {
+  //console.log(edu)
     const [userInfo] = useUserinfo();
     const [,edurefetch, ,] = useEduinfo();
   //  console.log(edu)
@@ -61,6 +53,40 @@ const EduEditModal = ({ title = 'Edit education' , edu}) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleDelete = () => {
+
+    setOpen(false);
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Are you sure you want to delete your ${edu.school} education?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/education/${edu._id}`,{
+          method:'DELETE'
+       })
+       .then(res => res.json())
+       .then(data=> {
+        if(data.deletedCount>0){
+          edurefetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: `${edu.school} education has been deleted.`,
+            icon: "success"
+          });
+        }
+        
+       })
+        
+      }else{
+        setOpen(true);
+      }
+    });
   };
 
   const { register, handleSubmit , reset } = useForm({
@@ -393,14 +419,25 @@ const EduEditModal = ({ title = 'Edit education' , edu}) => {
         </div>
              {/* THIS IS NOT PARTH OR FORM  */}
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+           style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '8px 24px', // Optional: Add some padding for better spacing
+          }}
+        >
+          
+         
+          <button onClick={handleDelete} className="btn btn-sm text-xl text-[#b4b4b4] ml-2">Delete education</button>
           <button
             onClick={handleExternalSubmit}
             className="btn bg-[#0a66c2] text-white rounded-full  px-6 py-2 text-xl mr-2"
           >
             Save
           </button>
+       
         </DialogActions>
+         
       </Dialog>
     </React.Fragment>
   );

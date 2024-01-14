@@ -1,6 +1,7 @@
 
 // import Modal from '../../../components/Modal';
 // import { Divider } from '@mui/material';
+import { Paper } from '@mui/material';
 import Modalfrm from '../../../components/Modal/Modalfrm';
 // import useEduinfo from '../../../hooks/useEduinfo';
 import useUserinfo from '../../../hooks/useUserinfo';
@@ -13,6 +14,7 @@ const Home = () => {
     return (
        <div>
             <div>
+                <Paper></Paper>
                 <h1>hey</h1>
                 <h1 className='text-4xl'>here userInfo</h1>
                 <h1>fisrt name: {userInfo?.first_name} </h1>
