@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <HelmetProvider>
       <ToastContainer />
         <QueryClientProvider client={queryClient}>
-          <div className='bg-[#f4f2ee]'>
+          <div className='bg-[#f4f2ee] '>
               <RouterProvider router={router} />
           </div>           
         </QueryClientProvider>  

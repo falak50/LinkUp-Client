@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,11 +8,11 @@ import { IoMdClose } from 'react-icons/io';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import useUserinfo from '../../../hooks/useUserinfo';
 import { toast } from 'react-toastify'
-const IntroModal = ({title = 'uppdate here' }) => {
+const IntroModal = ({title = 'NOT SET TITLE' }) => {
     const [open, setOpen] = React.useState(false);
     const formRef = React.useRef(null);
-    const [userInfo, refetch] = useUserinfo();
-    console.log(userInfo);
+    const [userInfo, refetch,isFetchingIntro] = useUserinfo();
+    //console.log(userInfo);
     const handleClickOpen = () => () => {
       setOpen(true);
     };
@@ -20,10 +20,10 @@ const IntroModal = ({title = 'uppdate here' }) => {
     const handleClose = () => {
       setOpen(false);
     };
-    const {register,handleSubmit} = useForm({
+    const {register,handleSubmit,reset} = useForm({
       defaultValues:{
         first_name:userInfo?.first_name,
-        last_name: userInfo?.last_namee,
+        last_name: userInfo?.last_name,
         additional_name:userInfo?.additional_name,
         headline: userInfo?.headline,
         education:userInfo?.education,
@@ -33,7 +33,7 @@ const IntroModal = ({title = 'uppdate here' }) => {
       
     });
     const onSubmit = data => {
-        console.log("data---->",data);
+       // console.log("data---->",data);
         // const saveUser = {last_name:data.name,email:data.email}
            fetch(`http://localhost:5000/users/${userInfo._id}`,{
             method:'PATCH', 
@@ -44,22 +44,15 @@ const IntroModal = ({title = 'uppdate here' }) => {
 
            })
            .then(res=>res.json())
-           .then(data => {
-               
-             console.log("back end id ",data)
-                refetch();
-                // Swal.fire({
-                //   position: "top-end",
-                //   icon: "success",
-                //   title: "User created successfully.",
-                //   showConfirmButton: false,
-                //   timer: 1000
-                // });
-                toast.success("User updated successfully")
-                
-                
+           .then(() => {
+              //(data) then //console.log("back end id ",data) 
+                refetch();               
+                toast.success("User updated successfully",{
+                  autoClose: 1200
+                })
                /// here add 
-               setOpen(false);
+              //  reset();
+              setOpen(false);
                
            })
 
@@ -69,7 +62,7 @@ const IntroModal = ({title = 'uppdate here' }) => {
     }
     const handleExternalSubmit = () => {
         // Trigger form submission from outside the form
-        console.log('click')
+      //  console.log('click')
 
         if (formRef.current) {
         
@@ -77,9 +70,17 @@ const IntroModal = ({title = 'uppdate here' }) => {
         }
       };
 
+      useEffect(()=>{
+        if(userInfo && !isFetchingIntro)
+        {
+          reset()
+          console.log('reset of introoooo')
+        } 
+      },[isFetchingIntro])
+
     return (
         <React.Fragment>
-           <button onClick={handleClickOpen()} className="btn btn-circle  bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
+           <button onClick={handleClickOpen()} className="btn btn-circle border-none  bg-white hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
                     <MdOutlineModeEditOutline className=''/>
                     
             </button>
@@ -91,14 +92,23 @@ const IntroModal = ({title = 'uppdate here' }) => {
           fullWidth
           maxWidth="md"
           className="mx-auto"
-          sx={{ width: '41%' }}
+          sx={{
+            width: '100%', // Set the width to 98% on small devices
+            '@media (min-width:1000px)': {
+              width: '70%', // Set the width to 70% for medium devices
+            },
+            '@media (min-width:1224px)': {
+              width: '50%', // Set the width to 41% for large devices
+              
+            },
+          }}
         >
           <DialogTitle id="scroll-dialog-title" className='flex justify-between'>
 
           <div className='text-2xl mt-2 mx-6'>
               {title}
               </div>
-            <button onClick={handleClose} className="btn btn-circle  bg-[#ededec] text-[#6a6a6a] text-2xl ">
+            <button onClick={handleClose} className="btn btn-circle border-none bg-white hover:bg-[#ededec] text-[#6a6a6a] text-2xl ">
             <IoMdClose />
             </button>
 

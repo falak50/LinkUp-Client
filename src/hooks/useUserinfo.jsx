@@ -5,7 +5,7 @@ import { AuthContext } from '../providers/AuthProviders';
 const useUserinfo = () => {
     const { user } = useContext(AuthContext);
 
-    const { refetch, data: userInfo = null ,isLoading } = useQuery({
+    const { refetch, data: userInfo = null ,isLoading,isFetching: isFetchingIntro } = useQuery({
         queryKey: ['user', user?.email],
         queryFn: async () => {
             if (!user?.email) {return null;}
@@ -14,6 +14,6 @@ const useUserinfo = () => {
         },
     });
 
-    return [userInfo, refetch, isLoading];
+    return [userInfo, refetch, isLoading, isFetchingIntro];
 }
 export default useUserinfo;

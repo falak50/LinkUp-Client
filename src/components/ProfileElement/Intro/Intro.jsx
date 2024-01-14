@@ -7,7 +7,7 @@ import useUserinfo from "../../../hooks/useUserinfo";
 const Intro = () => {
     const [userInfo] = useUserinfo();
     return (
-        <div className='md:w-[72%] bg-[white] rounded-lg relative'>
+        <div className='md:w-[100%] bg-[white] rounded-lg relative'>
 
         <div className=''>
         <img className='h-[200px] w-full rounded-t-lg  object-cover' src={bkimg} alt="" />
@@ -15,13 +15,14 @@ const Intro = () => {
         </div>
                    
          
-    <div className='mt-[-100px]'>
+    <div className='mt-[-100px] '>
     <div className="avatar mx-4  flex">
     <div className="w-40 rounded-full ring ring-[white] ring-offset-base-100 ring-offset-2">
         <img src={profileimg} />
     </div>
-    <button className="btn btn-circle   bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
+    <button className="btn btn-circle   bg-white text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
     <MdOutlineModeEditOutline className=''/>
+    {/* icon ar jaigait modal btn ar bitor */}
      </button>
     </div>
     <div className='mx-4 flex'>
@@ -29,7 +30,7 @@ const Intro = () => {
   <h1 className='text-3xl font-[600]'>
   {userInfo?.first_name} {userInfo?.last_name}
   {userInfo?.additional_name && (
-    <span className="badge">{userInfo.additional_name}</span>
+    <span className="badge">{userInfo?.additional_name}</span>
   )}
 </h1>
     {/* <p>MERN Stack Web Developer || Competitive Programmer</p> */}
@@ -38,7 +39,7 @@ const Intro = () => {
     </div>
    
      <div className='flex'>
-     <span>{userInfo.city} {userInfo.country}</span> 
+     <span>{userInfo?.city} {userInfo?.country}</span> 
      <div className='mx-4 font-[600] text-[#2779c9]'>
      <a href="" > Contact info</a>
      </div>
@@ -63,7 +64,7 @@ const Intro = () => {
      </button> */}
      {/* <h1>here model start of intr</h1> */}
      <button className="ml-auto"><IntroModal 
-     title="Custom Title"
+     title="Edit intro"
      ></IntroModal></button>
     {/* <h1>here model end of intr</h1> */}
 

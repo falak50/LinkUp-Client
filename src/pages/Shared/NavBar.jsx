@@ -44,7 +44,7 @@ const NavBar = () => {
         <li><Link to="/profile">
           <a className="justify-between">
             Profile
-            <span className="badge">{userInfo.first_name}</span>
+            <span className="badge">{userInfo?.first_name}</span>
           </a>
           </Link>
         </li>
@@ -111,7 +111,7 @@ const NavBar = () => {
             </div>
             <div className="divider lg:divider-horizontal"></div> 
             <div className="mx-20 navbar-end hidden md:block text-gray-500">
-                <a className="btn text-gray-500">{userInfo.first_name} {userInfo.last_name}</a>
+                <a className="btn text-gray-500">{userInfo?.first_name} {userInfo?.last_name}</a>
             </div>
         </div>
     </>

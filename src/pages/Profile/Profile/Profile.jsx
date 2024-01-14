@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet-async';
 // import Modalfrm from '../../../components/Modal/Modalfrm';
 // import { Button } from '@mui/base';
 import Intro from '../../../components/ProfileElement/Intro/Intro';
+import Education from '../../../components/ProfileElement/Education/Education';
+import Skills from '../../../components/ProfileElement/Skills/Skills';;
 
 const Profile = () => {
     // const {user} = useContext(AuthContext);
@@ -18,10 +20,22 @@ const Profile = () => {
             <title>LinkUp | prifile</title>
             </Helmet>
             
-            <div className='md:flex  m-2 gap-4 '>
+             <div className='md:flex '>
+             <div className='md:flex md:flex-col  m-2 gap-4 '>
              {/* first div main content  relative absolute */}
-              <Intro></Intro>  
+            <div>
+              <Intro></Intro>
+              <Education></Education>
+              <Skills></Skills>
+              </div>
+              
+                
+             
             {/* 2nd  div useless content  */}   
+            
+                
+            </div>
+
             <div className='md:w-[25%]'>
                <div className='bg-[white]  rounded-lg p-3 '>
                  <h1>Profile language</h1>
@@ -32,8 +46,7 @@ const Profile = () => {
                 </div>
    
             </div>
-                
-            </div>
+             </div>
            
 
         </div>

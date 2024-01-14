@@ -1,16 +1,18 @@
-import { useContext } from "react";
-import { AuthContext } from "../providers/AuthProviders";
-import { Navigate, useLocation } from "react-router-dom";
+// import { useContext } from "react";
+// import { AuthContext } from "../providers/AuthProviders";
+// import { Navigate, useLocation } from "react-router-dom";
 import useUserinfo from "../hooks/useUserinfo";
+import useEduinfo from "../hooks/useEduinfo";
 
 const PrivateRoute =  ({children}) => {
     //    const {loading}=useContext(AuthContext);
     //    here i am not use own made loader , if need then open it
-        const {user}=useContext(AuthContext);
-        const location = useLocation();
+        // const {user}=useContext(AuthContext);
+        // const location = useLocation();
         const [isLoading] = useUserinfo();
+        const [eduLoading] = useEduinfo();
        
-        if(!isLoading){
+        if(!isLoading && !eduLoading){
            return <>
            <progress className="progress w-56"></progress> 
                   <div className="flex gap-4 items-center">
@@ -23,11 +25,14 @@ const PrivateRoute =  ({children}) => {
                      </div>
                  <div className="skeleton h-32 w-full"></div>
            </>
-        }
-        if(user) {
+        }else {
+
             return children;
         }
-        return <Navigate to="/login" state={{from:location}} replace></Navigate>
+        // if(user) {
+        //     return children;
+        // }
+        // return <Navigate to="/login" state={{from:location}} replace></Navigate>
 
 };
 
