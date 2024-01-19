@@ -27,6 +27,9 @@ const Profile = () => {
               <Intro></Intro>
               <Education></Education>
               <Skills></Skills>
+              {/* <h1>skill come after project and onwer</h1> */}
+
+
               </div>
               
                 

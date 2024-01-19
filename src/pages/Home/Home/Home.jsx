@@ -1,18 +1,32 @@
-
-// import Modal from '../../../components/Modal';
-// import { Divider } from '@mui/material';
 import { Paper } from '@mui/material';
 import Modalfrm from '../../../components/Modal/Modalfrm';
-// import useEduinfo from '../../../hooks/useEduinfo';
 import useUserinfo from '../../../hooks/useUserinfo';
-
+import { useState } from 'react';
+const suggestedSkills = [
+    'AngularJS',
+    'Cascading Style Sheets (CSS)',
+    'Redux.js',
+    'React Native',
+    'Front-End Development',
+    'Computer Vision',
+    'jQuery',
+    'Microsoft Azure Machine Learning',
+    'Flutter',
+    'Express.js'
+  ];
 const Home = () => {
-   const [userInfo, refetch] = useUserinfo();
+   const [userInfo] = useUserinfo();
+   const [curSkils, setSkill] = useState('no skill');
    
  
    console.log(userInfo);
     return (
        <div>
+        
+      <div>
+
+            <h1 className='text-3xl'>new try end--------------------------</h1>
+        </div>
             <div>
                 <Paper></Paper>
                 <h1>hey</h1>

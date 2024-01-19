@@ -1,44 +1,60 @@
-import { useState } from "react";
-
+import { BsCreditCard2BackFill } from "react-icons/bs";
+import SkillsAddModal from "./SkillsAddModal";
+import useSkillsinfo from "../../../hooks/useSkillsinfo";
+import SkillsEdit from "./SkillsEdit";
 const Skills = () => {
-    const [skills, setSkills] = useState([]);
-    const [newSkill, setNewSkill] = useState('');
-  
-    const addSkill = () => {
-      if (newSkill.trim() !== '') {
-        setSkills([...skills, newSkill]);
-        setNewSkill('');
-      }
-    };
-  
-    const removeSkill = (index) => {
-      const updatedSkills = [...skills];
-      updatedSkills.splice(index, 1);
-      setSkills(updatedSkills);
-    };
-  
+  const  [SkillsInfo]= useSkillsinfo();
+    console.log("SKILSS",SkillsInfo);
     return (
-      <div>
-        <h1>Add Skills</h1>
-        {skills.map((skill, index) => (
-          <div key={index}>
-            Skill {index + 1}: {skill}
-            <button onClick={() => removeSkill(index)}>Remove</button>
-          </div>
-        ))}
-        <div>
-          {skills.length === 0 && <p>No skills added yet.</p>}
-          <div>
-            <input
-              type="text"
-              value={newSkill}
-              onChange={(e) => setNewSkill(e.target.value)}
-              placeholder="Enter skill"
-            />
-            <button onClick={addSkill}>Add Skill</button>
-          </div>
+      <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6 top-3">
+       <div className="flex mb-4">
+             <h1 className="text-2xl font-semibold">Skills</h1>
+             
+            <button className="btn btn-circle bg-white hover:bg-[#ededec] border-none  text-[#6a6a6a] text-3xl ml-auto">
+            {/* hre icon  */}
+            <SkillsAddModal></SkillsAddModal>
+            </button>
+             </div>
+             <div className="">
+                
+
+             <div className="mappppppp">
+           {SkillsInfo.map((skill, index) => (
+        <div key={index} className="">
+         {index!=0?<div className="divider"></div> :<></> } 
+               <div className="flex">
+               
+                <div className="flex-1">
+                 <h1 className="text-xl font-semibold mb-2 ">{skill.skill}</h1> 
+                {
+                  skill?.skillsWhereUse?.map((obj,index)=>{
+                   return <>
+                    <div key={index} className="flex items-center mb-2">
+                 <BsCreditCard2BackFill className="text-2xl mr-2 text-[#442b2b]">
+                  
+                 </BsCreditCard2BackFill>
+                 <h1>{obj}</h1>
+               
+                 </div>
+                   </>
+                  })
+                }
+                 
+                 </div>
+                 <div>
+                  {/* <h1>icon</h1> */}
+                  <SkillsEdit skill={skill}></SkillsEdit>
+                 </div>
+
+                 </div>    
         </div>
-      </div>
+      ))}
+            
+           </div>
+                   
+             </div>
+     
+ </div>
     );
 };
 

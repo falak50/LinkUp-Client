@@ -143,9 +143,6 @@ const EduEditModal = ({ title = 'Edit education' , edu}) => {
    reset();
   
 
-
-   // setOpen(false);
-    // Add your logic to handle the form data
   };
 
   const handleExternalSubmit = () => {
@@ -154,13 +151,6 @@ const EduEditModal = ({ title = 'Edit education' , edu}) => {
     }
   };
 
-  // useEffect(()=>{
-  //   if(EduInfo && !isFetchingEdu)
-  //     {
-  //       reset();
-  //       console.log("when reset => props edu ",edu)
-  //   }
-  // },[isFetchingEdu])
 
 
   return (
