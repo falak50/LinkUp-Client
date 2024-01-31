@@ -3,22 +3,35 @@ import bkimg from '../../../assets/backgroudPIC.jpg'
 import profileimg from '../../../assets/profilePic.jpg'
 import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
-
+import React from "react";
+import ProfileImg from "./ProfileImg";
+const pathLink='http://localhost:5000/images/'
 const Intro = () => {
-    const [userInfo] = useUserinfo();
+    const [userInfo] = useUserinfo();  
+    console.log(userInfo);
+    const [open,setOpen] = React.useState(false);
+    const profileImgModal  = () => {
+         console.log('click')
+         setOpen(true);
+    };
+  
     return (
         <div className='md:w-[100%] bg-[white] rounded-lg relative'>
-
+<ProfileImg 
+      open={open}
+      setOpen={setOpen}
+      ></ProfileImg>
         <div className=''>
         <img className='h-[200px] w-full rounded-t-lg  object-cover' src={bkimg} alt="" />
         
         </div>
                    
          
-    <div className='mt-[-100px] '>
-    <div className="avatar mx-4  flex">
-    <div className="w-40 rounded-full ring ring-[white] ring-offset-base-100 ring-offset-2">
-        <img src={profileimg} />
+    <div  className='mt-[-100px] '>
+    <div  className="avatar mx-4  flex " >
+    <div className="w-40 rounded-full ring ring-[white] ring-offset-base-100 ring-offset-2" onClick={profileImgModal}  >
+      <img src={pathLink+userInfo?.ProfileImgURL} />
+    
     </div>
     <button className="btn btn-circle   bg-white text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
     <MdOutlineModeEditOutline className=''/>

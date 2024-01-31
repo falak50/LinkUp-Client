@@ -22,7 +22,7 @@ const SkillsEdit = ({skill}) => {
       setOpen(false);
     };
    //   here skill function start -------------------------
-   console.log(skill?.skillsWhereUse)
+   //console.log(skill?.skillsWhereUse)
   const [skillsWhereUse, setSkillsWhereUse] = useState(skill?.skillsWhereUse);
   const [newSkillsWhereUse, setNewSkillsWhereUse] = useState('');
 
@@ -80,10 +80,10 @@ const handleDelete = () => {
 //   update submit ---------- start
 const onSubmit = () => {
     // console.log('data---->', data);
-    console.log('click')
+   // console.log('click')
      skill.skillsWhereUse=skillsWhereUse;
      const totalData = skill;
-     console.log("update data= >>>>> ",totalData);
+     //console.log("update data= >>>>> ",totalData);
 
       //console.log("got to hit for update")
     fetch(`http://localhost:5000/skills/${skill._id}`,{

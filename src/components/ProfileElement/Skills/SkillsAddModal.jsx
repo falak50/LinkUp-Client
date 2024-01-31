@@ -29,7 +29,7 @@ const suggestedSkills = [
     'Express.js'
   ];
 const SkillsAddModal = ({ title = 'Add Skills' }) => {
-  const  [,skillsrefetch,,]= useSkillsinfo();
+   const  [,skillsrefetch,,]= useSkillsinfo();
     const [curSkill, setSkill] = useState('');
     const [userInfo,] = useUserinfo();
 

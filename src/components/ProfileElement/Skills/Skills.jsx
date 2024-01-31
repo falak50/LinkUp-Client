@@ -4,7 +4,7 @@ import useSkillsinfo from "../../../hooks/useSkillsinfo";
 import SkillsEdit from "./SkillsEdit";
 const Skills = () => {
   const  [SkillsInfo]= useSkillsinfo();
-    console.log("SKILSS",SkillsInfo);
+    //console.log("SKILSS",SkillsInfo);
     return (
       <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6 top-3">
        <div className="flex mb-4">

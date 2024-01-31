@@ -23,15 +23,15 @@ const Education = () => {
             </button>
              </div>
            <div className="mappppppp">
-           {EduInfo.map((edu, index) => (
+           {EduInfo?.map((edu, index) => (
         <div key={index}>
           <div className="flex items-center">
                 <div className="flex">
                  <img src={edu_Icon} className="w-auto h-auto" alt="" />
                  <div className="p-2">
                     <h1 className="font-semibold">{edu.school} </h1>
-                     <p>{edu.degree}, {edu.fieldOfStudy}</p>
-                     <span className="text-[gray]">{edu.start_year} - {edu.end_year}
+                     <p>{edu?.degree}, {edu?.fieldOfStudy}</p>
+                     <span className="text-[gray]">{edu?.start_year} - {edu?.end_year}
                      </span>
                  </div>
                </div>

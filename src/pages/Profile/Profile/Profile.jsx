@@ -8,7 +8,9 @@ import { Helmet } from 'react-helmet-async';
 // import { Button } from '@mui/base';
 import Intro from '../../../components/ProfileElement/Intro/Intro';
 import Education from '../../../components/ProfileElement/Education/Education';
-import Skills from '../../../components/ProfileElement/Skills/Skills';;
+import Skills from '../../../components/ProfileElement/Skills/Skills';import Awards from '../../../components/ProfileElement/Awards/Awards';
+import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
+
 
 const Profile = () => {
     // const {user} = useContext(AuthContext);
@@ -27,6 +29,8 @@ const Profile = () => {
               <Intro></Intro>
               <Education></Education>
               <Skills></Skills>
+              <Mypost></Mypost>
+              <Awards></Awards>
               {/* <h1>skill come after project and onwer</h1> */}
 
 

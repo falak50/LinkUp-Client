@@ -2,17 +2,19 @@
 // import { AuthContext } from "../providers/AuthProviders";
 // import { Navigate, useLocation } from "react-router-dom";
 import useUserinfo from "../hooks/useUserinfo";
-import useEduinfo from "../hooks/useEduinfo";
+// import useEduinfo from "../hooks/useEduinfo";
+// import useMypost from "../hooks/useMypost";
 
 const PrivateRoute =  ({children}) => {
     //    const {loading}=useContext(AuthContext);
     //    here i am not use own made loader , if need then open it
         // const {user}=useContext(AuthContext);
         // const location = useLocation();
-        const [isLoading] = useUserinfo();
-        const [eduLoading] = useEduinfo();
-       
-        if(!isLoading && !eduLoading){
+        const [,isLoading] = useUserinfo();
+
+        // const [eduLoading] = useEduinfo();
+        // const [MypostsInfo, Mypostsrefetch, MypostsLoading,isFetchingMyposts] = useMypost();
+        if(!isLoading){
            return <>
            <progress className="progress w-56"></progress> 
                   <div className="flex gap-4 items-center">
