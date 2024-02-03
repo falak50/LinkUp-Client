@@ -27,6 +27,7 @@ const Profile = () => {
              {/* first div main content  relative absolute */}
             <div>
               <Intro></Intro>
+               {/* in intro first lo ading edit info data not loading  check late*/}
               <Education></Education>
               <Skills></Skills>
               <Mypost></Mypost>

@@ -8,7 +8,7 @@ import ProfileImg from "./ProfileImg";
 const pathLink='http://localhost:5000/images/'
 const Intro = () => {
     const [userInfo] = useUserinfo();  
-    console.log(userInfo);
+   // console.log(userInfo);
     const [open,setOpen] = React.useState(false);
     const profileImgModal  = () => {
          console.log('click')

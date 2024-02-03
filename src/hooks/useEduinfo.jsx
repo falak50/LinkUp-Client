@@ -6,7 +6,7 @@ import useUserinfo from './useUserinfo';
 const useEduinfo = () => {
     // const { user } = useContext(AuthContext);
     const [userInfo] = useUserinfo();
-    console.log('eduinfo ->userInfo?._id: ',userInfo?._id)
+   // console.log('eduinfo ->userInfo?._id: ',userInfo?._id)
     const { refetch: edurefetch, data: EduInfo = [], isLoading: eduLoading ,isFetching: isFetchingEdu } = useQuery({
         queryKey: ['user', userInfo?._id],
         queryFn: async () => {

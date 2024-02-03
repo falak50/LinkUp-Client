@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,18 +9,29 @@ import { MdPhotoCamera } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import useUserinfo from '../../../hooks/useUserinfo';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+const pathLink='http://localhost:5000/images/'
 const ProfileImg = ({open,setOpen}) => {
-  const [userInfo,refetch ] = useUserinfo();
-    const [files, setFiles] = useState([]);
-
-   
+  const [userInfo,refetch,isFetchingIntro] = useUserinfo();
+   const [files, setFiles] = useState([]);
+   const [img,setImg] = useState(pathLink+userInfo?.ProfileImgURL);
+  //  useEffect(()=>{
+  //   if(userInfo && !isFetchingIntro)
+  //   {
+  //       // refetch();
+  //     console.log('reset of introoooo')
+  //   } 
+  // },[isFetchingIntro])
+  // console.log(img);
     const handleFileChange = (e) => {
-        // Convert FileList to an array
-    //    console.log(files[0]);
-        const fileList = Array.from(e.target.files);
-        setFiles(fileList); // Set the state directly to the new array
-        console.log("value = ",e.target.files)
-     //   console.log(files);
+      const fileList = Array.from(e.target.files);
+
+      if (fileList.length > 0) {
+        const selectedImgURL = URL.createObjectURL(fileList[0]);
+        setImg(selectedImgURL);
+      }
+  
+      setFiles(fileList);
       };
   
   const handleClose = () => {
@@ -30,29 +41,89 @@ const ProfileImg = ({open,setOpen}) => {
  
 
 
-  const handleSubmit = () => {
-    console.log('helo',)
+  const handleSubmit = async() => {
+    console.log('hello');
     console.log(files[0]);
-    const uid=userInfo?._id;
+    const uid = userInfo?._id;
     const formData = new FormData();
     formData.append(`file`, files[0]);
     formData.append('uid', uid);
-    axios.post('http://localhost:5000/profileimg', formData)
-      .then(res => {
+  
+    try{
+      const res = await axios.post('http://localhost:5000/profileimg', formData)
+      
+      
+        console.log('add photo done');
         console.log(res);
-        refetch();
-      })
-      .catch(err => console.log(err));
+        refetch().then(userRes=>{
+          setImg(pathLink + userRes?.ProfileImgURL);
+          setOpen(false);
+        });
+       
+      
+     
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
     
-      console.log("come my opost")
-  //  Mypostsrefetch(); here work after one  but why . so use then 
-    setOpen(false);
-    // Add your logic to handle the form data
-    // setOpen(false);
-    // Add your logic to handle the form data
+  
+    console.log("come my opost");
   };
  
+  const handledelete = () => {
 
+    setOpen(false);
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete your profile picture?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('CONFIRM DELETE');
+        refetch();
+        setImg('');
+        console.log('img url ',img);
+       fetch(`http://localhost:5000/profilePicdelete/${userInfo._id}`,{
+          method:'DELETE'
+       })
+       .then(res => res.json())
+       .then(data=> {
+        refetch();
+          isFetchingIntro();
+          setImg('');
+        if(data.deletedCount>0){
+          console.log('delete done')
+          refetch();
+          isFetchingIntro();
+          setImg('');
+          Swal.fire({
+            title: "Deleted!",
+            text: `Picture has been deleted.`,
+            icon: "success"
+          });
+        }
+        
+       })
+        
+      }else{
+        setOpen(true);
+      }
+    });
+  };
+
+  useEffect(()=>{
+    if(userInfo && !isFetchingIntro)
+    {
+     setImg(pathLink+userInfo?.ProfileImgURL) 
+      console.log('reset of introoooo')
+    } 
+  },[isFetchingIntro])
 
 
   return (
@@ -92,11 +163,13 @@ const ProfileImg = ({open,setOpen}) => {
         <DialogContent 
         className='bg-[#1B1F23]'
         dividers={scroll}>
-         {/* bod strat  */}
+         {/* body strat  */}
+
+         
          <div className="flex items-center justify-center">
-    <div className="avatar">
-        <div className="m-auto w-[70%] rounded-full">
-            <img src='https://filmfare.wwmindia.com/content/2020/nov/shahrukhkhan31605693734.jpg' alt="Avatar" />
+    <div className="avatar w-[80%]">
+        <div className="m-auto  w-[70%] rounded-full">
+            <img   className=" " src={img} alt="Avatar" />
         </div>
     </div>
 </div>
@@ -124,7 +197,7 @@ const ProfileImg = ({open,setOpen}) => {
               style={{ display: 'none' }}
             />
           </label>
-         <div
+         <div onClick={handledelete}
             className="text-white  px-6 py-2 text-xl mr-2"
           >
             <RiDeleteBin6Fill className='mx-auto text-2xl' />
