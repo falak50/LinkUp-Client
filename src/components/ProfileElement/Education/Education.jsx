@@ -9,7 +9,7 @@ import EduEditModal from "./EduEditModal";
 
 const Education = () => {
     const [EduInfo, ,] = useEduinfo();
-   // console.log(EduInfo);
+  //  console.log(EduInfo);
     
   
     return (

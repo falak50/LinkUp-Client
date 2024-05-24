@@ -14,6 +14,7 @@ const useEduinfo = () => {
             const res = await fetch(`http://localhost:5000/education/${userInfo?._id}`);
             return res.json();
         },
+        // enabled : !!userInfo?.id
     });
 
     return [EduInfo, edurefetch, eduLoading ,isFetchingEdu];

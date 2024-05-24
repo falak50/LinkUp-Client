@@ -9,7 +9,7 @@ const Main = () => {
     return (
         <div>
            { noHeaderFooter || <div className="bg-[#ffffff] w-[100%] min-h-full">
-            <NavBar></NavBar>
+            <NavBar ></NavBar>
            </div> }
            <div className="max-w-screen-xl mx-auto bg-[#f4f2ee] min-h-screen ">
            <Outlet></Outlet>

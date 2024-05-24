@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,18 +7,24 @@ import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 import { IoImagesSharp } from "react-icons/io5";
 import axios from 'axios';
-import useUserinfo from '../../../hooks/useUserinfo';
-import useMypost from '../../../hooks/useMypost';
-const MypostAdd = (  ) => {
+import useUserinfo from '../../hooks/useUserinfo';
+import useMypost from '../../hooks/useMypost';
+import { IconButton } from '@mui/material';
+
+
+const MypostHome = ({open, setOpen}) => {
     const [userInfo, ] = useUserinfo();
     const [, Mypostsrefetch , , ] = useMypost();
     // imagme ----------------- fun start 
     const [files, setFiles] = useState([]);
-    const handleAddImage = (e) => {
+    const fileInputRef = useRef(null)
+    const handleAddImage = () => {
+      // Check if fileInputRef has been initialized
+      if (fileInputRef.current){
         // Open file input programmatically
-        const fileInput = e.target.nextSibling;
-        fileInput.click();
-      };
+        fileInputRef.current.click();
+      }
+    };
     
       const handleFileChange = (e) => {
         // Convert FileList to an array
@@ -30,26 +36,22 @@ const MypostAdd = (  ) => {
       };
       // imagme ----------------- end 
 
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const formRef = React.useRef(null);
-
-  const handleClickOpen = () => () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  const { register, handleSubmit} = useForm({
+  const { register, handleSubmit, reset} = useForm({
     defaultValues: {
+      description:''
     },
   });
   const onSubmit = (data) => {
     console.log('data---->', data);
     const uid=userInfo?._id;
     const formData = new FormData();
-
+   
     for (let i = 0; i < files.length; i++) {
       files[i].title = "falak";
       console.log("file info ", files[i]);
@@ -59,7 +61,7 @@ const MypostAdd = (  ) => {
     formData.append('description', data.description);
     formData.append('uid', uid);
   
-
+    
     axios.post('http://localhost:5000/posts', formData)
       .then(res => {
         console.log(res);
@@ -68,8 +70,14 @@ const MypostAdd = (  ) => {
       .catch(err => console.log(err));
     
       console.log("come my opost")
+      
   //  Mypostsrefetch(); here work after one  but why . so use then 
+    setFiles([]);
+    reset({
+      description:''
+    });
     setOpen(false);
+
     // Add your logic to handle the form data
   };
  
@@ -82,9 +90,9 @@ const MypostAdd = (  ) => {
 
 
   /// text area auto increse function
-  const [inputValue, setInputValue] = useState('');
+  
   const handleInput = (event) => {
-    setInputValue(event.target.value);
+ 
 
     // Auto-expand textarea height based on content
     event.target.style.height = 'auto';
@@ -95,13 +103,7 @@ const MypostAdd = (  ) => {
     return (
         <React.Fragment>
         
-      <button
-        onClick={handleClickOpen()}
-        className=" hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto "
-      >
-        Create a post
-      </button>
-         
+  
 
       <Dialog
         open={open}
@@ -154,7 +156,7 @@ const MypostAdd = (  ) => {
              
                  
                 <textarea
-                    value={inputValue}
+                   
                     onInput={handleInput}
                     placeholder="What do you want to talk about?"
                     {...register('description')}
@@ -180,29 +182,10 @@ const MypostAdd = (  ) => {
       </div>
 
 
-            
-          
-                   
-              
-            {/* THIS IS NOT PARTH OR FORM  */}
-            
-         
-            
-              
-        
-             {/* THIS IS NOT PARTH OR FORM  */}
-
-
-
-        
 
           </form>
 
-          {/* this is not part of form -------------- start  */}
-
-            {/* Suggested Skills   ------------------ start  */}
-         
-            {/* Suggested Skills   ------------------ end  */}
+  
         </DialogContent>
      
         <DialogActions
@@ -216,8 +199,10 @@ const MypostAdd = (  ) => {
          
           
            
-          <button className='btn btn-square btn-md' onClick={handleAddImage}><IoImagesSharp /></button>
-          <input type="file" onChange={handleFileChange} multiple style={{ display: 'none' }} />     
+          <button className='btn btn-square btn-md' onClick={handleAddImage}> 
+          <IconButton><IoImagesSharp /></IconButton>
+          </button>
+          <input  ref={fileInputRef} type="file" onChange={handleFileChange} multiple style={{ display: 'none' }} />     
       
 
           <button
@@ -233,4 +218,4 @@ const MypostAdd = (  ) => {
     );
 };
 
-export default MypostAdd;
+export default MypostHome;

@@ -35,6 +35,8 @@ const AuthProviders = ({children}) => {
           })
        }
     
+    const isLoginUser = (id)=>id==user?.id
+   
     useEffect( ()=> {
         const unsubscribe =  onAuthStateChanged(auth , currentUser => {
                 setUser(currentUser);
@@ -59,6 +61,8 @@ const AuthProviders = ({children}) => {
             return unsubscribe();
            }
         },[])
+
+
     const authInfo = {
         user,
         loading,
@@ -66,7 +70,8 @@ const AuthProviders = ({children}) => {
         signIn,
         googleSignIn,
         logOut,
-        updateUserProfile 
+        updateUserProfile,
+        isLoginUser
     }
     return (
         <AuthContext.Provider value={authInfo}>

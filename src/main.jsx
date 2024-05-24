@@ -18,8 +18,9 @@ const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <HelmetProvider>
      <AuthProviders>
-      <HelmetProvider>
+      
       <ToastContainer />
         <QueryClientProvider client={queryClient}>
           <div className='bg-[#f4f2ee] '>
@@ -27,7 +28,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           </div>           
         </QueryClientProvider>  
         
-      </HelmetProvider>
+     
      </AuthProviders>
+     </HelmetProvider>
   </React.StrictMode>,
 )

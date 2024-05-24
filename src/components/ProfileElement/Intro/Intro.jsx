@@ -1,6 +1,6 @@
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import bkimg from '../../../assets/backgroudPIC.jpg'
-import profileimg from '../../../assets/profilePic.jpg'
+// import profileimg from '../../../assets/profilePic.jpg'
 import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
 import React from "react";

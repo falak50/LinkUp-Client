@@ -20,6 +20,7 @@ module.exports = {
     // "globals": {
     //   "formRef": "readonly"
     // },
+    "react/prop-types": ["warn", { skipUndeclared: true }],
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

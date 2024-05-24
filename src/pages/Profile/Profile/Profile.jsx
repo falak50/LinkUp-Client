@@ -10,12 +10,42 @@ import Intro from '../../../components/ProfileElement/Intro/Intro';
 import Education from '../../../components/ProfileElement/Education/Education';
 import Skills from '../../../components/ProfileElement/Skills/Skills';import Awards from '../../../components/ProfileElement/Awards/Awards';
 import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
+import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
+// import useUserinfo from '../../../hooks/useUserinfo';
+// import { useEffect, useState } from 'react';
+// import { useQuery } from '@tanstack/react-query';
 
 
 const Profile = () => {
+  
     // const {user} = useContext(AuthContext);
-    
-    
+    // const [userInfo] = useUserinfo();
+    // const params = useParams();
+    // console.log('params ',params);
+    // const [isVistor,setIsVistor] = useState(false);
+    // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
+    // console.log("User Info id ->> ",userInfo?._id,typeof userInfo?._id);
+    // console.log("userInfoo ->>",userInfo);
+
+    // if(typeof(params.id)==="undefined"){
+    //     params.id=userInfo?._id
+    // }
+    // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
+
+  
+    //   console.log('kmooon aso kutay useEffect');
+      // if(userInfo?._id!==params?.id)setIsVistor(true); infinite loop.
+    //   const {  data:curdata , isLoading  } = useQuery({
+    //     queryKey: ['CurrentInfo', userInfo?._id],
+    //     queryFn: async () => {
+    //         // if (!userInfo?._id) {return null;}
+    //         const res = await fetch(`http://localhost:5000/profile/${params?.id}`);
+    //         return res.json();
+    //     },
+    // });
+    //  console.log("params data - - - >> ",curdata,isLoading )
+    // console.log("isVistor ->>> ",isVistor)
     return (
         <div>
             <Helmet>
