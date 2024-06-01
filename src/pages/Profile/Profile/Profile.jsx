@@ -21,8 +21,8 @@ const Profile = () => {
   
     // const {user} = useContext(AuthContext);
     // const [userInfo] = useUserinfo();
-    // const params = useParams();
-    // console.log('params ',params);
+    const params = useParams();
+    console.log('profile  params ',params);
     // const [isVistor,setIsVistor] = useState(false);
     // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
     // console.log("User Info id ->> ",userInfo?._id,typeof userInfo?._id);

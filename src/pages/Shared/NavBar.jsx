@@ -8,9 +8,10 @@ import { MdNotificationsActive } from "react-icons/md";
 import useUserinfo from "../../hooks/useUserinfo";
 
 const NavBar = () => {
-    const {logOut} = useContext(AuthContext);
+    const {logOut,user} = useContext(AuthContext);
     const [userInfo] = useUserinfo();
     const navigate = useNavigate();
+    // console.log('user ',user?.email)
     // const [cart]=useCart();
     // console.log(user);
     // console.log('hello from navbar ->>>',userInfo?._id)
@@ -41,7 +42,7 @@ const NavBar = () => {
           
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li><Link to={`/profile/${userInfo?._id}`}>
+        <li><Link to={`/profile/${user?.email}`}>
           <a className="justify-between">
             Profile
             <span className="badge">{userInfo?.first_name}</span>

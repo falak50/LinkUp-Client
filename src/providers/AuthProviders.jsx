@@ -43,14 +43,13 @@ const AuthProviders = ({children}) => {
                 console.log('current user',currentUser);
                 if(currentUser)
                 {
-                    console.log('not null')
-                
+                    // todo think it later
+                //     console.log('not null')
+            
+                //     currentUser.name='122'
+                //     currentUser.lastName=''
 
-
-                    currentUser.name='122'
-                    currentUser.lastName=''
-
-                console.log(currentUser.displayName)
+                // console.log(currentUser.displayName)
                 }else {
                     console.log('null')
                 }

@@ -8,7 +8,7 @@ const useMypost = () => {
         queryKey: ['myPostInfo', userInfo?._id],
         queryFn: async () => {
             // if (!userInfo?._id) {return null;}
-            const res = await fetch(`http://localhost:5000/myposts/${userInfo?._id}`);
+            const res = await fetch(`http://localhost:5000/posts/${userInfo?._id}`);
             return res.json();
         },
     });
