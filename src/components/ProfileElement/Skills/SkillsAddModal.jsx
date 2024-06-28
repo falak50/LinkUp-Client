@@ -78,7 +78,8 @@ const SkillsAddModal = ({ title = 'Add Skills' }) => {
   const onSubmit = (data) => {
     // console.log('data---->', data);
     const uid=userInfo._id
-    const totalData = { uid , ...data , skillsWhereUse };
+    const email=userInfo.email
+    const totalData = { uid , email , ...data , skillsWhereUse };
     console.log(totalData);
     console.log('tatolData --> ',totalData)
     fetch(`http://localhost:5000/skills`,{

@@ -69,8 +69,9 @@ const EduAddModal = ({ title = 'Add education' }) => {
 
   const onSubmit = (data) => {
     console.log('data---->', data);
-    const uid=userInfo._id
-    const totalData = { uid , ...data , skills  };
+    const uid=userInfo._id;
+    const email=userInfo.email;
+    const totalData = { uid , email , ...data , skills  };
 
     console.log('tatolData --> ',totalData)
     fetch(`http://localhost:5000/education`,{

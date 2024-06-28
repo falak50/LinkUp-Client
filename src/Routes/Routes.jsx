@@ -20,13 +20,18 @@ import MyNetwork from "../pages/MyNetwork/MyNetwork";
             path:'/',
             element:<Home></Home>
         },
+        // {
+        //     path:'profile',
+        //     element:<PrivateRoute><Profile></Profile></PrivateRoute>
+        // },
         {
-            path:'profile',
+            path:'profile/:email',
             element:<PrivateRoute><Profile></Profile></PrivateRoute>
         },
         {
-            path:'profile/:id',
-            element:<PrivateRoute><Profile></Profile></PrivateRoute>
+          path:'profile/education/:email',
+          element:<PrivateRoute><Profile></Profile></PrivateRoute>
+          
         },
         {
             path:'mynetwork',

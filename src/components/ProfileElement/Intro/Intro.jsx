@@ -5,19 +5,19 @@ import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
 import React from "react";
 import ProfileImg from "./ProfileImg";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 const pathLink='http://localhost:5000/images/'
 const Intro = () => {
     const [userInfo] = useUserinfo();  
-   // console.log(userInfo);
+   console.log('userInfo tela',userInfo);
     const [open,setOpen] = React.useState(false);
     const profileImgModal  = () => {
          console.log('click')
          setOpen(true);
     };
-  
-    const params = useParams();
-    console.log('profile  params ',params);
+
+    // const params = useParams();
+    // console.log('profile  params ',params);
     return (
         <div className='md:w-[100%] bg-[white] rounded-lg relative'>
 <ProfileImg 

@@ -12,6 +12,7 @@ import useMypost from '../../../hooks/useMypost';
 const MypostAdd = (  ) => {
     const [userInfo, ] = useUserinfo();
     const [, Mypostsrefetch , , ] = useMypost();
+    
     // imagme ----------------- fun start 
     const [files, setFiles] = useState([]);
     const handleAddImage = (e) => {

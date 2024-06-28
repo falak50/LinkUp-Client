@@ -9,10 +9,11 @@ import EduEditModal from "./EduEditModal";
 
 const Education = () => {
     const [EduInfo, ,] = useEduinfo();
-  //  console.log(EduInfo);
+  //  console.log('dasdad',EduInfo);
     
   
     return (
+    //  <div></div>
         <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6">
              <div className="flex mb-4">
              <h1 className="text-2xl font-semibold">Education</h1>

@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
-import { IoAdd } from 'react-icons/io5';
+// import { IoAdd } from 'react-icons/io5';
 
 
 const MypostAdd = () => {

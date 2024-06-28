@@ -42,7 +42,7 @@ const ProfileImg = ({open,setOpen}) => {
 
 
   const handleSubmit = async() => {
-    console.log('hello');
+    console.log('handleSubmit');
     console.log(files[0]);
     const uid = userInfo?._id;
     const formData = new FormData();
@@ -50,7 +50,7 @@ const ProfileImg = ({open,setOpen}) => {
     formData.append('uid', uid);
   
     try{
-      const res = await axios.post('http://localhost:5000/profileimg', formData)
+      const res = await axios.post('http://localhost:5000/users/profileimg', formData)
       
       
         console.log('add photo done');
@@ -89,7 +89,7 @@ const ProfileImg = ({open,setOpen}) => {
         refetch();
         setImg('');
         console.log('img url ',img);
-       fetch(`http://localhost:5000/profilePicdelete/${userInfo._id}`,{
+       fetch(`http://localhost:5000/users/profilePicdelete/${userInfo._id}`,{
           method:'DELETE'
        })
        .then(res => res.json())
