@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { useParams } from "react-router-dom";
 const pathLink='http://localhost:5000/images/'
-//note here userInfo.email == email 
+//note here userInfo.email == email  
 const Intro = ({owner,email}) => {
   const [userInfo] = useUserinfo();  
   // const { owner } = useContext(AuthContext);
