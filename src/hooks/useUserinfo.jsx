@@ -16,7 +16,7 @@ const useUserinfo = () => {
             return res.json();
         },
     });
-   console.log('intro data after',userInfo)
+   console.log('intro data after hello',userInfo)
     return [userInfo, refetch, isLoading, isFetchingIntro];
 }
 export default useUserinfo;

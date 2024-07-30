@@ -3,21 +3,177 @@ import bkimg from '../../../assets/backgroudPIC.jpg'
 // import profileimg from '../../../assets/profilePic.jpg'
 import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
-import React from "react";
+import  { useContext, useEffect, useState } from "react";
 import ProfileImg from "./ProfileImg";
-// import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProviders";
+import { useParams } from "react-router-dom";
 const pathLink='http://localhost:5000/images/'
-const Intro = () => {
-    const [userInfo] = useUserinfo();  
-   console.log('userInfo tela',userInfo);
-    const [open,setOpen] = React.useState(false);
+//note here userInfo.email == email 
+const Intro = ({owner,email}) => {
+  const [userInfo] = useUserinfo();  
+  // const { owner } = useContext(AuthContext);
+  // const {email} = useParams(); 
+  //  console.log('perams ',email)
+  console.log('userInfo--------------->',userInfo)
+
+    const [open,setOpen] = useState(false);
+
+    // const [owner,setOwner] = useState(JSON.parse(localStorage.getItem('user')))
+    console.log('owner in intr',owner  );
+    console.log('email in intr',email )
+   
     const profileImgModal  = () => {
          console.log('click')
          setOpen(true);
     };
+   
+    const handleAddFriends = () => {
+      if(!owner)alert('owner info is null');
 
-    // const params = useParams();
-    // console.log('profile  params ',params);
+      console.log("click here user",userInfo.email)
+      console.log('ownerUser',owner.email)
+
+      const payload = {
+          sentFriendRequestEmail : userInfo.email,
+          ownerEmail :owner.email
+      }
+      console.log(payload);
+      // return
+
+      fetch('http://localhost:5000/users/friendRequest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log('social log in done res', res);
+
+        })
+        .catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="#">Why do I have this issue?</a>',
+          });
+          console.error('Error:', error); // Handle any errors
+        });
+
+  };
+  const handleCancelfriendRequest = () => {
+    if(!owner)alert('owner info is null');
+
+    console.log("click here user",userInfo.email)
+    console.log('ownerUser',owner.email)
+
+    const payload = {
+        sentFriendRequestEmail : userInfo.email,
+        ownerEmail :owner.email
+    }
+    console.log(payload);
+    // return
+
+    fetch('http://localhost:5000/users/cancelFriendRequest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log('social log in done res', res);
+
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          footer: '<a href="#">Why do I have this issue?</a>',
+        });
+        console.error('Error:', error); // Handle any errors
+      });
+  
+};
+const handleAcceptFriendRequest = () => {
+  if(!owner)alert('owner info is null');
+
+  console.log("click here user",userInfo.email)
+  console.log('ownerUser',owner.email)
+
+  const payload = {
+      sentFriendRequestEmail : userInfo.email,
+      ownerEmail :owner.email
+  }
+  console.log(payload);
+  // return
+  fetch('http://localhost:5000/users/acceptFriendRequest', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(res => res.json())
+    .then(res => {
+      console.log('social log in done res', res);
+
+    })
+    .catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+      console.error('Error:', error); // Handle any errors
+    });
+
+};
+const handleRemovefriend = () => {
+  if(!owner)alert('owner info is null');
+
+  console.log("click here user",userInfo.email)
+  console.log('ownerUser',owner.email)
+
+  const payload = {
+      sentFriendRequestEmail : userInfo.email,
+      ownerEmail :owner.email
+  }
+  console.log('payload ',payload);
+  // return
+  fetch('http://localhost:5000/users/removefriend', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(res => res.json())
+    .then(res => {
+      console.log('social log in done res', res);
+
+    })
+    .catch(error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: '<a href="#">Why do I have this issue?</a>',
+      });
+      console.error('Error:', error); // Handle any errors
+    });
+
+};
+
+
+
+
     return (
         <div className='md:w-[100%] bg-[white] rounded-lg relative'>
 <ProfileImg 
@@ -65,8 +221,23 @@ const Intro = () => {
      <a href="" >500+ connections</a>
      </div>
      <div className='mt-3 mx-0'>
-        
-     <button className="btn btn-sm  mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]">Open to</button>
+        {email!==owner?.email &&
+        <>
+             <button className="btn btn-sm  mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+     onClick={()=>handleAddFriends()}
+     >Add Friend</button>
+       <button className="btn btn-sm  mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+     onClick={()=>handleRemovefriend()}
+     >Unfriend</button>
+     <button className="btn btn-sm  mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+     onClick={()=>handleCancelfriendRequest()}
+     >Cancel Request</button>
+       <button className="btn btn-sm  mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+     onClick={()=>handleAcceptFriendRequest()}
+     >Accept</button>
+        </>
+        }
+ 
      <button className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#0a66c2] text-[#0a66c2] hover:text-[#0a66c2] btn-ghost">Add profile section</button>
      <button className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#767676]  text-[#767676] hover:text-[#767676] btn-ghost">More</button>
      </div>

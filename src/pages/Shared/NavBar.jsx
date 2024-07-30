@@ -17,7 +17,8 @@ const NavBar = () => {
     // console.log('hello from navbar ->>>',userInfo?._id)
     const handleLogOut = () =>{
         logOut()
-        .then(()=>{})
+        .then(()=>{
+        })
         .catch(e => console.log(e))
         navigate("login" ,{replace:true});
     }

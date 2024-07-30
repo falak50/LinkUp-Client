@@ -7,53 +7,134 @@ import loginImg from "../../assets/loginPic2.svg"
 import Swal from "sweetalert2";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
-const SignUp = () => {
-  const {register,handleSubmit,reset,formState: { errors }} = useForm(); 
-    const {createUser,updateUserProfile} = useContext(AuthContext);
-    const navigate = useNavigate();
-    const onSubmit = data => {
-     console.log("data---->",data);
-     console.log('in submit')
-     createUser(data.email,data.password)
-     .then(results => {
-         console.log('in the createUSER')
-         const loggedUsed = results.user;
-         console.log(loggedUsed);
-         console.log('signup->createuser->then->name,url',data.name,data.photoURL)
-         console.log('in create user sing in  ')
-         updateUserProfile(data.name)
-         .then(()=>{
-           console.log('in update user');
-           const saveUser = {first_name:data.name,email:data.email}
-           fetch('http://localhost:5000/users',{
-            method:'POST',
-            headers:{
-              'content-type':'application/json'
-            },
-            body: JSON.stringify(saveUser)
+// const SignUp = () => {
+//   const {register,handleSubmit,reset,formState: { errors }} = useForm(); 
+//     const {createUser,updateUserProfile} = useContext(AuthContext);
+//     const navigate = useNavigate();
+//     const onSubmit = data => {
+//      console.log("data---->",data);
+//      console.log('in submit')
+//      createUser(data.email,data.password)
+//      .then(results => {
+//          console.log('in the createUSER')
+//          const loggedUsed = results.user;
+//          console.log(loggedUsed);
+//          console.log('signup->createuser->then->name,url',data.name,data.photoURL)
+//          console.log('in create user sing in  ')
+//          updateUserProfile(data.name)
+//          .then(()=>{
+//            console.log('in update user');
+//            const saveUser = {first_name:data.name,email:data.email}
+//            fetch('http://localhost:5000/users',{
+//             method:'POST',
+//             headers:{
+//               'content-type':'application/json'
+//             },
+//             body: JSON.stringify(saveUser)
 
-           })
-           .then(res=>res.json())
-           .then(data => {
-             console.log("back end id ",data.insertedId)
-               if(data.insertedId)
-               {
-                Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: "User created successfully.",
-                  showConfirmButton: false,
-                  timer: 1000
-                });
-                navigate('/');
-                reset();
-               }
-           })
+//            })
+//            .then(res=>res.json())
+//            .then(data => {
+//             console.log("back end id data sing",data)
+//              console.log("back end id ",data.insertedId)
+//                if(data.insertedId)
+//                {
+//                 Swal.fire({
+//                   position: "top-end",
+//                   icon: "success",
+//                   title: "User created successfully.",
+//                   showConfirmButton: false,
+//                   timer: 1000
+//                 });
+//                 navigate('/');
+//                 reset();
+//                }
+//            })
+         
           
-         })
+//          })
+         
         
-     })
-    };
+//      })
+//     };
+const SignUp = () => {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm(); 
+  const { createUser, updateUserProfile,setOwner } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const onSubmit = data => {
+    console.log("data---->", data);
+    console.log('in submit');
+
+    createUser(data.email, data.password)
+      .then(results => {
+        console.log('in the createUSER');
+        const loggedUser = results.user;
+        console.log(loggedUser);
+        console.log('signup->createuser->then->name,url', data.name, data.photoURL);
+        console.log('in create user sign in');
+
+        // Update user profile with name and photoURL
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            console.log('in update user');
+
+            // Prepare user data to save
+            const saveUser = { first_name: data.name, email: data.email };
+            
+            // Save user to backend
+            return fetch('http://localhost:5000/users', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(saveUser),
+            });
+          })
+          .then(res => res.json())
+          .then(data => {
+            console.log("backend response data:", data);
+            if (data._id) {
+              localStorage.setItem('user', JSON.stringify(data));
+              setOwner(data)
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User created successfully.",
+                showConfirmButton: false,
+                timer: 1000,
+              });
+              navigate('/');
+              reset();
+            }else {
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+              });
+            }
+          })
+          .catch(error => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops... fail to create in database",
+              text: "Something went wrong!",
+              footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            console.error("Error saving user to backend:", error);
+          });
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="#">Why do I have this issue?</a>'
+        });
+        console.error("Error creating user:", error);
+      });
+  };
  
     return (
         <>

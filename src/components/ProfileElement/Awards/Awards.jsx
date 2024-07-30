@@ -4,8 +4,8 @@ const Awards = () => {
 
     return (
       <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6 top-6">
-       <div className="flex mb-4">
-             <h1 className="text-2xl font-semibold">Skills</h1>
+       <div className="flex mb-4 ">
+             <h1 className="text-2xl font-semibold">Honors & awards</h1>
              
             <button className="btn btn-circle bg-white hover:bg-[#ededec] border-none  text-[#6a6a6a] text-3xl ml-auto">
             {/* hre icon  */}

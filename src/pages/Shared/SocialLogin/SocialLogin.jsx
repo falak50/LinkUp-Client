@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProviders";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const SocialLogin = () => {
-    const {googleSignIn} = useContext(AuthContext);
+    const {googleSignIn,setOwner} = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -24,9 +25,52 @@ const SocialLogin = () => {
                 body: JSON.stringify(saveUser)
               })
               .then(res => res.json())
-              .then( () => {
+              .then( (res) => {
 
-                console.log('social log in done')
+                console.log('social log in done res',res)
+               if(loggedInUser?.email){
+                fetch(`http://localhost:5000/users/${loggedInUser.email}`)
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                  }
+                  return response.json(); // Parse JSON response asynchronously
+                })
+                .then((user) => {
+                  console.log("User data: --- infolol", user); // Handle user data here
+                  // Perform additional actions if needed
+                  Swal.fire({
+                    title: "User Login Successful.",
+                    showClass: {
+                      popup: `
+                          animate__animated
+                          animate__fadeInUp
+                          animate__faster
+                        `,
+                    },
+                    hideClass: {
+                      popup: `
+                          animate__animated
+                          animate__fadeOutDown
+                          animate__faster
+                        `,
+                    },
+                  });
+                  setOwner(user);
+                  localStorage.setItem('user', JSON.stringify(user));
+                  navigate(from, { replace: true });
+                })
+                .catch((error) => {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                  });
+                  console.error("Error:", error); // Handle any errors
+                });
+               }
+              
                   navigate(from ,{replace:true});
               })
       

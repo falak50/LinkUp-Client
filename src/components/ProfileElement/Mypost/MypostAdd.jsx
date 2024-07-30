@@ -50,7 +50,7 @@ const MypostAdd = (  ) => {
     console.log('data---->', data);
     const uid=userInfo?._id;
     const formData = new FormData();
-
+    
     for (let i = 0; i < files.length; i++) {
       files[i].title = "falak";
       console.log("file info ", files[i]);
@@ -81,7 +81,7 @@ const MypostAdd = (  ) => {
     }
   };
 
-
+  console.log('files',files)
   /// text area auto increse function
   const [inputValue, setInputValue] = useState('');
   const handleInput = (event) => {

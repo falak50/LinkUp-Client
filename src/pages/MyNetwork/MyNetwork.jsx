@@ -16,7 +16,7 @@ export default function MyNetwork() {
           {users?.map(user => (
                <PersonCard
                   key={user._id} 
-                  user={user}
+                  userCard={user}
                />
             ))}
            

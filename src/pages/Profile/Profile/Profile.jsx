@@ -11,6 +11,7 @@ import Education from '../../../components/ProfileElement/Education/Education';
 import Skills from '../../../components/ProfileElement/Skills/Skills';import Awards from '../../../components/ProfileElement/Awards/Awards';
 import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 // import { useParams } from 'react-router-dom';
 // import useUserinfo from '../../../hooks/useUserinfo';
 // import { useEffect, useState } from 'react';
@@ -21,8 +22,8 @@ const Profile = () => {
   
     // const {user} = useContext(AuthContext);
     // const [userInfo] = useUserinfo();
-    const params = useParams();
-    console.log('profile  params ',params);
+    // const params = useParams();
+    // console.log('profile  params ',params);
     // const [isVistor,setIsVistor] = useState(false);
     // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
     // console.log("User Info id ->> ",userInfo?._id,typeof userInfo?._id);
@@ -46,6 +47,8 @@ const Profile = () => {
     // });
     //  console.log("params data - - - >> ",curdata,isLoading )
     // console.log("isVistor ->>> ",isVistor)
+    const [owner,setOwner] = useState(JSON.parse(localStorage.getItem('user')));
+    const {email} = useParams(); 
     return (
         <div>
             <Helmet>
@@ -56,12 +59,15 @@ const Profile = () => {
              <div className='md:flex md:flex-col  m-2 gap-4 '>
              {/* first div main content  relative absolute */}
             <div>
-              <Intro></Intro>
+              <Intro owner={owner} email={email}></Intro>
                {/* in intro first lo ading edit info data not loading  check late*/}
               <Education></Education>
               <Skills></Skills>
-              <Mypost></Mypost>
-              <Awards></Awards>
+              <Mypost className=''></Mypost>
+              <br />
+              <Awards className='mt-4'></Awards>
+              <br />
+              <br />
               {/* <h1>skill come after project and onwer</h1> */}
 
 

@@ -8,7 +8,15 @@ const AuthProviders = ({children}) => {
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true)
     const googleProvider = new GoogleAuthProvider();
+    const [owner, setOwner] = useState(null);
 
+    useEffect(() => {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      if (storedUser) {
+        setOwner(storedUser);
+      }
+    }, []);
+    console.log('owner  in auth',owner)
     const createUser = (email,password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth,email,password);
@@ -25,6 +33,7 @@ const AuthProviders = ({children}) => {
        }
     
        const logOut = () =>  {
+        setOwner();
          setLoading(true);
          return signOut(auth);
        }
@@ -38,18 +47,13 @@ const AuthProviders = ({children}) => {
     const isLoginUser = (id)=>id==user?.id
    
     useEffect( ()=> {
+
         const unsubscribe =  onAuthStateChanged(auth , currentUser => {
                 setUser(currentUser);
                 console.log('current user',currentUser);
                 if(currentUser)
                 {
-                    // todo think it later
-                //     console.log('not null')
-            
-                //     currentUser.name='122'
-                //     currentUser.lastName=''
-
-                // console.log(currentUser.displayName)
+                 console.log('auth...')
                 }else {
                     console.log('null')
                 }
@@ -70,7 +74,9 @@ const AuthProviders = ({children}) => {
         googleSignIn,
         logOut,
         updateUserProfile,
-        isLoginUser
+        isLoginUser,
+        setOwner,
+        owner
     }
     return (
         <AuthContext.Provider value={authInfo}>
