@@ -106,10 +106,10 @@ const EduEditModal = ({ title = 'Edit education' , edu}) => {
 
   const onSubmit = (data) => {
    // console.log('data---->', data);
-    const uid=userInfo._id
+    const uid=userInfo?._id
     const totalData = { uid , ...data , skills  };
      //console.log("got to hit for update")
-   fetch(`http://localhost:5000/education/${edu._id}`,{
+   fetch(`http://localhost:5000/education/${edu?._id}`,{
     method:'PATCH', 
     headers:{
       'content-type':'application/json'

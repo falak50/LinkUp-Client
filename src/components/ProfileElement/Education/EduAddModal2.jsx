@@ -29,7 +29,7 @@ const EduAddModal2 = ({ title = 'Add education' }) => {
     const [open, setOpen] = React.useState(false);
     const formRef = React.useRef(null);
     const [userInfo] = useUserinfo();
-    console.log(userInfo);
+   // console.log(userInfo);
     const handleClickOpen = () => () => {
       setOpen(true);
     };

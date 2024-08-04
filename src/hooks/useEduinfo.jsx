@@ -8,9 +8,9 @@ const useEduinfo = () => {
     // const { user } = useContext(AuthContext);
     const [userInfo] = useUserinfo();
     const { email } = useParams();
-    console.log('email ----->',email)
+   // console.log('email ----->',email)
    // console.log('eduinfo ->userInfo?._id: ',userInfo?._id)
-   console.log('user info',userInfo)
+   //console.log('user info',userInfo)
     const { refetch: edurefetch, data: EduInfo = [], isLoading: eduLoading ,isFetching: isFetchingEdu } = useQuery({
         queryKey: ['edu', email],
         queryFn: async () => {
@@ -21,7 +21,7 @@ const useEduinfo = () => {
         // enabled : !!userInfo?.id
     });
     
-   console.log(EduInfo)
+  // console.log(EduInfo)
     return [EduInfo, edurefetch, eduLoading ,isFetchingEdu];
 };
 

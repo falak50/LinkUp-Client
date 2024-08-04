@@ -5,11 +5,11 @@ import { FaHome, FaSortDown, FaUserFriends  } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
 import { AiFillMessage } from "react-icons/ai";
 import { MdNotificationsActive } from "react-icons/md";
-import useUserinfo from "../../hooks/useUserinfo";
+// import useUserinfo from "../../hooks/useUserinfo";
 
 const NavBar = () => {
     const {logOut,user} = useContext(AuthContext);
-    const [userInfo] = useUserinfo();
+    // const [userInfo] = useUserinfo();
     const navigate = useNavigate();
     // console.log('user ',user?.email)
     // const [cart]=useCart();
@@ -29,7 +29,7 @@ const NavBar = () => {
     <li><Link to="/mynetwork"><div className="text-gray-500"><FaUserFriends className="flex items-center md:mx-7 mx-auto text-2xl"/><h1 className="hidden md:block">My Network</h1></div></Link></li>
     
     <li><Link to="/"><div className="text-gray-500"><GiAchievement className="flex items-center  text-2xl"/><h1 className="hidden md:block">Jobs</h1></div></Link></li>
-    <li><Link to="/"><div className="text-gray-500"><AiFillMessage className="flex items-center md:mx-6 mx-auto text-2xl"/><h1 className="hidden md:block">Messaging</h1></div></Link></li>
+    <li><Link to="/messaging"><div className="text-gray-500"><AiFillMessage className="flex items-center md:mx-6 mx-auto text-2xl"/><h1 className="hidden md:block">Messaging</h1></div></Link></li>
     <li><Link to="/">
         <div className="text-gray-500"><MdNotificationsActive className="flex items-center md:mx-8 mx-auto text-2xl "/><h1 className="hidden md:block">Notifications</h1></div></Link></li>
 
@@ -46,7 +46,7 @@ const NavBar = () => {
         <li><Link to={`/profile/${user?.email}`}>
           <a className="justify-between">
             Profile
-            <span className="badge">{userInfo?.first_name}</span>
+            <span className="badge">{"falak demo"}</span>
           </a>
           </Link>
         </li>
@@ -76,7 +76,7 @@ const NavBar = () => {
             </div>
             <div className="divider lg:divider-horizontal"></div> 
             <div className="mx-20 navbar-end hidden md:block text-gray-500">
-                <a className="btn text-gray-500">{userInfo?.first_name} {userInfo?.last_name}</a>
+                {/* <a className="btn text-gray-500">{userInfo?.first_name} {userInfo?.last_name}</a> */}
             </div>
         </div>
 

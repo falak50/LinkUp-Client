@@ -54,7 +54,7 @@ const MypostHome = ({open, setOpen}) => {
    
     for (let i = 0; i < files.length; i++) {
       files[i].title = "falak";
-      console.log("file info ", files[i]);
+    //  console.log("file info ", files[i]);
       formData.append(`file`, files[i]);
     }
 
@@ -69,7 +69,7 @@ const MypostHome = ({open, setOpen}) => {
       })
       .catch(err => console.log(err));
     
-      console.log("come my opost")
+   //   console.log("come my opost")
       
   //  Mypostsrefetch(); here work after one  but why . so use then 
     setFiles([]);

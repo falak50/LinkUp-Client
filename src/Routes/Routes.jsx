@@ -9,6 +9,8 @@ import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import Settings from "../pages/Settings/Settings";
 import MyNetwork from "../pages/MyNetwork/MyNetwork";
+import Messaging from "../pages/Messaging/Messaging";
+import MessagingPage from "../pages/Messaging/MessagingPage";
 
 
  export const  router = createBrowserRouter([
@@ -36,6 +38,14 @@ import MyNetwork from "../pages/MyNetwork/MyNetwork";
         {
             path:'mynetwork',
             element:<PrivateRoute><MyNetwork></MyNetwork></PrivateRoute>
+        },
+        {
+          path:'messaging',
+          element:<MessagingPage></MessagingPage>
+        },
+        {
+          path:'messaging1',
+          element:<Messaging></Messaging>
         },
         {
             path:'/login',

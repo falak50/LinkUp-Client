@@ -12,7 +12,7 @@ const useSkillsinfo = () => {
             return res.json();
         },
     });
-    console.log('ok-------------------',SkillsInfo)
+    // console.log('ok-------------------',SkillsInfo)
     return [SkillsInfo, skillsrefetch, SkillsLoading ,isFetchingskills];
 };
 

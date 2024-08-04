@@ -69,7 +69,7 @@ const ProfileImg = ({open,setOpen}) => {
     }
     
   
-    console.log("come my opost");
+   // console.log("come my opost");
   };
  
   const handledelete = () => {
@@ -121,7 +121,7 @@ const ProfileImg = ({open,setOpen}) => {
     if(userInfo && !isFetchingIntro)
     {
      setImg(pathLink+userInfo?.ProfileImgURL) 
-      console.log('reset of introoooo')
+     // console.log('reset of introoooo')
     } 
   },[isFetchingIntro])
 

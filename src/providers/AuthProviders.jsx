@@ -16,7 +16,7 @@ const AuthProviders = ({children}) => {
         setOwner(storedUser);
       }
     }, []);
-    console.log('owner  in auth',owner)
+  //  console.log('owner  in auth',owner)
     const createUser = (email,password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth,email,password);
@@ -50,10 +50,10 @@ const AuthProviders = ({children}) => {
 
         const unsubscribe =  onAuthStateChanged(auth , currentUser => {
                 setUser(currentUser);
-                console.log('current user',currentUser);
+                // console.log('current user',currentUser);
                 if(currentUser)
                 {
-                 console.log('auth...')
+                //  console.log('auth...')
                 }else {
                     console.log('null')
                 }

@@ -1,100 +1,102 @@
-// import { useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
-// import { AuthContext } from '../../../providers/AuthProviders';
-// import { MdOutlineModeEditOutline } from "react-icons/md";
-// import bkimg from '../../../assets/backgroudPIC.jpg'
-// import profileimg from '../../../assets/profilePic.jpg'
-// import Modalfrm from '../../../components/Modal/Modalfrm';
-// import { Button } from '@mui/base';
 import Intro from '../../../components/ProfileElement/Intro/Intro';
 import Education from '../../../components/ProfileElement/Education/Education';
-import Skills from '../../../components/ProfileElement/Skills/Skills';import Awards from '../../../components/ProfileElement/Awards/Awards';
+import Skills from '../../../components/ProfileElement/Skills/Skills';
+import Awards from '../../../components/ProfileElement/Awards/Awards';
 import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import useUserinfo from '../../../hooks/useUserinfo';
-// import { useEffect, useState } from 'react';
-// import { useQuery } from '@tanstack/react-query';
-
+import { useEffect, useState } from 'react';
+import useUserinfo from '../../../hooks/useUserinfo';
+import Swal from 'sweetalert2';
+import Check from '../../../not_includes/Check';
+import ChatCard from '../../../not_includes/ChatCard';
+import Chat from '../../../not_includes/Chat';
+import Messaging from '../../Messaging/Messaging';
+import MessagingPage from '../../Messaging/MessagingPage';
 
 const Profile = () => {
-  
-    // const {user} = useContext(AuthContext);
-    // const [userInfo] = useUserinfo();
-    // const params = useParams();
-    // console.log('profile  params ',params);
-    // const [isVistor,setIsVistor] = useState(false);
-    // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
-    // console.log("User Info id ->> ",userInfo?._id,typeof userInfo?._id);
-    // console.log("userInfoo ->>",userInfo);
+  const [owner, setOwner] = useState(JSON.parse(localStorage.getItem('user')));
+  const { email } = useParams(); 
 
-    // if(typeof(params.id)==="undefined"){
-    //     params.id=userInfo?._id
-    // }
-    // console.log('from prfile prams id ->>> ',params.id,typeof params.id) ;
+  const [relation, setRelation] = useState("");
+  const [redender, setRedender] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [userInfo] = useUserinfo();
 
-  
-    //   console.log('kmooon aso kutay useEffect');
-      // if(userInfo?._id!==params?.id)setIsVistor(true); infinite loop.
-    //   const {  data:curdata , isLoading  } = useQuery({
-    //     queryKey: ['CurrentInfo', userInfo?._id],
-    //     queryFn: async () => {
-    //         // if (!userInfo?._id) {return null;}
-    //         const res = await fetch(`http://localhost:5000/profile/${params?.id}`);
-    //         return res.json();
-    //     },
-    // });
-    //  console.log("params data - - - >> ",curdata,isLoading )
-    // console.log("isVistor ->>> ",isVistor)
-    const [owner,setOwner] = useState(JSON.parse(localStorage.getItem('user')));
-    const {email} = useParams(); 
-    return (
-        <div>
-            <Helmet>
-            <title>LinkUp | prifile</title>
-            </Helmet>
-            
-             <div className='md:flex '>
-             <div className='md:flex md:flex-col  m-2 gap-4 '>
-             {/* first div main content  relative absolute */}
-            <div>
-              <Intro owner={owner} email={email}></Intro>
-               {/* in intro first lo ading edit info data not loading  check late*/}
-              <Education></Education>
-              <Skills></Skills>
-              <Mypost className=''></Mypost>
-              <br />
-              <Awards className='mt-4'></Awards>
-              <br />
-              <br />
-              {/* <h1>skill come after project and onwer</h1> */}
+  useEffect(() => {
+    if (userInfo?.email && owner?.email) {
+      const payload = {
+        sentFriendRequestEmail: userInfo.email,
+        ownerEmail: owner.email,
+      };
 
+      fetch("http://localhost:5000/users/active-button-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("res", res);
+          setRelation(res.message);
+          setLoading(false); 
+        })
+        .catch((error) => {
+          console.log("res ", error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>',
+          });
+          console.error("Error:", error);
+          setLoading(false);
+        });
+    }
+  }, [userInfo, owner, redender]);
 
-              </div>
-              
-                
-             
-            {/* 2nd  div useless content  */}   
-            
-                
-            </div>
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-            <div className='md:w-[25%]'>
-               <div className='bg-[white]  rounded-lg p-3 '>
-                 <h1>Profile language</h1>
-                 <span>English</span>
-                 <div className="divider"></div> 
-                 <h1>Profile languagee</h1>
-                 <span>www.linkedin.com/in/falak-ahmed-shakib-a5182823a</span>
-                </div>
-   
-            </div>
-             </div>
-           
-
+  return (
+    <div className="relative min-h-screen">
+      <Helmet>
+        <title>LinkUp | Profile</title>
+      </Helmet>
+      <div className="md:flex">
+        <div className="md:flex md:flex-col m-2 gap-4">
+          <div>
+            <Intro owner={owner} email={email} relation={relation} setRelation={setRelation} setRedender={setRedender} />
+            <Education />
+            <Skills />
+            <Mypost className='' />
+            <br />
+            <Awards className='mt-4' />
+            <br />
+            <br />
+          </div>
         </div>
-    );
+        <div className='md:w-[80%]'>
+          <div className='bg-[white] rounded-lg p-3'>
+            <h1>Profile language</h1>
+            {/* <Check /> */}
+            <div className="p-4">
+              {/* Place other content here if needed */}
+            </div>
+          </div>
+          <div className='bg-[white] rounded-lg p-3'>
+            {/* <Messaging /> */}
+          </div>
+        </div>
+      </div>
+      <div className="fixed bottom-0 right-0 m-4 bg-white rounded-lg shadow-lg p-4">
+        <Chat /> {/* Positioned at the bottom right */}
+      </div>
+    </div>
+  );
 };
 
 export default Profile;
