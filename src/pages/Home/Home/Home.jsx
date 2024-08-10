@@ -16,12 +16,7 @@ const Home = () => {
 
 
       </div>
-      <div className="w-1/3">
-        <div className=" p-4">
-          <h2 className="text-lg font-bold">Div 3</h2>
-          <p>Content for div 3 lorem1000</p>
-        </div>
-      </div>
+     
     </div>
   );
 };

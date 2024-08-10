@@ -77,6 +77,7 @@ const NavBar = () => {
             <div className="divider lg:divider-horizontal"></div> 
             <div className="mx-20 navbar-end hidden md:block text-gray-500">
                 {/* <a className="btn text-gray-500">{userInfo?.first_name} {userInfo?.last_name}</a> */}
+                <h1>felooo</h1>
             </div>
         </div>
 

@@ -79,22 +79,9 @@ const Profile = () => {
             <br />
           </div>
         </div>
-        <div className='md:w-[80%]'>
-          <div className='bg-[white] rounded-lg p-3'>
-            <h1>Profile language</h1>
-            {/* <Check /> */}
-            <div className="p-4">
-              {/* Place other content here if needed */}
-            </div>
-          </div>
-          <div className='bg-[white] rounded-lg p-3'>
-            {/* <Messaging /> */}
-          </div>
-        </div>
+     
       </div>
-      <div className="fixed bottom-0 right-0 m-4 bg-white rounded-lg shadow-lg p-4">
-        <Chat /> {/* Positioned at the bottom right */}
-      </div>
+     
     </div>
   );
 };
