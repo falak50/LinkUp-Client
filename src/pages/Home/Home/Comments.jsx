@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import Comment from "./Comment";
 import axios from "axios";
 
-const Comments = ({ post_id }) => {
-    const [comments, setComments] = useState([]);
+const Comments = ({comments}) => {
+    // const [comments, setComments] = useState([]);
 
     // useEffect(() => {
     //     // Make sure to use the actual post_id value in the URL
@@ -18,11 +18,11 @@ const Comments = ({ post_id }) => {
     //             console.error("Error fetching comments:", error);
     //         });
     // }, [post_id]); // Adding post_id as a dependency ensures the effect runs again if the post_id changes
-
-    return (
+//    console.log('comments need1',comments)
+     return (
         <div>
             {comments.map((comment, index) => (
-                <Comment key={index} data={comment} />
+                <Comment key={index} comment={comment} />
             ))}
         </div>
     );

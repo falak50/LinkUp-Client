@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { AiFillLike } from "react-icons/ai";
 
-export default function Reply() {
-  const [isReact, setIsReact] = useState(true);
-
+export default function Reply({reply}) {
+  // const [isReact, setIsReact] = useState(true);
+//  console.log('reply ',reply)
   return (
     <div className="flex items-center my-2">
       <div className="flex bg-[#f6f6f6] p-2 rounded-[8px]">
@@ -18,9 +18,8 @@ export default function Reply() {
         </div>
 
         <div className="ml-4">
-          <div className="font-semibold">John Doe</div>
-          <div className="text-gray-600 text-sm">nice picture</div>
-          <div className="_comment_reply flex items-center"></div>
+          <div className="font-semibold">{reply?.userInfo?.first_name} {reply?.userInfo?.last_name}</div>
+          <div className="text-gray-600 text-sm">{reply?.text}</div>
         </div>
       </div>
     </div>

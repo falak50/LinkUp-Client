@@ -17,17 +17,17 @@ const Post = ({ post }) => {
 
 console.log('comments ____>',comments)
   useEffect(() => {
-    const liker_ids = post.likes || [];
+    const liker_ids = post?.likes || [];
     // console.log("liker_ids ",liker_ids )
     if (liker_ids.includes(owner._id)) {
       setIsLiked(true);
     } else {
       setIsLiked(false);
     }
-
+    
     setComments(post.comments);
 
-  }, []);
+  }, [post]);
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
@@ -45,12 +45,16 @@ console.log('comments ____>',comments)
     console.log("payload ", payload);
     axios.post('http://localhost:5000/comments', payload)
       .then(res => {
-        console.log(res);
+        console.log('res need ',res.data.comment);
+        const resNewComment = res.data.comment
+        console.log('resNewComment need',resNewComment);
+        console.log('pre comments need',comments)
+        setComments([resNewComment,...comments]);
+        setNewComment("");
       })
       .catch(err => console.log(err));
 
-    setComments([...comments, newComment]);
-    setNewComment("");
+   
   };
 
 
@@ -218,7 +222,7 @@ console.log('comments ____>',comments)
 
       {/* Render Comments */}
       <div>
-        <Comments post_id={post._id} />
+        <Comments comments={comments} />
       </div>
     </div>
   );
