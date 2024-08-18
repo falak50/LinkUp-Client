@@ -95,7 +95,7 @@ console.log('comments ____>',comments)
   const displayedImages = showAll ? post.imgUrls : post.imgUrls.slice(0, 4);
 
   return (
-    <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden py-2 my-5">
+    <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden py-2 my-5 pb-4">
       <div className="p-4">
         <div className="flex items-center mb-2">
           <div className="avatar">

@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import Comment from "./Comment";
-import axios from "axios";
 
-const Comments = ({comments}) => {
-    // const [comments, setComments] = useState([]);
+const Comments = ({ comments }) => {
+    const [commentsm, setCommentsm] = useState(comments);
 
-    // useEffect(() => {
-    //     // Make sure to use the actual post_id value in the URL
+    useEffect(() => {
+        setCommentsm(comments);
+    }, [comments]);
 
-    //     axios
-    //         .get(`http://localhost:5000/comments/${post_id}`)
-    //         .then((response) => {
-    //             console.log("response comment", response.data);
-    //             setComments(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error fetching comments:", error);
-    //         });
-    // }, [post_id]); // Adding post_id as a dependency ensures the effect runs again if the post_id changes
-//    console.log('comments need1',comments)
-     return (
-        <div>
-            {comments.map((comment, index) => (
-                <Comment key={index} comment={comment} />
+    const onDelete = (commentId) => {
+        // Filter out the deleted comment from the commentsm state
+        const updatedComments = commentsm.filter(comment => comment._id !== commentId);
+        setCommentsm(updatedComments);
+    };
+
+    return (
+        <div className="">
+            {commentsm.map((comment, index) => (
+                <Comment key={index} comment={comment} onDelete={onDelete} />
             ))}
         </div>
     );

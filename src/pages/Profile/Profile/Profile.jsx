@@ -4,7 +4,7 @@ import Education from '../../../components/ProfileElement/Education/Education';
 import Skills from '../../../components/ProfileElement/Skills/Skills';
 import Awards from '../../../components/ProfileElement/Awards/Awards';
 import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useUserinfo from '../../../hooks/useUserinfo';
 import Swal from 'sweetalert2';
@@ -13,6 +13,7 @@ import ChatCard from '../../../not_includes/ChatCard';
 import Chat from '../../../not_includes/Chat';
 import Messaging from '../../Messaging/Messaging';
 import MessagingPage from '../../Messaging/MessagingPage';
+import Dot from '../../../not_includes/Dot';
 
 const Profile = () => {
   const [owner, setOwner] = useState(JSON.parse(localStorage.getItem('user')));
@@ -66,6 +67,9 @@ const Profile = () => {
       <Helmet>
         <title>LinkUp | Profile</title>
       </Helmet>
+      <div>
+     <Dot></Dot>
+      </div>
       <div className="md:flex">
         <div className="md:flex md:flex-col m-2 gap-4">
           <div>
