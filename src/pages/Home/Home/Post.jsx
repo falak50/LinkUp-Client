@@ -1,24 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { IoMdShareAlt } from "react-icons/io";
-import { Button, Image } from "antd"; // Import Button from antd
+import { Button, Image } from "antd";
 import Comments from "./Comments";
 import { timeAgo } from "./utils";
 import axios from "axios";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MypostEdit from "../../../components/ProfileElement/Mypost/MypostEdit";
 
 const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [showAll, setShowAll] = useState(false);
+  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const owner = JSON.parse(localStorage.getItem("user"));
   const [likeCount, setLikeCount] = useState(post.likes?.length || 0);
 
-console.log('comments ____>',comments)
+  const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const liker_ids = post?.likes || [];
-    // console.log("liker_ids ",liker_ids )
     if (liker_ids.includes(owner._id)) {
       setIsLiked(true);
     } else {
@@ -26,66 +30,48 @@ console.log('comments ____>',comments)
     }
     
     setComments(post.comments);
-
   }, [post]);
+
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
+  const handleDeletePost = () => {
+    // Implement post deletion logic
+  };
+
   const handleCommentSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     if (newComment.trim() === "") return;
-    console.log("newComment ", newComment);
     const payload = {
       text: newComment,
       post_id: post._id,
-      parent_comment_id:null,
-      uid:owner._id
+      parent_comment_id: null,
+      uid: owner._id
     };
-    console.log("payload ", payload);
     axios.post('http://localhost:5000/comments', payload)
       .then(res => {
-        console.log('res need ',res.data.comment);
-        const resNewComment = res.data.comment
-        console.log('resNewComment need',resNewComment);
-        console.log('pre comments need',comments)
-        setComments([resNewComment,...comments]);
+        const resNewComment = res.data.comment;
+        setComments([resNewComment, ...comments]);
         setNewComment("");
       })
       .catch(err => console.log(err));
-
-   
   };
 
-
-  const handlelike = () => {
-
-    console.log("newComment ", newComment);
+  const handleLike = () => {
     const payload = {
-      post_id  : post._id,
-      liker_id : owner._id,
-      isAdd :  !isLiked,
+      post_id: post._id,
+      liker_id: owner._id,
+      isAdd: !isLiked,
     };
-  
-    console.log('payload ',payload)
-    // return 
-    console.log("payload ", payload);
     axios.post('http://localhost:5000/posts/like', payload)
       .then(res => {
-        console.log(res);
         setIsLiked(!isLiked);
-        setLikeCount(res.data.likeCount)
-
+        setLikeCount(res.data.likeCount);
       })
       .catch(err => console.log(err));
-
-    // setComments([...comments, newComment]);
-    // setNewComment("");
   };
-  
-  
 
-  // Calculate time ago
   const timeAgoText = timeAgo(post.createdAt);
 
   const handleToggleShowAll = () => {
@@ -94,8 +80,26 @@ console.log('comments ____>',comments)
 
   const displayedImages = showAll ? post.imgUrls : post.imgUrls.slice(0, 4);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
+  // const handleEditModalOpen = () => {
+  //   setIsEditModalOpen(true);
+  //   closeDropdown(); // Close the dropdown when opening the modal
+  // };
+
+  // const handleEditModalClose = () => {
+  //   setIsEditModalOpen(false);
+  // };
+
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden py-2 my-5 pb-4">
+       <MypostEdit post={post} open={open} setOpen={setOpen}></MypostEdit> 
       <div className="p-4">
         <div className="flex items-center mb-2">
           <div className="avatar">
@@ -107,12 +111,40 @@ console.log('comments ____>',comments)
               />
             </div>
           </div>
-
-          <div className="ml-4">
+          <div className="ml-4 flex-grow">
             <div className="font-semibold">
               {post.userInfo?.first_name} {post.userInfo?.last_name}
             </div>
             <div className="text-gray-600 text-sm">{timeAgoText}</div>
+          </div>
+
+          <div className="flex-none ml-4">
+            <div className="" ref={dropdownRef}>
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost avatar text-gray-500"
+                onClick={toggleDropdown}
+              >
+                <MoreVertIcon />
+              </div>
+             
+              {isOpen && (
+                //  <MypostEdit post={post}></MypostEdit>
+                <ul
+                  className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
+                  onClick={closeDropdown}
+                >
+                  <li  onClick={()=>setOpen(true)}>
+                    <span className="justify-between">Edit</span>
+                  </li>
+                   {/* <MypostEdit post={post}></MypostEdit> */}
+                  <li onClick={handleDeletePost}>
+                    <span>Delete</span>
+                  </li>
+                </ul>
+              )}
+            </div>
           </div>
         </div>
 
@@ -173,7 +205,7 @@ console.log('comments ____>',comments)
       <div className="flex justify-between items-center mb-4 mx-5">
         <button
           className="btn flex gap-2 text-xl items-center"
-          onClick={() => handlelike()}
+          onClick={handleLike}
         >
           {isLiked ? (
             <FcLike className="text-3xl" />
@@ -191,7 +223,6 @@ console.log('comments ____>',comments)
         </button>
       </div>
 
-      {/* Input field for new comments */}
       <div className="flex flex-col space-y-4 m-3 rounded-lg">
         <form
           onSubmit={handleCommentSubmit}
@@ -220,10 +251,11 @@ console.log('comments ____>',comments)
         </form>
       </div>
 
-      {/* Render Comments */}
       <div>
         <Comments comments={comments} />
       </div>
+
+     
     </div>
   );
 };

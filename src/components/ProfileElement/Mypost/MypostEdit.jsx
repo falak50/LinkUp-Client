@@ -10,12 +10,12 @@ import axios from 'axios';
 import useUserinfo from '../../../hooks/useUserinfo';
 import useMypost from '../../../hooks/useMypost';
 
-const MypostEdit = ({ post }) => {
+const MypostEdit = ({ post ,open , setOpen}) => {
     const [userInfo, ] = useUserinfo();
     const [, Mypostsrefetch, , ] = useMypost();
     const [files, setFiles] = useState([]);
     const [inputValue, setInputValue] = useState(post.description || '');
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const formRef = useRef(null);
 
     useEffect(() => {
@@ -47,9 +47,9 @@ const MypostEdit = ({ post }) => {
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
 
     const handleClose = () => {
         setOpen(false);
@@ -64,9 +64,9 @@ const MypostEdit = ({ post }) => {
     useEffect(() => {
         reset({ description: post.description });
     }, [post, reset]);
-
+    const owner = JSON.parse(localStorage.getItem('user'));
     const onSubmit = (data) => {
-        const uid = userInfo?._id;
+        const uid = owner?._id;
         const formData = new FormData();
 
         files.forEach(fileObj => {
@@ -79,7 +79,7 @@ const MypostEdit = ({ post }) => {
         axios.post(`http://localhost:5000/posts/${post._id}`, formData)
             .then(res => {
                 console.log('res ',res)
-                Mypostsrefetch();
+                // Mypostsrefetch();
                 setOpen(false);
             })
             .catch(err => console.log(err));
@@ -99,12 +99,6 @@ const MypostEdit = ({ post }) => {
 
     return (
         <React.Fragment>
-            <button
-                onClick={handleClickOpen}
-                className="hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto"
-            >
-                Edit
-            </button>
 
             <Dialog
                 open={open}

@@ -184,6 +184,7 @@ const Comment = ({ comment, onDelete }) => {
             </ul>
           )}
         </div>
+          {/*end 3-dot icon for edit/delete options */}
       </div>
 
       <div className="_comment_reply_num mx-[60px]">

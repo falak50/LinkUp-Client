@@ -2,11 +2,13 @@ import MypostAdd from "./MypostAdd";
 import useMypost from "../../../hooks/useMypost";
 import Swal from "sweetalert2";
 import MypostEdit from "./MypostEdit";
+import { useState } from "react";
+import Post from "../../../pages/Home/Home/Post";
 const pathLink = 'http://localhost:5000/images/'
 
 const Mypost = () => {
     const [MypostsInfo, , , ] = useMypost();
-
+   
     const handleDelete = (postId) => {
         // Implement the delete logic here, e.g., making an API call to delete the post by ID
         console.log(`Deleting post with ID: ${postId}`);
@@ -64,33 +66,34 @@ const Mypost = () => {
             </div>
             <div className="">
                 <div className="mappppppp">
-                    {MypostsInfo?.map((post, index) => (
-                        <div key={index} className="">
-                            {index !== 0 ? <div className="divider"></div> : null}
-                            <div className="flex justify-between items-center">
-                                <div className="flex">
-                                    {post.imgUrls.length !== 0 ? (
-                                        <img src={pathLink + post?.imgUrls[0]} className="w-20" alt="" />
-                                    ) : (
-                                        <div className="absolute"></div>
-                                    )}
-                                    <span className="p-2">
-                                        {post?.description}
-                                    </span>
-                                </div>
-                                <div>
-                                <button
-                                    className="btn btn-sm bg-red-500 hover:bg-red-700 text-white"
-                                    onClick={() => handleDelete(post._id)}
-                                >
-                                    Delete
-                                </button>
-                                <MypostEdit post={post}></MypostEdit>
-                                </div>
+                    {MypostsInfo?.map((post) => (
+                        <Post key={post.id} post={post} />
+                        // <div key={index} className="">
+                        //     {index !== 0 ? <div className="divider"></div> : null}
+                        //     <div className="flex justify-between items-center">
+                        //         <div className="flex">
+                        //             {post.imgUrls.length !== 0 ? (
+                        //                 <img src={pathLink + post?.imgUrls[0]} className="w-20" alt="" />
+                        //             ) : (
+                        //                 <div className="absolute"></div>
+                        //             )}
+                        //             <span className="p-2">
+                        //                 {post?.description}
+                        //             </span>
+                        //         </div>
+                        //         <div>
+                        //         <button
+                        //             className="btn btn-sm bg-red-500 hover:bg-red-700 text-white"
+                        //             onClick={() => handleDelete(post._id)}
+                        //         >
+                        //             Delete
+                        //         </button>
+                        //         {/* <MypostEdit post={post} open={open} setOpen={setOpen}></MypostEdit>  */}
+                        //         </div>
                             
                                 
-                            </div>
-                        </div>
+                        //     </div>
+                        // </div>
                     ))}
                 </div>
             </div>

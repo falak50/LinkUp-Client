@@ -14,6 +14,7 @@ import Chat from '../../../not_includes/Chat';
 import Messaging from '../../Messaging/Messaging';
 import MessagingPage from '../../Messaging/MessagingPage';
 import Dot from '../../../not_includes/Dot';
+import PostEdit from '../../../components/ProfileElement/Mypost/PostEidt';
 
 const Profile = () => {
   const [owner, setOwner] = useState(JSON.parse(localStorage.getItem('user')));
@@ -23,7 +24,7 @@ const Profile = () => {
   const [redender, setRedender] = useState(0);
   const [loading, setLoading] = useState(true);
   const [userInfo] = useUserinfo();
-
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (userInfo?.email && owner?.email) {
       const payload = {
@@ -62,6 +63,7 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
+
   return (
     <div className="relative min-h-screen">
       <Helmet>
@@ -69,6 +71,11 @@ const Profile = () => {
       </Helmet>
       <div>
      <Dot></Dot>
+     {/* <PostEdit open={open} setOpen={setOpen}></PostEdit> */}
+     <h1>dsa</h1>
+     <h1>dsad</h1>
+     <button onClick={()=>setOpen(true)}>clcik</button>
+     
       </div>
       <div className="md:flex">
         <div className="md:flex md:flex-col m-2 gap-4">
