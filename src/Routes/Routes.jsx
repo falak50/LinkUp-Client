@@ -11,6 +11,7 @@ import Settings from "../pages/Settings/Settings";
 import MyNetwork from "../pages/MyNetwork/MyNetwork";
 import Messaging from "../pages/Messaging/Messaging";
 import MessagingPage from "../pages/Messaging/MessagingPage";
+import MessagingCom from "../pages/Messaging/MessagingCom";
 
 
  export const  router = createBrowserRouter([
@@ -41,7 +42,8 @@ import MessagingPage from "../pages/Messaging/MessagingPage";
         },
         {
           path:'messaging',
-          element:<MessagingPage></MessagingPage>
+          element:<MessagingCom></MessagingCom>
+          // element:<MessagingPage></MessagingPage>
         },
         {
           path:'messaging1',

@@ -70,11 +70,9 @@ const Profile = () => {
         <title>LinkUp | Profile</title>
       </Helmet>
       <div>
-     <Dot></Dot>
+     {/* <Dot></Dot> */}
      {/* <PostEdit open={open} setOpen={setOpen}></PostEdit> */}
-     <h1>dsa</h1>
-     <h1>dsad</h1>
-     <button onClick={()=>setOpen(true)}>clcik</button>
+     {/* <button onClick={()=>setOpen(true)}>clcik</button> */}
      
       </div>
       <div className="md:flex">

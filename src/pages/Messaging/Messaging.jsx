@@ -1,45 +1,46 @@
 import io from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { IoMdSend } from "react-icons/io";
-import { IoMdClose } from "react-icons/io";
+import { IoMdSend, IoMdClose } from "react-icons/io";
 
+const defaultImage = 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg';
 const socket = io.connect("http://localhost:5000");
 
-function Messaging({ other, onClose }) {
+function Messaging({ other, onclose }) {
   const owner = JSON.parse(localStorage.getItem("user"));
-  console.log('other first', other);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const chatContainerRef = useRef(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
 
-  // Automatically join the room when the component mounts and fetch old messages
   useEffect(() => {
     if (owner && owner.email) {
       socket.emit("join_room", { userId: owner._id });
+    }
+  }, [owner]);
 
-      // Fetch previous messages
+  useEffect(() => {
+    if (owner && owner.email) {
       if (other?._id) {
-        const chatId = [owner._id, other._id].sort().join('_');
-        axios.get(`http://localhost:5000/chats/messages/${chatId}`)
-          .then(response => {
-            console.log('response ', response);
-            const formattedMessages = response.data.map(msg => ({
+        const chatId = [owner._id, other._id].sort().join("_");
+        axios
+          .get(`http://localhost:5000/chats/messages/${chatId}`)
+          .then((response) => {
+            const formattedMessages = response.data.map((msg) => ({
               ...msg,
-              sender: msg.senderId === owner._id ? "You" : other.email,
+              sender: msg.senderId === owner._id ? "" : other.first_name,
               isOwnMessage: msg.senderId === owner._id,
-              timestamp: new Date(msg.timestamp).toLocaleTimeString()
+              timestamp: new Date(msg.timestamp).toLocaleTimeString(),
             }));
             setMessages(formattedMessages);
           })
-          .catch(error => {
-            console.error('Error fetching messages:', error);
+          .catch((error) => {
+            console.error("Error fetching messages:", error);
           });
       }
     }
-  }, [other]);
+  }, [other, owner]);
 
-  // Function to send a message
   const sendMessage = () => {
     if (!other?._id) {
       alert("Please select another user");
@@ -54,87 +55,137 @@ function Messaging({ other, onClose }) {
         senderId,
         sender: "You",
         isOwnMessage: true,
-        timestamp: new Date().toLocaleTimeString()
+        timestamp: new Date().toLocaleTimeString(),
       };
 
       socket.emit("send_message", newMessage);
 
-      // Update local state with the new message
       setMessages([...messages, newMessage]);
       setMessage(""); // Clear the input field
     }
   };
 
-  // Function to handle receiving a message
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log('data ', data);
-      console.log('other ', other);
       if (data.senderId === other._id) {
-        setMessages((prevMessages) => [...prevMessages, { ...data, sender: other.email, isOwnMessage: false, timestamp: new Date(data.timestamp).toLocaleTimeString() }]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            ...data,
+            sender: other.email,
+            isOwnMessage: false,
+            timestamp: new Date(data.timestamp).toLocaleTimeString(),
+          },
+        ]);
       }
     });
 
-    // Clean up the event listener on component unmount
     return () => {
       socket.off("receive_message");
     };
   }, [other._id]);
 
-  // Auto-scroll to the bottom when a new message is added
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    const container = chatContainerRef.current;
+    if (container) {
+      if (isAtBottom) {
+        container.scrollTop = container.scrollHeight;
+      }
     }
-  }, [messages]);
+  }, [messages, isAtBottom]);
+
+  const handleScroll = () => {
+    const container = chatContainerRef.current;
+    if (container) {
+      const isAtBottom =
+        container.scrollHeight - container.clientHeight <= container.scrollTop + 1;
+      setIsAtBottom(isAtBottom);
+    }
+  };
+
+  // Function to determine the correct image URL
+  const getImageUrl = (imageURL) => {
+    return imageURL ? `http://localhost:5000/images/${imageURL}` : defaultImage;
+  };
 
   return (
-    <div className="">
-      <div className="bg-white p-2 rounded-lg shadow-lg w-full max-w-md ">
-        <div className="flex items-center justify-between mb-2">
+    <div className="fixed bottom-0 right-0 m-4 w-[25%] max-w-lg">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between bg-blue-600 text-white p-4">
           <div className="flex items-center">
             <img
               alt="Avatar"
               className="w-10 h-10 rounded-full mr-2"
-              src={`http://localhost:5000/images/${other?.ProfileImgURL}`}
+              src={getImageUrl(other?.ProfileImgURL)}
             />
-            <h1 className="text-xl font-bold">{other?.email}</h1>
+            <h1 className="text-xl font-semibold">
+              {other?.first_name} {other?.last_name}
+            </h1>
           </div>
-          <button onClick={onClose} className="text-red-500">
+          <button onClick={onclose} className="text-white hover:text-red-400">
             <IoMdClose className="text-xl" />
           </button>
         </div>
-        <div ref={chatContainerRef} className="mb-4 h-80 overflow-y-auto border border-gray-300 rounded-lg p-4">
+
+        {/* Chat Messages */}
+        <div
+          ref={chatContainerRef}
+          onScroll={handleScroll}
+          className="h-80 overflow-y-auto p-4 border-b border-gray-300 bg-gray-50"
+        >
           {messages.map((msg, index) => (
-            <div key={index} className={`chat ${msg.isOwnMessage ? 'chat-end' : 'chat-start'} mb-4`}>
-              <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Avatar"
-                    src={msg.isOwnMessage ? `http://localhost:5000/images/${owner?.ProfileImgURL}` : `http://localhost:5000/images/${other?.ProfileImgURL}`}
-                  />
+            <div
+              key={index}
+              className={`flex ${
+                msg.isOwnMessage ? "justify-end" : "justify-start"
+              } mb-4`}
+            >
+              <div
+                className={`flex flex-col ${
+                  msg.isOwnMessage ? "items-end" : "items-start"
+                } relative`}
+              >
+                <div
+                  className={`flex ${
+                    msg.isOwnMessage ? "flex-row-reverse" : "flex-row"
+                  } items-end`}
+                >
+                  {!msg.isOwnMessage && (
+                    <img
+                      alt="Avatar"
+                      className="w-8 h-8 rounded-full mr-2"
+                      src={getImageUrl(other?.ProfileImgURL)}
+                    />
+                  )}
+                  <div
+                    className={`max-w-xs rounded-lg p-2 shadow-lg ${
+                      msg.isOwnMessage
+                        ? "bg-blue-600 text-white border-blue-800"
+                        : "bg-gray-200 text-gray-800 border-gray-400"
+                    }`}
+                  >
+                    <div className="text-base">{msg.message}</div>
+                  </div>
                 </div>
               </div>
-              <div className="chat-header">
-                {msg.sender}
-                <time className="text-xs opacity-50">{msg.timestamp}</time>
-              </div>
-              <div className={`chat-bubble ${msg.isOwnMessage ? 'chat-bubble-primary' : 'chat-bubble-secondary'}`}>{msg.message}</div>
             </div>
           ))}
         </div>
-        <div className="p-4 border-t border-gray-300 bg-gray-100 flex items-center">
+
+        {/* Message Input */}
+        <div className="p-4 bg-gray-100 flex items-center">
           <input
             type="text"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            onKeyPress={(event) => event.key === 'Enter' && sendMessage()}
-            className="flex-1 p-2 border rounded-lg"
+            onKeyPress={(event) => event.key === "Enter" && sendMessage()}
+            className="flex-1 p-2 border rounded-lg border-gray-300 text-base focus:outline-none"
             placeholder="Type a message..."
           />
           <button
             onClick={sendMessage}
-            className="ml-2 bg-blue-500 text-white p-2 rounded-lg flex items-center"
+            className="ml-2 bg-blue-500 text-white p-2 rounded-lg flex items-center hover:bg-blue-600 transition-colors duration-300 ease-in-out"
           >
             <IoMdSend className="text-lg" />
           </button>
