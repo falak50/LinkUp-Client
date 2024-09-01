@@ -9,6 +9,7 @@ import { MdNotificationsActive } from "react-icons/md";
 
 const NavBar = () => {
     const {logOut,user} = useContext(AuthContext);
+    const owner = JSON.parse(localStorage.getItem('user'));
     // const [userInfo] = useUserinfo();
     const navigate = useNavigate();
     // console.log('user ',user?.email)
@@ -43,7 +44,7 @@ const NavBar = () => {
           
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li><Link to={`/profile/${user?.email}`}>
+        <li><Link to={`/profile/${owner?.email}`}>
           <a className="justify-between">
             Profile
             <span className="badge">{"falak demo"}</span>

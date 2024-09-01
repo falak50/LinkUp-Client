@@ -65,7 +65,7 @@ const AuthProviders = ({children}) => {
            }
         },[])
 
-
+    const [dp,setDp] = useState('') 
     const authInfo = {
         user,
         loading,
@@ -76,7 +76,9 @@ const AuthProviders = ({children}) => {
         updateUserProfile,
         isLoginUser,
         setOwner,
-        owner
+        owner,
+        dp,
+        setDp
     }
     return (
         <AuthContext.Provider value={authInfo}>
