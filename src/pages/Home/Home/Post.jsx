@@ -8,8 +8,9 @@ import { timeAgo } from "./utils";
 import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MypostEdit from "../../../components/ProfileElement/Mypost/MypostEdit";
+import Swal from "sweetalert2";
 
-const Post = ({ post }) => {
+const Post = ({ post ,setResetCount }) => {
   const [isLiked, setIsLiked] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -36,9 +37,50 @@ const Post = ({ post }) => {
     setNewComment(e.target.value);
   };
 
+
   const handleDeletePost = () => {
-    // Implement post deletion logic
-  };
+    const postId = post._id;
+    console.log(`Deleting post with ID: ${postId}`);
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete your profile picture?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('CONFIRM DELETE');
+       fetch(`http://localhost:5000/posts/delete/${postId}`,{
+          method:'POST'
+       })
+       .then(res => res.json())
+       .then(data=> {
+        console.log(data)
+        setResetCount(p=>p+1);
+        // refetch();
+        //   isFetchingIntro();
+        //   setImg('');
+        if(data){
+          console.log('delete done')
+          // refetch();
+          // isFetchingIntro();
+          // setImg('');
+          Swal.fire({
+            title: "Deleted!",
+            text: `Picture has been deleted.`,
+            icon: "success"
+          });
+        }
+        
+       })
+        
+      }else{
+        // setOpen(true);
+      }
+    });
+};
 
   const handleCommentSubmit = (e) => {
     e.preventDefault();
@@ -99,7 +141,7 @@ const Post = ({ post }) => {
 
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden py-2 my-5 pb-4">
-       <MypostEdit post={post} open={open} setOpen={setOpen}></MypostEdit> 
+       <MypostEdit post={post} open={open} setOpen={setOpen} setResetCount={setResetCount}></MypostEdit> 
       <div className="p-4">
         <div className="flex items-center mb-2">
           <div className="avatar">

@@ -3,11 +3,11 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { TfiWrite } from "react-icons/tfi";
 import MypostHome from "../../../components/HomeCompo/MypostHome";
 import { useState } from "react";
-const PostSectionHome = () => {
+const PostSectionHome = ({setResetCount}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden my-2">
-      <MypostHome open={open} setOpen={setOpen}></MypostHome>
+      <MypostHome open={open} setOpen={setOpen} setResetCount={setResetCount} ></MypostHome>
       {/* ------------------------------------------   */}
       <div className="bg-[#ffffff] m-2 p-3 ">
         <div className="flex items-center gap-3">

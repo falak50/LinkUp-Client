@@ -10,7 +10,7 @@ import axios from 'axios';
 import useUserinfo from '../../../hooks/useUserinfo';
 import useMypost from '../../../hooks/useMypost';
 
-const MypostEdit = ({ post ,open , setOpen}) => {
+const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
     const [userInfo, ] = useUserinfo();
     const [, Mypostsrefetch, , ] = useMypost();
     const [files, setFiles] = useState([]);
@@ -81,6 +81,7 @@ const MypostEdit = ({ post ,open , setOpen}) => {
                 console.log('res ',res)
                 // Mypostsrefetch();
                 setOpen(false);
+                setResetCount(p=>p+1)
             })
             .catch(err => console.log(err));
     };

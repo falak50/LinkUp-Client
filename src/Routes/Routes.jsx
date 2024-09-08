@@ -12,6 +12,8 @@ import MyNetwork from "../pages/MyNetwork/MyNetwork";
 import Messaging from "../pages/Messaging/Messaging";
 import MessagingPage from "../pages/Messaging/MessagingPage";
 import MessagingCom from "../pages/Messaging/MessagingCom";
+import Job from "../pages/Job/Job";
+import Joblist from "../pages/Job/Joblist";
 
 
  export const  router = createBrowserRouter([
@@ -40,6 +42,11 @@ import MessagingCom from "../pages/Messaging/MessagingCom";
             path:'mynetwork',
             element:<PrivateRoute><MyNetwork></MyNetwork></PrivateRoute>
         },
+        {
+          path:'job',
+          element:<Joblist></Joblist>
+          // element:<Job></Job>
+      },
         {
           path:'messaging',
           element:<MessagingCom></MessagingCom>

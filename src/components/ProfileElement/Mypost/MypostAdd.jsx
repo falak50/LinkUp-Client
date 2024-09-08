@@ -10,9 +10,10 @@ import axios from 'axios';
 import useUserinfo from '../../../hooks/useUserinfo';
 import useMypost from '../../../hooks/useMypost';
 const MypostAdd = (  ) => {
-    const [userInfo, ] = useUserinfo();
+    // const [userInfo, ] = useUserinfo();
+    const owner = JSON.parse(localStorage.getItem("user"));
     const [, Mypostsrefetch , , ] = useMypost();
-    
+  
     // imagme ----------------- fun start 
     const [files, setFiles] = useState([]);
     const handleAddImage = (e) => {
@@ -48,14 +49,15 @@ const MypostAdd = (  ) => {
   });
   const onSubmit = (data) => {
     console.log('data---->', data);
-    const uid=userInfo?._id;
+    const uid=owner?._id;
     const formData = new FormData();
     
     for (let i = 0; i < files.length; i++) {
-      files[i].title = "falak";
+      files[i].title = "image";
       console.log("file info ", files[i]);
       formData.append(`file`, files[i]);
     }
+    console.log('hello cfdasd ssdad')
 
     formData.append('description', data.description);
     formData.append('uid', uid);

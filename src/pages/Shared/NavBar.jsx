@@ -29,7 +29,7 @@ const NavBar = () => {
     <li><Link to="/"><div className="text-gray-500"><FaHome className="flex items-center  md:mx-2 mx-auto  text-2xl "/><h1 className="hidden md:block">Home</h1></div></Link></li>
     <li><Link to="/mynetwork"><div className="text-gray-500"><FaUserFriends className="flex items-center md:mx-7 mx-auto text-2xl"/><h1 className="hidden md:block">My Network</h1></div></Link></li>
     
-    <li><Link to="/"><div className="text-gray-500"><GiAchievement className="flex items-center  text-2xl"/><h1 className="hidden md:block">Jobs</h1></div></Link></li>
+    <li><Link  to="/job"><div className="text-gray-500"><GiAchievement className="flex items-center  text-2xl"/><h1 className="hidden md:block">Jobs</h1></div></Link></li>
     <li><Link to="/messaging"><div className="text-gray-500"><AiFillMessage className="flex items-center md:mx-6 mx-auto text-2xl"/><h1 className="hidden md:block">Messaging</h1></div></Link></li>
     <li><Link to="/">
         <div className="text-gray-500"><MdNotificationsActive className="flex items-center md:mx-8 mx-auto text-2xl "/><h1 className="hidden md:block">Notifications</h1></div></Link></li>

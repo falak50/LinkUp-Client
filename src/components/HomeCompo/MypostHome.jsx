@@ -7,13 +7,14 @@ import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 import { IoImagesSharp } from "react-icons/io5";
 import axios from 'axios';
-import useUserinfo from '../../hooks/useUserinfo';
+// import useUserinfo from '../../hooks/useUserinfo';
 import useMypost from '../../hooks/useMypost';
 import { IconButton } from '@mui/material';
 
 
-const MypostHome = ({open, setOpen}) => {
-    const [userInfo, ] = useUserinfo();
+const MypostHome = ({open, setOpen,setResetCount}) => {
+    // const [userInfo, ] = useUserinfo();
+    const owner = JSON.parse(localStorage.getItem("user"));
     const [, Mypostsrefetch , , ] = useMypost();
     // imagme ----------------- fun start 
     const [files, setFiles] = useState([]);
@@ -49,38 +50,34 @@ const MypostHome = ({open, setOpen}) => {
   });
   const onSubmit = (data) => {
     console.log('data---->', data);
-    const uid=userInfo?._id;
+    const uid=owner?._id;
     const formData = new FormData();
-   
+    
     for (let i = 0; i < files.length; i++) {
-      files[i].title = "falak";
-    //  console.log("file info ", files[i]);
+      files[i].title = "image";
+      console.log("file info ", files[i]);
       formData.append(`file`, files[i]);
     }
+    console.log('hello cfdasd ssdad')
 
     formData.append('description', data.description);
     formData.append('uid', uid);
   
-    
+
     axios.post('http://localhost:5000/posts', formData)
       .then(res => {
-        console.log(res);
+        console.log('hello ',res);
         Mypostsrefetch();
       })
       .catch(err => console.log(err));
     
-   //   console.log("come my opost")
-      
+      console.log("come my opost")
   //  Mypostsrefetch(); here work after one  but why . so use then 
-    setFiles([]);
-    reset({
-      description:''
-    });
     setOpen(false);
-
+    reset();
+    setResetCount(p=>p+1)
     // Add your logic to handle the form data
   };
- 
 
   const handleExternalSubmit = () => {
     if (formRef.current) {
