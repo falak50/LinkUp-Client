@@ -19,10 +19,10 @@ const Main = () => {
            </div> }
            <div className="max-w-screen-xl mx-auto bg-[#f4f2ee] min-h-screen ">
            <div className="flex w-[100%]">
-            <div className="w-[77%]">
+            <div className="w-[100%]">
             <Outlet></Outlet> 
             </div>
-            <div className="w-[22%]">
+            <div className="">
             <div className="fixed bottom-0 right-0 m-auto  bg-white rounded-lg shadow-lg p-4 ">
             {/* <Chat />  */}
            <ChatMain></ChatMain>

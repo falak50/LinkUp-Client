@@ -25,7 +25,7 @@ export default function JobSearch() {
   };
 
   return (
-    <div className="bg-white p-4 shadow-md mx-4 mt-2 ">
+    <div className="bg-white rounded-lg  mx-2  ">
       <div className="max-w-4xl mx-auto flex items-center justify-between">
         <h1 className="text-gray-800 text-2xl font-semibold">Job Search</h1>
         <div className="flex flex-1 items-center space-x-4">

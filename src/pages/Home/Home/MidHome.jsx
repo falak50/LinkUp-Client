@@ -20,7 +20,7 @@ const MidHome = () => {
     }, [resetCount]);
 
     return (
-        <div >
+        <div  className='' >
         <PostSectionHome setResetCount={setResetCount}></PostSectionHome>
         <Posts posts={posts} setResetCount={setResetCount}></Posts>
 

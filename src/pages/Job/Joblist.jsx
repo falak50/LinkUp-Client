@@ -66,11 +66,11 @@ export default function Joblist() {
     };
 
     return (
-        <>
+        <div className='w-full rounded-lg'>
             <JobSearch />
-            <div className="container mx-auto p-4 h-screen flex">
-                {/* Left side: Job list */}
-                <div className="w-1/2 bg-white overflow-y-auto border-r px-4 py-2">
+            <div className="container mx-auto p-2 h-screen flex rounded-lg">
+                {/* Left side: Job list with scrolling */}
+                <div className="w-1/2 bg-white h-full overflow-y-auto border-r px-4 py-2">
                     <h2 className="text-2xl font-bold mb-4">Job Listings</h2>
                     <ul className="divide-y divide-gray-300">
                         {list.map(job => (
@@ -111,8 +111,8 @@ export default function Joblist() {
                     </ul>
                 </div>
 
-                {/* Right side: Job details */}
-                <div className="w-1/2 bg-white p-6 px-4 py-2">
+                {/* Right side: Job details with scrolling */}
+                <div className="w-1/2 bg-white h-full overflow-y-auto p-6 px-4 py-2">
                     {selectedJob ? (
                         <>
                             <h2 className="text-4xl font-bold mb-4">{selectedJob.title}</h2>
@@ -137,14 +137,14 @@ export default function Joblist() {
                                 </div>
                             </div>
                             <p className="text-lg mb-4" style={{ whiteSpace: 'pre-line' }}>
-    <strong>About the job:</strong> {selectedJob.description}
-</p>
+                                <strong>About the job:</strong> {selectedJob.description}
+                            </p>
                         </>
                     ) : (
                         <p className="text-lg">Please select a job to see the details.</p>
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
