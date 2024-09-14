@@ -1,7 +1,4 @@
-import ChatLogo from "./ChatLogo";
-import Messaging from "./Messaging";
 import MessagingCom from "./MessagingCom";
-import MessagingPage from "./MessagingPage";
 
 export default function ChatMain() {
   return (

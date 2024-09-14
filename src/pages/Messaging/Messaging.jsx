@@ -17,7 +17,7 @@ function Messaging({ other, onclose }) {
     if (owner && owner.email) {
       socket.emit("join_room", { userId: owner._id });
     }
-  }, [owner]);
+  }, []);
 
   useEffect(() => {
     if (owner && owner.email) {

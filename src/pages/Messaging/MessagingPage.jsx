@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { Avatar, List } from 'antd';
 import axios from 'axios';
 import Messaging from './Messaging';
-import ChatCard from '../../not_includes/ChatCard';
-import Chat from '../../not_includes/Chat';
 
 const MessagingPage = () => {
   const [friends, setFriends] = useState([]);

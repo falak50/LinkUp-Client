@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Avatar, List } from 'antd';
 import axios from 'axios';
 import Messaging from './Messaging';
 import ChatList from './ChatList';
