@@ -1,114 +1,140 @@
-import React, { useEffect, useState } from 'react';
-import { FaMapMarkerAlt, FaBriefcase, FaTimes } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaMapMarkerAlt, FaBriefcase } from 'react-icons/fa';
 import JobSearch from './JobSearch';
-import axios from 'axios'; // Import axios
+import axios from 'axios';
+import { Radio, Space, Button } from 'antd';
+import EditJob from './EditJob';
 
 export default function Joblist() {
-    const [list, setList] = useState([
-        {
-            "_id": "66dc7b370f6ce4bfc63ecb93",
-            "title": "Developer",
-            "location": "Dhaka",
-            "description": "Develop and maintain web applications.",
-            "workType": "Remote",
-            "uid": "65906b9f80ab38cb50b0078f",
-            "createdAt": "2024-09-07T16:11:35.748Z",
-            "userInfo": {
-                "email": "m10@gmail.com",
-                "first_name": "Mahdi",
-                "last_name": "Ahmed",
-                "ProfileImgURL": "https://via.placeholder.com/150"
-            }
-        },
-        {
-            "_id": "66dc76fb415b196f362fe5b6",
-            "title": "Software Engineer",
-            "location": "New York",
-            "description": "Develop software solutions.",
-            "workType": "On-site",
-            "uid": "65906b9f80ab38cb50b0078f",
-            "createdAt": "2024-09-07T15:53:31.121Z",
-            "userInfo": {
-                "email": "m10@gmail.com",
-                "first_name": "Mahdi",
-                "last_name": "Ahmed",
-                "ProfileImgURL": "https://via.placeholder.com/150"
-            }
-        }
-    ]);
+    const [list, setList] = useState([]); // Ensure list is always an array
+    const [title, setTitle] = useState('');
+    const [location, setLocation] = useState('');
+    const [workType, setWorkType] = useState('');
+    const [selectedJob, setSelectedJob] = useState(null);
+    const [curPage, setCurPage] = useState(1);
+    const [appliedJobs, setAppliedJobs] = useState([]); // Track applied jobs
+    const limit = 5;
+    const owner = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
-        const handleSearch = async () => {
+        const fetchJobs = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/jobs');
-                console.log(response.data); // Handle or display the data as needed
-                setList(response.data); // Assuming the API response has the job data
+                const response = await axios.get('http://localhost:5000/jobs', {
+                    params: {
+                        title,
+                        location,
+                        workType,
+                        page: curPage,
+                        limit: limit
+                    }
+                });
+                const jobs = response.data || []; 
+                setList(jobs);
+                if (jobs.length > 0) {
+                    setSelectedJob(jobs[0]);
+                } else {
+                    setSelectedJob(null); 
+                }
             } catch (error) {
                 console.error('Error fetching jobs:', error);
             }
         };
 
-        handleSearch(); // Trigger the search once on component mount
-    }, []); // Empty dependency array ensures this runs only on mount
+        fetchJobs(); 
+    }, [curPage]); 
 
-    const [selectedJob, setSelectedJob] = useState(list[0]);
-
-    const removeJob = (id) => {
-        const updatedList = list.filter(job => job._id !== id);
-        setList(updatedList);
-
-        // Auto-select the first job or set to null if the list is empty
-        if (updatedList.length > 0) {
-            setSelectedJob(updatedList[0]);
-        } else {
-            setSelectedJob(null);
+    const handleSearch = async () => {
+        setCurPage(1); 
+        try {
+            const response = await axios.get('http://localhost:5000/jobs', {
+                params: {
+                    title,
+                    location,
+                    workType,
+                    page: curPage,
+                    limit: 5
+                }
+            });
+            const jobs = response.data.jobs || [];
+            setList(jobs);
+            if (jobs.length > 0) {
+                setSelectedJob(jobs[0]);
+            } else {
+                setSelectedJob(null); 
+            }
+        } catch (error) {
+            console.error('Error fetching jobs:', error);
         }
     };
 
     return (
         <div className='w-full rounded-lg'>
-            <JobSearch />
+            <JobSearch 
+                handleSearch={handleSearch}
+                title={title}
+                setTitle={setTitle}
+                location={location}
+                setLocation={setLocation}
+                workType={workType}
+                setWorkType={setWorkType}
+                setList={setList}
+            />
             <div className="container mx-auto p-2 h-screen flex rounded-lg">
                 {/* Left side: Job list with scrolling */}
                 <div className="w-1/2 bg-white h-full overflow-y-auto border-r px-4 py-2">
                     <h2 className="text-2xl font-bold mb-4">Job Listings</h2>
                     <ul className="divide-y divide-gray-300">
-                        {list.map(job => (
-                            <li
-                                key={job._id}
-                                className={`relative py-4 px-4 mb-2 cursor-pointer hover:bg-gray-100 ${selectedJob && selectedJob._id === job._id ? 'bg-gray-100' : ''}`}
-                                onClick={() => setSelectedJob(job)} // Set the selected job when clicked
-                            >
-                                <button
-                                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // Prevent click event from triggering the job selection
-                                        removeJob(job._id);
-                                    }}
-                                    aria-label="Remove job"
+                        {Array.isArray(list) && list.length > 0 ? (
+                            list.map(job => (
+                                <li
+                                    key={job._id}
+                                    className={`relative py-4 px-4 mb-2 cursor-pointer hover:bg-gray-100 ${selectedJob && selectedJob._id === job._id ? 'bg-gray-100' : ''}`}
+                                    onClick={() => setSelectedJob(job)}
                                 >
-                                    <FaTimes className="text-xl" />
-                                </button>
-                                <div className="flex items-center space-x-4">
-                                    <img
-                                        src={job.userInfo.ProfileImgURL}
-                                        alt={`${job.userInfo.first_name}'s profile`}
-                                        className="w-12 h-12 rounded-full"
-                                    />
-                                    <div className="flex-1">
-                                        <h3 className="text-lg font-semibold">{job.title}</h3>
-                                        <p className="text-gray-500 flex items-center">
-                                            <FaMapMarkerAlt className="mr-2" /> {job.location}
-                                        </p>
-                                        <p className="text-gray-500 flex items-center">
-                                            <FaBriefcase className="mr-2" /> {job.workType}
-                                        </p>
-                                        <p className="text-sm text-gray-500 mt-2">Posted by: {job.userInfo.first_name} {job.userInfo.last_name}</p>
+                                    { job.uid === owner._id && (
+                                        <div className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                                            <EditJob job={job} setList={setList} setSelectedJob={setSelectedJob} />
+                                        </div>
+                                    )}
+                                    <div className="flex items-center space-x-4">
+                                        <img
+                                            src={`http://localhost:5000/images/${job.userInfo.ProfileImgURL}`}
+                                            alt={`${job.userInfo.first_name}'s profile`}
+                                            className="w-12 h-12 rounded-full"
+                                        />
+                                        <div className="flex-1">
+                                            <h3 className="text-lg font-semibold">{job.title}</h3>
+                                            <p className="text-gray-500 flex items-center">
+                                                <FaMapMarkerAlt className="mr-2" /> {job.location}
+                                            </p>
+                                            <p className="text-gray-500 flex items-center">
+                                                <FaBriefcase className="mr-2" /> {job.workType}
+                                            </p>
+                                            <p className="text-sm text-gray-500 mt-2">Posted by: {job.userInfo.first_name} {job.userInfo.last_name}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        ))}
+                                </li>
+                            ))
+                        ) : (
+                            <p className="text-lg">No jobs available.</p>
+                        )}
                     </ul>
+                    <Space className="flex justify-center items-center mt-4">
+                        <Radio.Group>
+                            <Radio.Button
+                                onClick={() => setCurPage(curPage - 1)}
+                                disabled={curPage <= 1}
+                            >
+                                Previous
+                            </Radio.Button>
+                            <Radio.Button
+                                onClick={() => setCurPage(curPage + 1)}
+                                disabled={list.length < limit}
+                            >
+                                Next
+                            </Radio.Button>
+                        </Radio.Group>
+                    </Space>
                 </div>
 
                 {/* Right side: Job details with scrolling */}
@@ -126,7 +152,7 @@ export default function Joblist() {
                             </div>
                             <div className="flex items-center space-x-4 mb-4">
                                 <img
-                                    src={selectedJob.userInfo.ProfileImgURL}
+                                    src={`http://localhost:5000/images/${selectedJob.userInfo.ProfileImgURL}`}
                                     alt={`${selectedJob.userInfo.first_name}'s profile`}
                                     className="w-16 h-16 rounded-full"
                                 />
@@ -136,9 +162,29 @@ export default function Joblist() {
                                     <p className="text-md"><strong>Posted on:</strong> {new Date(selectedJob.createdAt).toLocaleDateString()}</p>
                                 </div>
                             </div>
+                           <div className='my-3'>
+                           <div
+    className="btn btn-sm  rounded-full btn-outline hover:bg-opacity-20 hover:bg-[#0a66c2] text-[#0a66c2] hover:text-[#0a66c2] btn-ghost flex items-center justify-center py-1 px-3 w-[110px]"
+    disabled={appliedJobs.includes(selectedJob._id)}
+>
+    <a 
+        href={`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${selectedJob.userInfo.email}&su=Apply%20for%20the%20post%20${encodeURIComponent(selectedJob.title)}`} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="w-full h-full text-center flex items-center justify-center font-semibold"
+    >
+        EASY Apply
+    </a>
+</div>
+                           </div>
                             <p className="text-lg mb-4" style={{ whiteSpace: 'pre-line' }}>
                                 <strong>About the job:</strong> {selectedJob.description}
                             </p>
+                           
+
+
+
+                            
                         </>
                     ) : (
                         <p className="text-lg">Please select a job to see the details.</p>

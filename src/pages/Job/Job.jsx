@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+
+import  { useState } from 'react';
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import axios from 'axios';
 
-export default function Job({ Mypostsrefetch }) {
+export default function Job({ setList }) {
   const [open, setOpen] = useState(false);
   const owner = JSON.parse(localStorage.getItem("user"));
   const [form] = Form.useForm();
@@ -26,6 +27,19 @@ export default function Job({ Mypostsrefetch }) {
         axios.post('http://localhost:5000/jobs', formData)
           .then(res => {
             console.log('Response:', res);
+            const obj =  {
+              ...formData,
+              _id: res.data.insertedId, // Use the ID from the response
+              createdAt: new Date().toISOString(), // Use current date as createdAt
+              userInfo: {
+                email: owner.email,
+                first_name: owner.first_name,
+                last_name: owner.last_name,
+                ProfileImgURL: owner.ProfileImgURL || "https://via.placeholder.com/150"
+              }
+          }
+         console.log('obj ',obj)
+            setList(pre => [obj,...pre])
             setOpen(false);
             form.resetFields(); // Reset form fields after submission
           })

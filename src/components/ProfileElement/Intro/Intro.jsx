@@ -12,9 +12,6 @@ const pathLink = "http://localhost:5000/images/";
 //note here userInfo.email == email
 const Intro = ({ owner, email,relation, setRelation }) => {
   const [userInfo] = useUserinfo();
-  // const { owner } = useContext(AuthContext);
-  // const {email} = useParams();
-  //  console.log('perams ',email)
   console.log("userInfo--------------->", userInfo);
  console.log('relation ',relation)
   const [open, setOpen] = useState(false);
