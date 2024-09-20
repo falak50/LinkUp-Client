@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Button, Modal, Form, Input, Radio } from "antd";
 import axios from "axios";
 import { FiEdit } from "react-icons/fi";
-
-export default function EditJob({ job, setList, setSelectedJob }) {
+//  setList, setSelectedJob
+export default function EditJob({ job,setReset }) {
   const [open, setOpen] = useState(false);
   const owner = JSON.parse(localStorage.getItem("user"));
   const [form] = Form.useForm();
@@ -34,13 +34,15 @@ export default function EditJob({ job, setList, setSelectedJob }) {
           ...values,
           uid,
         };
-
+      
         axios
           .post(`http://localhost:5000/jobs/edit/${job._id}`, formData)
           .then((res) => {
             console.log("Response:", res);
             setOpen(false);
             form.resetFields();
+            setReset(pre=>pre+1);
+          
           })
           .catch((err) => {
             console.log("Error:", err);
@@ -63,15 +65,16 @@ export default function EditJob({ job, setList, setSelectedJob }) {
       );
       console.log("Delete Response:", response);
 
-      setList((prevList) => {
-        const updatedList = prevList.filter((job) => job._id !== id);
-        if (updatedList.length > 0) {
-          setSelectedJob(updatedList[0]);
-        } else {
-          setSelectedJob(null);
-        }
-        return updatedList;
-      });
+      setReset(pre=>pre+1);
+      // setList((prevList) => {
+      //   const updatedList = prevList.filter((job) => job._id !== id);
+      //   if (updatedList.length > 0) {
+      //     setSelectedJob(updatedList[0]);
+      //   } else {
+      //     setSelectedJob(null);
+      //   }
+      //   return updatedList;
+      // });
 
       setOpen(false); // Close the modal after deletion
     } catch (error) {
