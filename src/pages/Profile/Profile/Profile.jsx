@@ -76,7 +76,7 @@ const Profile = () => {
      
       </div>
       <div className="md:flex">
-        <div className="md:flex md:flex-col m-2 gap-4">
+        <div className="md:flex md:flex-col m-2 gap-4 w-[75%]">
           <div>
             <Intro owner={owner} email={email} relation={relation} setRelation={setRelation} setRedender={setRedender} />
             <Education />

@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
+import bkimg from "../../../assets/bkImg.png";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { IoMdClose } from "react-icons/io";
 import { MdPhotoCamera } from "react-icons/md";
-import dpImg from "../../../assets/dpImg.jpg";
-// import CheckIcon from '@mui/icons-material/Check';
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import useUserinfo from "../../../hooks/useUserinfo";
 import axios from "axios";
 import Swal from "sweetalert2";
 const pathLink = "http://localhost:5000/images/";
-const ProfileImg = ({ open, setOpen }) => {
+
+const BackgroudImg = ({ open, setOpen }) => {
   const [userInfo, refetch, isFetchingIntro] = useUserinfo();
+  console.log('user Info ',userInfo)
   const [files, setFiles] = useState([]);
-  const [img, setImg] = useState(pathLink + userInfo?.ProfileImgURL);
+  const [img, setImg] = useState(pathLink+userInfo.CoverImgURL);
   const handleFileChange = (e) => {
     const fileList = Array.from(e.target.files);
 
@@ -41,14 +42,14 @@ const ProfileImg = ({ open, setOpen }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/users/profileimg",
+        "http://localhost:5000/users/coverImg",
         formData
       );
 
       console.log("add photo done");
       console.log(res);
       refetch().then((userRes) => {
-        setImg(pathLink + userRes?.ProfileImgURL);
+        setImg(pathLink + userRes?.CoverImgURL);
         setOpen(false);
       });
     } catch (err) {
@@ -62,7 +63,7 @@ const ProfileImg = ({ open, setOpen }) => {
     setOpen(false);
     Swal.fire({
       title: "Are you sure?",
-      text: `You want to delete your profile picture?`,
+      text: `You want to delete your cover picture?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -74,7 +75,7 @@ const ProfileImg = ({ open, setOpen }) => {
         refetch();
         setImg("");
         console.log("img url ", img);
-        fetch(`http://localhost:5000/users/profilePicdelete/${userInfo._id}`, {
+        fetch(`http://localhost:5000/users/coverPicdelete/${userInfo._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -102,11 +103,10 @@ const ProfileImg = ({ open, setOpen }) => {
 
   useEffect(() => {
     if (userInfo && !isFetchingIntro) {
-      setImg(pathLink + userInfo?.ProfileImgURL);
-      // console.log('reset of introoooo')
+      setImg(pathLink+userInfo.CoverImgURL);
     }
   }, [isFetchingIntro,open]);
- console.log('img ',img)
+
   return (
     <React.Fragment>
       <Dialog
@@ -131,7 +131,7 @@ const ProfileImg = ({ open, setOpen }) => {
           id="scroll-dialog-title"
           className="flex justify-between  bg-[#1B1F23]"
         >
-          <div className="text-[#FFFEFD] text-2xl mt-2 mx-6">Profile photo</div>
+          <div className="text-[#FFFEFD] text-2xl mt-2 mx-6">Cover photo</div>
           <button
             onClick={handleClose}
             className="btn btn-circle border-none bg-white hover:bg-[#ededec] text-[#6a6a6a] text-2xl "
@@ -143,15 +143,16 @@ const ProfileImg = ({ open, setOpen }) => {
           {/* body strat  */}
 
           <div className="flex items-center justify-center">
-            <div className="avatar w-[80%]">
-              <div className="m-auto  w-[70%] rounded-full">
+            <div className="">
+              <div className="m-auto">
                 {/* <img className=" " src={img} alt="Avatar" /> */}
                 <img 
   className=" " 
   src={img} 
   alt="Avatar" 
-  onError={(e) => { e.target.onerror = null; e.target.src = dpImg; }} 
+  onError={(e) => { e.target.onerror = null; e.target.src = bkimg; }} 
 />
+           
               </div>
             </div>
           </div>
@@ -199,4 +200,4 @@ const ProfileImg = ({ open, setOpen }) => {
   );
 };
 
-export default ProfileImg;
+export default BackgroudImg;

@@ -6,7 +6,7 @@ import { Radio, Space } from "antd";
 import EditJob from "./EditJob";
 
 export default function Joblist() {
-  const [list, setList] = useState([]); // Ensure list is always an array
+  const [list, setList] = useState([]); 
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [workType, setWorkType] = useState("");
@@ -26,6 +26,7 @@ export default function Joblist() {
             workType,
             page: curPage,
             limit: limit,
+            uid:"",
           },
         });
         const jobs = response.data || [];

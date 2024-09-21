@@ -1,55 +1,21 @@
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import bkimg from "../../../assets/backgroudPIC.jpg";
-// import profileimg from '../../../assets/profilePic.jpg'
+import bkimg from "../../../assets/bkImg.png";
+import dpImg from "../../../assets/dpImg.jpg";
 import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProfileImg from "./ProfileImg";
 import Swal from "sweetalert2";
-// import { AuthContext } from "../../../providers/AuthProviders";
-// import { useParams } from "react-router-dom";
+import BackgroudImg from "./BackgroudImg";
 const pathLink = "http://localhost:5000/images/";
-//note here userInfo.email == email
-const Intro = ({ owner, email,relation, setRelation }) => {
+const Intro = ({ owner, email, relation, setRelation }) => {
   const [userInfo] = useUserinfo();
-  console.log("userInfo--------------->", userInfo);
- console.log('relation ',relation)
+  console.log("cover  userInfo--------------->", userInfo);
+  console.log("relation ", relation);
   const [open, setOpen] = useState(false);
-  // const [relation, setRelation] = useState("");
+  const [openbg,setOpenbg] = useState(false);
 
-  // useEffect(() => {
-  //   if (userInfo?.email && owner?.email) {
-  //     const payload = {
-  //       sentFriendRequestEmail: userInfo.email,
-  //       ownerEmail: owner.email,
-  //     };
-  
-  //     fetch("http://localhost:5000/users/active-button-code", {
-  //       method: "POST", // Change to POST
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(payload),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((res) => {
-  //         console.log("res", res);
-  //         setRelation(res.message);
-  //       })
-  //       .catch((error) => {
-  //         console.log("res ", error);
-  //         Swal.fire({
-  //           icon: "error",
-  //           title: "Oops...",
-  //           text: "Something went wrong!",
-  //           footer: '<a href="#">Why do I have this issue?</a>',
-  //         });
-  //         console.error("Error:", error); // Handle any errors
-  //       });
-  //   }
-  // }, [userInfo, owner]);
-
-  const getRelation = ()=>{
+  const getRelation = () => {
     const payload = {
       sentFriendRequestEmail: userInfo.email,
       ownerEmail: owner.email,
@@ -78,17 +44,10 @@ const Intro = ({ owner, email,relation, setRelation }) => {
         console.error("Error:", error); // Handle any errors
         // setLoading(false); // Set loading to false even if there's an error
       });
-    
-  }
-  
-  //console.log('relation useSate res',relation)
-
-  // const [owner,setOwner] = useState(JSON.parse(localStorage.getItem('user')))
-  //console.log("owner in intr", owner);
-  //console.log("email in intr", email);
+  };
 
   const profileImgModal = () => {
-   // console.log("click");
+    // console.log("click");
     setOpen(true);
   };
 
@@ -114,11 +73,8 @@ const Intro = ({ owner, email,relation, setRelation }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        // setRelation(res.message)
-        // setRelation('cancel_request')
         getRelation();
         console.log("social log in done res", res);
-         
       })
       .catch((error) => {
         Swal.fire({
@@ -233,16 +189,23 @@ const Intro = ({ owner, email,relation, setRelation }) => {
         console.error("Error:", error); // Handle any errors
       });
   };
- //console.log('relation ')
+  console.log('cover ',userInfo.CoverImgURL)
+  console.log('cover ',userInfo.CoverImgURL)
   return (
     <div className="md:w-[100%] bg-[white] rounded-lg relative">
       <ProfileImg open={open} setOpen={setOpen}></ProfileImg>
+      <BackgroudImg open={openbg} setOpen={setOpenbg}></BackgroudImg>
       <div className="">
-        <img
-          className="h-[200px] w-full rounded-t-lg  object-cover"
-          src={bkimg}
-          alt=""
-        />
+  
+           <img
+            className="h-[200px] w-full rounded-t-lg  object-cover"
+              src={pathLink + userInfo?.CoverImgURL || bkimg}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = bkimg;
+              }}
+              alt="Profile"
+            />
       </div>
 
       <div className="mt-[-100px] ">
@@ -251,9 +214,18 @@ const Intro = ({ owner, email,relation, setRelation }) => {
             className="w-40 rounded-full ring ring-[white] ring-offset-base-100 ring-offset-2"
             onClick={profileImgModal}
           >
-            <img src={pathLink + userInfo?.ProfileImgURL} />
+            <img
+              src={pathLink + userInfo?.ProfileImgURL || dpImg}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = dpImg;
+              }}
+              alt="Profile"
+            />
           </div>
-          <button className="btn btn-circle   bg-white text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
+          <button 
+          onClick={()=>setOpenbg(true)}
+          className="btn btn-circle   bg-white text-[#6a6a6a] text-2xl ml-auto mt-[-90px]">
             <MdOutlineModeEditOutline className="" />
             {/* icon ar jaigait modal btn ar bitor */}
           </button>
@@ -312,20 +284,20 @@ const Intro = ({ owner, email,relation, setRelation }) => {
                     </button>
                   )}
 
-                   {relation === "accept_&_cancel_request" && (
+                  {relation === "accept_&_cancel_request" && (
                     <>
-                    <button
-                      className="btn btn-sm mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
-                      onClick={() => handleAcceptFriendRequest()}
-                    >
-                      Accept
-                    </button>
-                    <button
-                      className="btn btn-sm mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
-                      onClick={() => handleCancelfriendRequest()}
-                    >
-                      Cancel Request
-                    </button>
+                      <button
+                        className="btn btn-sm mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+                        onClick={() => handleAcceptFriendRequest()}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="btn btn-sm mx-0 rounded-[50px] bg-[#0a66c2] hover:bg-[#004182] text-[white]"
+                        onClick={() => handleCancelfriendRequest()}
+                      >
+                        Cancel Request
+                      </button>
                     </>
                   )}
                 </>

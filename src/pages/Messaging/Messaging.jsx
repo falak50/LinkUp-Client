@@ -2,8 +2,8 @@ import io from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { IoMdSend, IoMdClose } from "react-icons/io";
-
-const defaultImage = 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg';
+import dpImg from '../../assets/dpImg.jpg'
+// const defaultImage = 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg';
 const socket = io.connect("http://localhost:5000");
 
 function Messaging({ other, onclose }) {
@@ -105,7 +105,7 @@ function Messaging({ other, onclose }) {
 
   // Function to determine the correct image URL
   const getImageUrl = (imageURL) => {
-    return imageURL ? `http://localhost:5000/images/${imageURL}` : defaultImage;
+    return imageURL ? `http://localhost:5000/images/${imageURL}` : dpImg;
   };
 
   return (
