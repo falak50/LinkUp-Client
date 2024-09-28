@@ -70,7 +70,7 @@ export default function Joblist() {
   };
 
   return (
-    <div className="w-full rounded-lg">
+    <div className="w-full rounded-lg ">
       <JobSearch
         handleSearch={handleSearch}
         title={title}
@@ -81,10 +81,10 @@ export default function Joblist() {
         setWorkType={setWorkType}
         setList={setList}
       />
-      <div className="container mx-auto p-2 h-screen flex rounded-lg">
+      <div className="container mx-auto p-2 h-screen flex rounded-lg ">
         {/* Left side: Job list with scrolling */}
         <div className="w-1/2 bg-white h-full overflow-y-auto border-r px-4 py-2">
-          <h2 className="text-2xl font-bold mb-4">Job Listings</h2>
+          <h2 className="text-2xl font-bold mb-4 ">Job Listings</h2>
           <ul className="divide-y divide-gray-300">
             {Array.isArray(list) && list.length > 0 ? (
               list.map((job) => (
@@ -115,10 +115,10 @@ export default function Joblist() {
                     />
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold">{job.title}</h3>
-                      <p className="text-gray-500 flex items-center">
+                      <p className="text-gray-500 flex items-center font-serif">
                         <FaMapMarkerAlt className="mr-2" /> {job.location}
                       </p>
-                      <p className="text-gray-500 flex items-center">
+                      <p className="text-gray-500 flex items-center font-serif">
                         <FaBriefcase className="mr-2" /> {job.workType}
                       </p>
                       <p className="text-sm text-gray-500 mt-2">
@@ -155,16 +155,16 @@ export default function Joblist() {
         <div className="w-1/2 bg-white h-full overflow-y-auto p-6 px-4 py-2">
           {selectedJob ? (
             <>
-              <h2 className="text-4xl font-bold mb-4">{selectedJob.title}</h2>
+              <h2 className="text-4xl font-serif  mb-4">{selectedJob.title}</h2>
               <div className="flex items-center mb-2">
                 <FaMapMarkerAlt className="text-lg mr-2" />
-                <p className="text-lg">
+                <p className="text-lg  font-serif">
                   <strong>Location:</strong> {selectedJob.location}
                 </p>
               </div>
               <div className="flex items-center mb-2">
                 <FaBriefcase className="text-lg mr-2" />
-                <p className="text-lg">
+                <p className="text-lg  font-serif">
                   <strong>Work Type:</strong> {selectedJob.workType}
                 </p>
               </div>
@@ -175,15 +175,15 @@ export default function Joblist() {
                   className="w-16 h-16 rounded-full"
                 />
                 <div>
-                  <p className="text-md">
+                  <p className="text-md  font-serif">
                     <strong>Posted by:</strong>{" "}
                     {selectedJob.userInfo.first_name}{" "}
                     {selectedJob.userInfo.last_name}
                   </p>
-                  <p className="text-md">
+                  <p className="text-md  font-serif">
                     <strong>Email:</strong> {selectedJob.userInfo.email}
                   </p>
-                  <p className="text-md">
+                  <p className="text-md  font-serif">
                     <strong>Posted on:</strong>{" "}
                     {new Date(selectedJob.createdAt).toLocaleDateString()}
                   </p>
@@ -201,14 +201,14 @@ export default function Joblist() {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full h-full text-center flex items-center justify-center font-semibold"
+                    className="w-full h-full text-center flex items-center justify-center font-semibold "
                   >
                     EASY Apply
                   </a>
                 </div>
               </div>
-              <p className="text-lg mb-4" style={{ whiteSpace: "pre-line" }}>
-                <strong>About the job:</strong> {selectedJob.description}
+              <p className="text-lg mb-4  font-sans" style={{ whiteSpace: "pre-line" }}>
+                <strong >About the job:</strong> {selectedJob.description}
               </p>
             </>
           ) : (

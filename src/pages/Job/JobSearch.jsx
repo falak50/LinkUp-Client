@@ -1,3 +1,4 @@
+import { FaSearch } from 'react-icons/fa';
 import Job from './Job';
 export default function JobSearch({ handleSearch, title, setTitle, location, setLocation, workType, setWorkType ,setList }) {
     return (
@@ -29,11 +30,12 @@ export default function JobSearch({ handleSearch, title, setTitle, location, set
                         <option value="On-site">On-site</option>
                     </select>
                     <button
-                        onClick={handleSearch}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-sm text-sm"
-                    >
-                        Search
-                    </button>
+    onClick={handleSearch}
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm flex items-center justify-center space-x-2 hover:bg-blue-70"
+>
+    <FaSearch /> 
+    <span>Search</span>
+</button>
                   <Job setList={setList}></Job>
                 </div>
             </div>

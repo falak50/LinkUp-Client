@@ -2,6 +2,8 @@
 import  { useState } from 'react';
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import axios from 'axios';
+import { IoIosAdd, IoMdAdd } from 'react-icons/io';
+import { FaSearch } from 'react-icons/fa';
 
 export default function Job({ setList }) {
   const [open, setOpen] = useState(false);
@@ -59,13 +61,21 @@ export default function Job({ setList }) {
 
   return (
     <div className="p-6">
-      <Button
+      {/* <Button
         type="primary"
         onClick={showModal}
         className="bg-blue-500 text-white px-4 py-2 rounded-md"
       >
-        Open Modal
-      </Button>
+        <IoIosAdd className='text-xl'/>
+        post
+      </Button> */}
+      <button
+     onClick={showModal}
+    className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm flex items-center justify-center space-x-2 hover:bg-blue-700"
+>
+<IoMdAdd className='text-xl font-serif' />
+    <span className="font-serif text-sm">Post</span>
+</button>
       <Modal
         open={open}
         title={<h2 className="text-xl font-bold">Post Job</h2>}

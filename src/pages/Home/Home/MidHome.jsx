@@ -6,10 +6,22 @@ import Posts from './Posts'
 import axios from 'axios';
 const MidHome = () => {
     const [posts, setPosts] = useState([]);
+    const owner = JSON.parse(localStorage.getItem("user"));
     const [resetCount,setResetCount] = useState(0)
+    // useEffect(() => {
+    //   axios
+    //     .get(`http://localhost:5000/posts`)
+    //     .then((response) => {
+    //       console.log("response ", response.data);
+    //       setPosts(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching messages:", error);
+    //     });
+    // }, [resetCount]);
     useEffect(() => {
       axios
-        .get(`http://localhost:5000/posts`)
+        .get(`http://localhost:5000/posts/friendsPost/${owner._id}`)
         .then((response) => {
           console.log("response ", response.data);
           setPosts(response.data);
