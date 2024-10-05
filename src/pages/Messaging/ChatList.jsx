@@ -21,7 +21,7 @@ export default function ChatList({ friends, handleClick,owner }) {
             </div>
           </div>
           {/* Add spacing between the image and text */}
-          <h1 className="text-xl font-semibold ml-3">Messaging</h1>
+          <h1 className="text-lg font-semibold ml-3">Messaging...</h1>
         </div>
         {!openList &&
           <FaChevronUp onClick={()=>setOpenList(!openList)} />

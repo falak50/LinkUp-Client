@@ -4,6 +4,7 @@ import NavBar from "../pages/Shared/NavBar";
 import ChatMain from "../pages/Messaging/ChatMain";
 import Chat from "../not_includes/Chat";
 import { useEffect } from "react";
+import MessagingCom from "../pages/Messaging/MessagingCom";
 // import ChatMain from "../pages/Messaging/ChatMain";
 
 const Main = () => {
@@ -31,7 +32,8 @@ const Main = () => {
           <div className="">
             <div className="fixed bottom-0 right-0 m-auto  bg-white rounded-lg shadow-lg p-4 ">
               {/* <Chat />  */}
-              {!noHeaderFooter && <ChatMain></ChatMain>}
+              {/* {!noHeaderFooter && <ChatMain></ChatMain>} */}
+              {!noHeaderFooter &&  <MessagingCom></MessagingCom>}
             </div>
           </div>
         </div>

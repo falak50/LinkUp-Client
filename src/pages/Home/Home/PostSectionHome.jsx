@@ -7,6 +7,7 @@ const PostSectionHome = ({setResetCount}) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden my-2">
+      
       <MypostHome open={open} setOpen={setOpen} setResetCount={setResetCount} ></MypostHome>
       {/* ------------------------------------------   */}
       <div className="bg-[#ffffff] m-2 p-3 ">
@@ -24,7 +25,7 @@ const PostSectionHome = ({setResetCount}) => {
           </button>
         </div>
 
-        <div className="flex justify-between items-center m-4">
+        {/* <div className="flex justify-between items-center m-4">
           <div className="flex gap-2 text-xl items-center">
             <MdOutlinePermMedia className="text-[blue]" />
             Media{" "}
@@ -36,7 +37,14 @@ const PostSectionHome = ({setResetCount}) => {
             <TfiWrite className="text-[#FF7F50]" />
             Write aticle
           </div>
-        </div>
+        </div> */}
+        
+          {/* <div className="p-4">
+        <nav className="flex space-x-4 mt-2 text-gray-500">
+          <a href="#" className="text-green-600 border-b-2 border-green-600 pb-1">Companies</a>
+          <a href="#" className="hover:text-green-600 ">Groups</a>
+        </nav>
+      </div> */}
       </div>
     </div>
   );

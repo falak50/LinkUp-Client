@@ -1,41 +1,50 @@
-
-import { useEffect, useState } from 'react';
-import MyCard from '../../../not_includes/MyCard';
+import { useState } from 'react';
 import PostSectionHome from './PostSectionHome';
-import Posts from './Posts'
-import axios from 'axios';
+import FriendsPost from './FriendsPost';
+import PublicPost from './PublicPost';
+
 const MidHome = () => {
-    const [posts, setPosts] = useState([]);
-    const owner = JSON.parse(localStorage.getItem("user"));
-    const [resetCount,setResetCount] = useState(0)
-    // useEffect(() => {
-    //   axios
-    //     .get(`http://localhost:5000/posts`)
-    //     .then((response) => {
-    //       console.log("response ", response.data);
-    //       setPosts(response.data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching messages:", error);
-    //     });
-    // }, [resetCount]);
-    useEffect(() => {
-      axios
-        .get(`http://localhost:5000/posts/friendsPost/${owner._id}`)
-        .then((response) => {
-          console.log("response ", response.data);
-          setPosts(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching messages:", error);
-        });
-    }, [resetCount]);
+    const [resetCount, setResetCount] = useState(0);
+    const [isPublic, setIsPublic] = useState(true);
 
     return (
-        <div  className='' >
-        <PostSectionHome setResetCount={setResetCount}></PostSectionHome>
-        <Posts posts={posts} setResetCount={setResetCount}></Posts>
+        <div className='shadow-md '>
+            {/* Post section */}
+            <PostSectionHome setResetCount={setResetCount}></PostSectionHome>
 
+            {/* Toggle buttons for Public and Friends Feed */}
+            <div className="p-4 w-[100%] bg-white rounded-lg">
+                <nav className="flex space-x-4 mt-2 text-gray-500">
+                    {/* Public Feed Button */}
+                    <button
+                        onClick={() => setIsPublic(true)}
+                        className={`pb-1 font-semibold ${
+                            isPublic
+                                ? 'text-green-600 border-b-2 border-green-600' // Active state
+                                : 'hover:text-green-600' // Inactive state with hover effect
+                        }`}>
+                        Public Feed
+                    </button>
+
+                    {/* Friends Feed Button */}
+                    <button
+                        onClick={() => setIsPublic(false)}
+                        className={`pb-1 font-semibold ${
+                            !isPublic
+                                ? 'text-green-600 border-b-2 border-green-600' // Active state
+                                : 'hover:text-green-600' // Inactive state with hover effect
+                        }`}>
+                        Friends Feed
+                    </button>
+                </nav>
+            </div>
+
+            {/* Conditionally render based on isPublic */}
+            {!isPublic ? (
+                <FriendsPost resetCount={resetCount} setResetCount={setResetCount}></FriendsPost>
+            ) : (
+                <PublicPost resetCount={resetCount} setResetCount={setResetCount}></PublicPost>
+            )}
         </div>
     );
 };
