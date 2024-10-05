@@ -1,13 +1,15 @@
 import { Avatar } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dpImg from "../../assets/dpImg.jpg";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const pathLink = "http://localhost:5000/images/";
 
 const ConnectionList = () => {
   const [connections, setConnections] = useState([]);
+  const { other, setOther, isSelect, setIsSelect } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -43,9 +45,12 @@ const ConnectionList = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const handleMessage = (e) => {
+  const handleMessage = (e, connection) => {
     e.stopPropagation(); // Stop event propagation to parent
-    alert('Hello!');
+    console.log('Selected connection:', connection);
+    setOther(connection);
+    setIsSelect(true)
+    // alert("Hello!");
   };
 
   return (
@@ -59,7 +64,11 @@ const ConnectionList = () => {
             {/* Profile Avatar */}
             <img
               className="bg-gray-300 rounded-full w-16 h-16"
-              src={connection?.ProfileImgURL ? pathLink + connection.ProfileImgURL : dpImg}
+              src={
+                connection?.ProfileImgURL
+                  ? pathLink + connection.ProfileImgURL
+                  : dpImg
+              }
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = dpImg;
@@ -79,7 +88,7 @@ const ConnectionList = () => {
             </div>
           </div>
           <button
-            onClick={(e) => handleMessage(e)} // Pass the event to stop propagation
+            onClick={(e) => handleMessage(e, connection)} // Pass the event and connection data properly
             className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
             Message

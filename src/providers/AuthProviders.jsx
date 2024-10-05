@@ -9,7 +9,8 @@ const AuthProviders = ({children}) => {
     const [loading,setLoading] = useState(true)
     const googleProvider = new GoogleAuthProvider();
     const [owner, setOwner] = useState(null);
-
+    const [other,setOther] = useState(null);
+    const [isSelect,setIsSelect]= useState(false)
     useEffect(() => {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser) {
@@ -78,7 +79,11 @@ const AuthProviders = ({children}) => {
         setOwner,
         owner,
         dp,
-        setDp
+        setDp,
+        other,
+        setOther,
+        isSelect,
+        setIsSelect
     }
     return (
         <AuthContext.Provider value={authInfo}>

@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Messaging from './Messaging';
 import ChatList from './ChatList';
+import { AuthContext } from '../../providers/AuthProviders';
 const MessagingCom = () => {
+   const {   other,
+    setOther , isSelect,
+    setIsSelect} = useContext(AuthContext);
   const [friends, setFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const owner = JSON.parse(localStorage.getItem('user'));
   const ownEmail =owner.email;
   const [email,setEmail] = useState('NORMAL');
-  const [other,setOther] = useState(null)
-  const [isSelect,setIsSelect]= useState(false)
+  // const [other,setOther] = useState(null)
+  // const [isSelect,setIsSelect]= useState(false)
   useEffect(() => {
     const fetchFriends = async () => {
       try {
