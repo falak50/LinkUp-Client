@@ -1,6 +1,6 @@
 import { Avatar, Select, Input, Typography, Button } from "antd";
 import axios from "axios";
-import  { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dpImg from "../../assets/dpImg.jpg";
 import { AuthContext } from "../../providers/AuthProviders";
@@ -9,12 +9,13 @@ import { SearchOutlined } from "@ant-design/icons";
 const { Option } = Select;
 const { Text } = Typography;
 const { Search } = Input;
+
 const pathLink = "http://localhost:5000/images/";
 
 const ConnectionList = () => {
   const [connections, setConnections] = useState([]);
   const [total, setTotal] = useState(0);
-  // const [result,setResult] =useState(0);
+  const [result,setResult] =useState(0);
   const { other, setOther, isSelect, setIsSelect } = useContext(AuthContext);
   const [call, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -85,6 +86,35 @@ const ConnectionList = () => {
     setIsMoreLoading(true);
     setPage((p) => p + 1);// for next call
     fetchFriends(page+1)
+    // try {
+    //   const response = await axios.get(
+    //     `http://localhost:5000/users/connections/${ownId}`,
+    //     {
+    //       params: {
+    //         search: searchQuery, // Pass search query
+    //         sort: sortOption, // Pass sort option
+    //         page: page+1,
+    //       },
+    //     }
+    //   );
+    //   console.log('response', response);
+    //   let data = response.data;
+    //   console.log('data ', data);
+    //   let fetchedConnections = data.friends;
+
+    //   // setConnections(fetchedConnections);
+    //   // setConnections(p=>[...p,...fetchedConnections])
+    //   setConnections((prevPosts) => [...prevPosts, ...fetchedConnections]); 
+     
+    //   setTotal(data.total);
+    //   setResult(data.result)
+    //   setIsMoreLoading(false);
+    //   console.log("Fetched friends:", fetchedConnections);
+    // } catch (err) {
+    //   setError(err.message);
+    // } finally {
+    //   setLoading(false);
+    // }
   }
   if (loading) return <p>Loading...</p>;
   // if (error) return <p>Error: {error}</p>;

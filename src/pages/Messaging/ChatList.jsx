@@ -8,7 +8,7 @@ export default function ChatList({ friends, handleClick,owner }) {
     return imageURL ? `http://localhost:5000/images/${imageURL}` : defaultImage;
   };
   return (
-    <div className="fixed bottom-0 right-0 m-4 w-[25%] max-w-lg bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="fixed bottom-0 right-0 m-4 w-[365px] max-w-lg bg-white rounded-lg shadow-lg overflow-hidden">
       {/* Header Start */}
       <div
       onClick={()=>setOpenList(!openList)}

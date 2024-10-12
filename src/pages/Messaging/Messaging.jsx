@@ -2,8 +2,9 @@ import io from "socket.io-client";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { IoMdSend, IoMdClose } from "react-icons/io";
-import dpImg from '../../assets/dpImg.jpg'
-// const defaultImage = 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg';
+import dpImg from '../../assets/dpImg.jpg';
+
+// Socket connection
 const socket = io.connect("http://localhost:5000");
 
 function Messaging({ other, onclose }) {
@@ -13,34 +14,35 @@ function Messaging({ other, onclose }) {
   const chatContainerRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
+  // Join room once when component mounts
   useEffect(() => {
     if (owner && owner.email) {
       socket.emit("join_room", { userId: owner._id });
     }
-  }, []);
+  }, []); // Only on mount
 
+  // Fetch chat messages when 'other' changes
   useEffect(() => {
-    if (owner && owner.email) {
-      if (other?._id) {
-        const chatId = [owner._id, other._id].sort().join("_");
-        axios
-          .get(`http://localhost:5000/chats/messages/${chatId}`)
-          .then((response) => {
-            const formattedMessages = response.data.map((msg) => ({
-              ...msg,
-              sender: msg.senderId === owner._id ? "" : other.first_name,
-              isOwnMessage: msg.senderId === owner._id,
-              timestamp: new Date(msg.timestamp).toLocaleTimeString(),
-            }));
-            setMessages(formattedMessages);
-          })
-          .catch((error) => {
-            console.error("Error fetching messages:", error);
-          });
-      }
+    if (owner && owner.email && other?._id) {
+      const chatId = [owner._id, other._id].sort().join("_");
+      axios
+        .get(`http://localhost:5000/chats/messages/${chatId}`)
+        .then((response) => {
+          const formattedMessages = response.data.map((msg) => ({
+            ...msg,
+            sender: msg.senderId === owner._id ? "" : other.first_name,
+            isOwnMessage: msg.senderId === owner._id,
+            timestamp: new Date(msg.timestamp).toLocaleTimeString(),
+          }));
+          setMessages(formattedMessages);
+        })
+        .catch((error) => {
+          console.error("Error fetching messages:", error);
+        });
     }
   }, [other, owner]);
 
+  // Send a message
   const sendMessage = () => {
     if (!other?._id) {
       alert("Please select another user");
@@ -65,6 +67,7 @@ function Messaging({ other, onclose }) {
     }
   };
 
+  // Listen for incoming messages
   useEffect(() => {
     socket.on("receive_message", (data) => {
       if (data.senderId === other._id) {
@@ -83,17 +86,20 @@ function Messaging({ other, onclose }) {
     return () => {
       socket.off("receive_message");
     };
-  }, [other._id]);
+  }, [other.email]);
 
+  // Smooth scrolling to the bottom of the chat
   useEffect(() => {
     const container = chatContainerRef.current;
-    if (container) {
-      if (isAtBottom) {
-        container.scrollTop = container.scrollHeight;
-      }
+    if (container && isAtBottom) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }, [messages, isAtBottom]);
 
+  // Handle scroll behavior and determine if at the bottom of the chat
   const handleScroll = () => {
     const container = chatContainerRef.current;
     if (container) {
@@ -109,7 +115,7 @@ function Messaging({ other, onclose }) {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 m-4 w-[25%] max-w-lg">
+    <div className="fixed bottom-0 right-0 m-4 w-[365px] max-w-lg">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between bg-blue-600 text-white p-4">
@@ -137,9 +143,7 @@ function Messaging({ other, onclose }) {
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`flex ${
-                msg.isOwnMessage ? "justify-end" : "justify-start"
-              } mb-4`}
+              className={`flex ${msg.isOwnMessage ? "justify-end" : "justify-start"} mb-4`}
             >
               <div
                 className={`flex flex-col ${
@@ -179,7 +183,12 @@ function Messaging({ other, onclose }) {
             type="text"
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            onKeyPress={(event) => event.key === "Enter" && sendMessage()}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+              }
+            }}
             className="flex-1 p-2 border rounded-lg border-gray-300 text-base focus:outline-none"
             placeholder="Type a message..."
           />

@@ -8,13 +8,12 @@ import Profile from './../Profile/Profile/Profile';
 const urlProfileDefault = "https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg";
 const urlBg = "https://miro.medium.com/v2/resize:fit:1400/0*Eww7pEGuh5F3K8fm";
 const pathLink = 'http://localhost:5000/images/';
-
+import bkimg from "../../assets/bkImg.png";
+import dpImg from "../../assets/dpImg.jpg";
 export default function PersonCard({ userCard }) {
+    console.log('userCard ',userCard)
     const { owner } = useContext(AuthContext);
     const navigate = useNavigate();
-
-    // Determine Profile Image URL
-    const urlProfile = userCard?.ProfileImgURL ? `${pathLink}${userCard.ProfileImgURL}` : urlProfileDefault;
 
     const handleViewProfile = () => {
         navigate(`/profile/${userCard?.email}`);
@@ -57,15 +56,27 @@ export default function PersonCard({ userCard }) {
                 console.error('Error:', error);
             });
     };
-
+  
     return (
         <div className="card w-[250px] bg-base-100 shadow-lg hover:shadow-xl transition-shadow rounded-lg p-2"> {/* Reduced padding */}
             <div className="relative h-20">
                 {/* Background Image */}
-                <img src={urlBg} alt="Background" className="absolute inset-0 w-full h-full object-cover rounded-t-lg" />
+                <img 
+                   src={pathLink + userCard?.CoverImgURL || bkimg}
+                   onError={(e) => {
+                     e.target.onerror = null;
+                     e.target.src = bkimg;
+                   }}
+                alt="Background" className="absolute inset-0 w-full h-full object-cover rounded-t-lg" />
                 
                 {/* Profile Picture */}
-                <img src={urlProfile} alt="Profile" className="w-16 h-16 rounded-full border-2 border-white absolute -bottom-8 left-4" />
+                <img 
+                 src={pathLink + userCard?.ProfileImgURL || dpImg}
+                 onError={(e) => {
+                   e.target.onerror = null;
+                   e.target.src = dpImg;
+                 }}
+                alt="Profile" className="w-16 h-16 rounded-full border-2 border-white absolute -bottom-8 left-4" />
             </div>
             <div className="card-body text-center mt-4"> {/* Reduced margin-top */}
                 {/* User Name */}
@@ -74,7 +85,7 @@ export default function PersonCard({ userCard }) {
                 {/* Additional Text */}
                 <p className="text-xs text-black">{userCard?.headline}</p>
                 <button onClick={handleAddFriends}   className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#0a66c2] text-[#0a66c2] hover:text-[#0a66c2] btn-ghost">
-                Add profile section
+                Add Friend
               </button>
               <button onClick={handleViewProfile}  className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#767676]  text-[#767676] hover:text-[#767676] btn-ghost">
                 View Profile
