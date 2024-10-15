@@ -189,8 +189,8 @@ const Intro = ({ owner, email, relation, setRelation }) => {
         console.error("Error:", error); // Handle any errors
       });
   };
-  console.log('cover ',userInfo.CoverImgURL)
-  console.log('cover ',userInfo.CoverImgURL)
+  console.log('cover ',userInfo?.CoverImgURL)
+  console.log('cover ',userInfo?.CoverImgURL)
   return (
     <div className="md:w-[100%] bg-[white] rounded-lg relative">
       <ProfileImg open={open} setOpen={setOpen}></ProfileImg>

@@ -16,7 +16,7 @@ const BackgroudImg = ({ open, setOpen }) => {
   const [userInfo, refetch, isFetchingIntro] = useUserinfo();
   console.log('user Info ',userInfo)
   const [files, setFiles] = useState([]);
-  const [img, setImg] = useState(pathLink+userInfo.CoverImgURL);
+  const [img, setImg] = useState(pathLink+userInfo?.CoverImgURL);
   const handleFileChange = (e) => {
     const fileList = Array.from(e.target.files);
 
@@ -103,7 +103,7 @@ const BackgroudImg = ({ open, setOpen }) => {
 
   useEffect(() => {
     if (userInfo && !isFetchingIntro) {
-      setImg(pathLink+userInfo.CoverImgURL);
+      setImg(pathLink+userInfo?.CoverImgURL);
     }
   }, [isFetchingIntro,open]);
 
