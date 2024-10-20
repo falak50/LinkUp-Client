@@ -66,6 +66,7 @@ const AuthProviders = ({children}) => {
            }
         },[])
 
+        
     const [dp,setDp] = useState('') 
     const authInfo = {
         user,
