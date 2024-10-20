@@ -1,71 +1,72 @@
-import { Avatar, Select, Input, Typography, Button } from "antd";
+import { Select, Input, Typography, Button } from "antd";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dpImg from "../../assets/dpImg.jpg";
-import { AuthContext } from "../../providers/AuthProviders";
 import { SearchOutlined } from "@ant-design/icons";
-import { FaUserFriends, FaUserPlus, FaUserTimes } from "react-icons/fa";
+import { FaUserFriends, FaUserPlus } from "react-icons/fa";
 const { Option } = Select;
 const { Text } = Typography;
 const { Search } = Input;
 import PersonCard from "./PersonCard";
 import FriendRequests from "./ManageComp.jsx/FriendRequests";
 import SendFriendRequests from "./ManageComp.jsx/SendFriendRequests";
-import addImage from "./Image/ADD.jpg";
-import imgNoData from "./Image/NODATA.jpg";
-const pathLink = "http://localhost:5000/images/";
 
 const ManageConnections = () => {
-  const [connections, setConnections] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [result, setResult] = useState(0);
-  const { other, setOther, isSelect, setIsSelect } = useContext(AuthContext);
-  const [call, setCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [sortOption, setSortOption] = useState("recent");
-  const [searchQuery, setSearchQuery] = useState(""); // Add searchQuery state
   const [page, setPage] = useState(1);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
-  const handleMessage = (e, connection) => {
-    e.stopPropagation();
-    console.log("Selected connection:", connection);
-    setOther(connection);
-    setIsSelect(true);
-  };
   const [makeFriendUsers, setMakeFriendUsers] = useState([]);
-  const [friendUsers, setFriendUsers] = useState([]);
-  const [friendrequestUsers, setFriendrequestUsers] = useState([]);
-  const [sentFriendrequestUsers, setSentFriendrequestUsers] = useState([]);
   const [activeSection, setActiveSection] = useState("makeFriends");
-  const [error, setError] = useState(null);
   const owner = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/users/networks/makeFriendUsers/${owner._id}`
-        );
+  const fetchFriends = async (pagePera = 1) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/users/networks/makeFriendUsers/${owner._id}`,
+        {
+          params: {
+            search: searchQuery, // Pass search query
+            page: pagePera,
+          },
+        }
+      );
+      // Ensure data is fetched only once for page 1
+      if (pagePera === 1) {
         setMakeFriendUsers(response.data.makeFriendUsers || []);
-        setFriendUsers(response.data.friendUsers || []);
-        setFriendrequestUsers(response.data.friendrequestUsers || []);
-        setSentFriendrequestUsers(response.data.sentfriendrequestUsers || []);
-      } catch (err) {
-        setError("Error fetching friends: " + err.message);
-        console.error("Error fetching friends:", err);
+      } else {
+        setMakeFriendUsers((prevPosts) => [
+          ...prevPosts,
+          ...response.data.makeFriendUsers,
+        ]);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching friends:", err);
+    }
+  };
 
-    fetchFriends();
-  }, [owner._id]);
+  // Run fetchFriends only once when component mounts
+  useEffect(() => {
+    fetchFriends(1);
+  }, []);
+
+  const more = async () => {
+    setIsMoreLoading(true);
+    const newPage = page + 1;
+    setPage(newPage); // Set new page number
+    await fetchFriends(newPage); // Fetch next page of friends
+    setIsMoreLoading(false);
+  };
+
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    setPage(1); // Reset page to 1 on search
+    fetchFriends(1); // Fetch friends with updated search query
+  };
+
   return (
     <div className="bg-white p-4 my-2 w-[77%]">
-      {/* Header Section */}
-     
       <div className="bg-white p-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -97,22 +98,22 @@ const ManageConnections = () => {
               </Select>
             </div>
           </div>
-      
-          {activeSection === "makeFriends" &&
-    <div className="flex items-center space-x-4">
-    <Search
-      placeholder="Search by name"
-      onChange={(e) => handleSearch(e.target.value)} // Update to onChange
-      style={{ width: 250 }}
-      allowClear
-      enterButton={<SearchOutlined />}
-    />
 
-    <Button type="link" onClick={() => setCount((p) => p + 1)}>
-      Search with filters
-    </Button>
-  </div>
-}
+          {activeSection === "makeFriends" && (
+            <div className="flex items-center space-x-4">
+              <Search
+                placeholder="Search by name"
+                onChange={(e) => handleSearch(e.target.value)} // Update to onChange
+                style={{ width: 250 }}
+                allowClear
+                enterButton={<SearchOutlined />}
+              />
+
+              <Button type="link" onClick={() => console.log("Filter clicked")}>
+                Search with filters
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -129,13 +130,23 @@ const ManageConnections = () => {
           </div>
         )}
 
-        {activeSection === "friendRequests" && (
-          <FriendRequests></FriendRequests>
+        {activeSection === "makeFriends" && (
+          <div className="flex justify-center my-6">
+            <Button
+              onClick={more}
+              type="primary"
+              className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+              size="large"
+              loading={isMoreLoading}
+            >
+              Load More
+            </Button>
+          </div>
         )}
 
-        {activeSection === "sendFriendRequests" && (
-          <SendFriendRequests></SendFriendRequests>
-        )}
+        {activeSection === "friendRequests" && <FriendRequests />}
+
+        {activeSection === "sendFriendRequests" && <SendFriendRequests />}
       </div>
     </div>
   );

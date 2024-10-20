@@ -17,7 +17,7 @@ export default function MyNetworkOld() {
   const [friendrequestUsers, setFriendrequestUsers] = useState([]);
   const [sentFriendrequestUsers, setSentFriendrequestUsers] = useState([]);
   const [activeSection, setActiveSection] = useState("makeFriends");
-  const [error, setError] = useState(null);
+  const [ setError] = useState(null);
   const owner = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {

@@ -23,6 +23,8 @@ function Messaging({ other, onclose }) {
 
   // Fetch chat messages when 'other' changes
   useEffect(() => {
+
+    console.log('hello api')
     if (owner && owner.email && other?._id) {
       const chatId = [owner._id, other._id].sort().join("_");
       axios
@@ -40,7 +42,7 @@ function Messaging({ other, onclose }) {
           console.error("Error fetching messages:", error);
         });
     }
-  }, [other, owner]);
+  }, [other,owner._id]);
 
   // Send a message
   const sendMessage = () => {

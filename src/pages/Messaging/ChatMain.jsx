@@ -5,7 +5,7 @@ export default function ChatMain() {
     <div className="flex justify-center items-center ">
       {/* <ChatLogo /> */}
         {/* <MessagingPage></MessagingPage> */}
-        <MessagingCom></MessagingCom>
+        {/* <MessagingCom></MessagingCom> */}
     </div>
   );
 }

@@ -2,8 +2,6 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from './../../providers/AuthProviders';
 import Swal from "sweetalert2";
-import { Button, Flex } from "antd";
-import Profile from './../Profile/Profile/Profile';
 
 const urlProfileDefault = "https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg";
 const urlBg = "https://miro.medium.com/v2/resize:fit:1400/0*Eww7pEGuh5F3K8fm";
@@ -81,6 +79,9 @@ export default function PersonCard({ userCard }) {
             <div className="card-body text-center mt-4"> {/* Reduced margin-top */}
                 {/* User Name */}
                 <h6 className="text-lg text-black font-bold">{userCard?.first_name} {userCard?.last_name}</h6>
+                {!userCard?.first_name &&
+               <h6 className="text-lg text-black font-bold">{userCard?.first_name} {userCard?.name}</h6>
+                }
                 
                 {/* Additional Text */}
                 <p className="text-xs text-black">{userCard?.headline}</p>

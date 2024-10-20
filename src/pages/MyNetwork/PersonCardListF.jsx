@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from './../../providers/AuthProviders';
 import Swal from "sweetalert2";
-import { Button, Flex } from "antd";
+import { Button } from "antd";
 
 const urlProfileDefault = "https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg";
 const pathLink = 'http://localhost:5000/images/';

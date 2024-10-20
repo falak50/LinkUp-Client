@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Switch, Button, Select, Input, Modal } from "antd";
 import axios from "axios";
 
@@ -89,10 +89,14 @@ const initialJobOptions = [
   "Statistician",
   "Game Developer",
 ];
-
+import { AuthContext } from '../../providers/AuthProviders';
+import Load from "../../components/Load";
+import Swal from "sweetalert2";
 
 const Settings = () => {
-  const [enabledPrivate, setEnabledPrivate] = useState(false);
+  const { curUser } = useContext(AuthContext);
+  console.log('cur ',curUser)
+  const [enabledPrivate, setEnabledPrivate] = useState(curUser?.isPrivate || false);
   const [enabledJob, setEnabledJob] = useState(false);
   const [selectedJobs, setSelectedJobs] = useState([]);
   const [customJob, setCustomJob] = useState('');
@@ -148,15 +152,23 @@ const Settings = () => {
       axios.post('http://localhost:5000/users/private', payload)
         .then(res => {
           console.log(res);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title:"Update Private Account Setting" , //"Your work has been saved"
+            showConfirmButton: false,
+            timer: 700
+          });
           // setIsLiked(!isLiked);
         })
         .catch(err => console.log(err));
 
   }
-
+  if(!curUser)return <Load></Load>
   return (
     <div className="bg-white p-6">
       {/* Private Account Setting */}
+      <h1>{curUser.email}</h1>
       <div className="max-w-lg bg-gray-50 p-6 mb-4 rounded-lg shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Private Account Setting</h2>
         <p className="text-sm text-gray-600 mb-4">

@@ -10,7 +10,10 @@ const AuthProviders = ({children}) => {
     const googleProvider = new GoogleAuthProvider();
     const [owner, setOwner] = useState(null);
     const [other,setOther] = useState(null);
-    const [isSelect,setIsSelect]= useState(false)
+    const [isSelect,setIsSelect]= useState(false);
+    const [curUser,setCurUser] = useState(null);
+    const [loadingCurUser,setLoadingCurUser] = useState(false)
+
     useEffect(() => {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser) {
@@ -66,7 +69,25 @@ const AuthProviders = ({children}) => {
            }
         },[])
 
-        
+    useEffect(()=>{
+      if(owner?.email){
+        fetch(`http://localhost:5000/users/${owner?.email}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json(); // Parse JSON response asynchronously
+        })
+        .then((user) => {
+          console.log("User data: --- infolol", user); 
+          setCurUser(user)
+        })
+        .catch((error) => {
+          console.error("Error:", error); 
+        });
+       }
+    },[owner?.email])
+
     const [dp,setDp] = useState('') 
     const authInfo = {
         user,
@@ -84,7 +105,8 @@ const AuthProviders = ({children}) => {
         other,
         setOther,
         isSelect,
-        setIsSelect
+        setIsSelect,
+        curUser
     }
     return (
         <AuthContext.Provider value={authInfo}>

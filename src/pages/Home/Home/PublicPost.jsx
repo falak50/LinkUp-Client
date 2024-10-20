@@ -42,7 +42,6 @@ export default function PublicPost({ resetCount, setResetCount }) {
 
   return (
     <div>
-        <h1>PublicPost</h1>
       <Posts posts={posts} setResetCount={setResetCount} />
       <div className="flex justify-center my-6">
         <Button
