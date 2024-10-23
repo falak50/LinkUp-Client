@@ -200,7 +200,7 @@ const SignUp = () => {
                 <input className="btn btn-primary" type="submit" value="Sing Up"/>
               </div>
             </form>
-            <p><small>Already have an acount <Link to="/login">Login</Link> </small></p>
+            <p className="mx-10 font-serif"><small>Already have an acount <Link className="text-blue-600" to="/login">Login</Link> </small></p>
             <SocialLogin></SocialLogin>
           </div>
         </div>

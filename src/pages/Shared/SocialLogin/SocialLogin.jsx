@@ -40,21 +40,11 @@ const SocialLogin = () => {
                   console.log("User data: --- infolol", user); // Handle user data here
                   // Perform additional actions if needed
                   Swal.fire({
+                    position: "top-end",
+                    icon: "success",
                     title: "User Login Successful.",
-                    showClass: {
-                      popup: `
-                          animate__animated
-                          animate__fadeInUp
-                          animate__faster
-                        `,
-                    },
-                    hideClass: {
-                      popup: `
-                          animate__animated
-                          animate__fadeOutDown
-                          animate__faster
-                        `,
-                    },
+                    showConfirmButton: false,
+                    timer: 1500,
                   });
                   setOwner(user);
                   localStorage.setItem('user', JSON.stringify(user));
