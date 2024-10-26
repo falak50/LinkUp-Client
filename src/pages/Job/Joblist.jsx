@@ -5,7 +5,7 @@ import axios from "axios";
 import { Radio, Space } from "antd";
 import EditJob from "./EditJob";
 import Load from "../../components/Load";
-
+const { logOut, curUser } = useContext(AuthContext);
 export default function Joblist() {
   const [list, setList] = useState([]); 
   const [title, setTitle] = useState("");
