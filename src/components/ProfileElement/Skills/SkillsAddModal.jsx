@@ -232,7 +232,7 @@ const SkillsAddModal = ({ title = 'Add Skills' }) => {
               type="text" className="input input-bordered h-9"
               value={newSkillsWhereUse}
               onChange={(e) => setNewSkillsWhereUse(e.target.value)}
-              placeholder="Enter skill"
+              placeholder="Enter the project ,where use this Skill"
               style={{ width: '100%' }}
             />
         

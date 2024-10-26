@@ -101,31 +101,34 @@ export default function FriendRequests() {
           key={index}
           className="flex items-center justify-between p-4 mb-4 border rounded-lg shadow-sm"
         >
-          <div className="flex items-center space-x-4">
-            <img
-              className="bg-gray-300 rounded-full w-16 h-16"
-              src={
-                connection?.ProfileImgURL
-                  ? pathLink + connection.ProfileImgURL
-                  : dpImg
-              }
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = dpImg;
-              }}
-              alt="Profile"
-            />
-            <div>
-              <p
-                className="text-lg font-semibold text-black cursor-pointer hover:underline"
-                onClick={() => handleViewProfile(connection.email)}
-              >
-                {connection?.first_name} {connection?.last_name}
-              </p>
-              <p className="text-sm text-gray-500">{connection?.headline}</p>
-              <p className="text-sm text-gray-400">{connection?.education}</p>
-            </div>
-          </div>
+         <div className="flex items-center space-x-4">
+  <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-300">
+    <img
+      className="w-full h-full object-cover"
+      src={
+        connection?.ProfileImgURL
+          ? pathLink + connection.ProfileImgURL
+          : dpImg
+      }
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = dpImg;
+      }}
+      alt="Profile"
+    />
+  </div>
+  <div>
+    <p
+      className="text-lg font-semibold text-black cursor-pointer hover:underline"
+      onClick={() => handleViewProfile(connection.email)}
+    >
+      {connection?.first_name} {connection?.last_name}
+    </p>
+    <p className="text-sm text-gray-500">{connection?.headline}</p>
+    <p className="text-sm text-gray-400">{connection?.education}</p>
+  </div>
+</div>
+
           <div>
             <button
               onClick={() => handleAcceptFriendRequest(connection)}

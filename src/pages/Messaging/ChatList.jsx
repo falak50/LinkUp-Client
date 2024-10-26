@@ -1,8 +1,10 @@
 import { Avatar, List } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { AuthContext } from "../../providers/AuthProviders";
 const defaultImage = 'https://as2.ftcdn.net/v2/jpg/03/31/69/91/1000_F_331699188_lRpvqxO5QRtwOM05gR50ImaaJgBx68vi.jpg';
-export default function ChatList({ friends, handleClick,owner }) {
+export default function ChatList({ friends, handleClick }) {
+  const { curUser } = useContext(AuthContext);
   const [openList, setOpenList] = useState(false);
   const getImageUrl = (imageURL) => {
     return imageURL ? `http://localhost:5000/images/${imageURL}` : defaultImage;
@@ -17,7 +19,7 @@ export default function ChatList({ friends, handleClick,owner }) {
           <div className="avatar online">
             <div className="w-10 rounded-full">
               {/* Reduce the image size by using w-10 instead of w-14 */}
-              <img  src={getImageUrl(owner?.ProfileImgURL)}/>
+              <img  src={getImageUrl(curUser?.ProfileImgURL)}/>
             </div>
           </div>
           {/* Add spacing between the image and text */}

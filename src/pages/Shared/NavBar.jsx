@@ -3,14 +3,13 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import { FaHome, FaSortDown, FaUserFriends } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
-import { AiFillMessage } from "react-icons/ai";
 import { MdNotificationsActive } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import dpImg from "../../assets/dpImg.jpg";
 import { IoIosLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 const pathLink = "http://localhost:5000/images/";
-import linkup from "../../assets/linkUp/linkup7.png";
+// import linkup from "../../assets/linkUp/linkup7.png";
 
 const NavBar = () => {
   const { logOut, curUser } = useContext(AuthContext);
