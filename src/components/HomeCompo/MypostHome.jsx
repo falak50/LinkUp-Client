@@ -85,8 +85,6 @@ const MypostHome = ({open, setOpen,setResetCount}) => {
     }
   };
 
-
-  /// text area auto increse function
   
   const handleInput = (event) => {
  

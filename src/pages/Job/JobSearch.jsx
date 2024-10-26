@@ -10,20 +10,20 @@ export default function JobSearch({ handleSearch, title, setTitle, location, set
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs"
+                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs bg-[#edf3f8]"
                         placeholder="Job Title"
                     />
                     <input
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs"
+                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs bg-[#edf3f8]"
                         placeholder="Location"
                     />
                     <select
                         value={workType}
                         onChange={(e) => setWorkType(e.target.value)}
-                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs"
+                        className="p-2 border border-gray-300 rounded-sm text-sm w-full max-w-xs bg-[#edf3f8]"
                     >
                         <option value="">Any</option>
                         <option value="Remote">Remote</option>

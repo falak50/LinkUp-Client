@@ -1,10 +1,12 @@
-import { MdOutlinePermMedia } from "react-icons/md";
-import { FaCalendarAlt } from "react-icons/fa";
-import { TfiWrite } from "react-icons/tfi";
 import MypostHome from "../../../components/HomeCompo/MypostHome";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../providers/AuthProviders";
+const pathLink = "http://localhost:5000/images/";
+import dpImg from "../../../assets/dpImg.jpg";
 const PostSectionHome = ({setResetCount}) => {
+  const { curUser } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
+  
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden my-2">
       
@@ -13,15 +15,23 @@ const PostSectionHome = ({setResetCount}) => {
       <div className="bg-[#ffffff] m-2 p-3 ">
         <div className="flex items-center gap-3">
           <div className="avatar">
-            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <div className="w-12 rounded-full  ">
+            <img
+              src={pathLink + curUser?.ProfileImgURL || dpImg}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = dpImg;
+              }}
+              alt="Profile"
+            />
             </div>
           </div>
+        
           <button
             onClick={() => setOpen(true)}
-            className="btn btn-outline flex justify-start text-[gray] w-[90%] text-left hover:bg-[#f6f5f5] hover:text-black cursor-pointer rounded-xl  ml-auto"
+            className="btn btn-outline flex justify-start bg-[#ffffff] text-[gray] w-[90%] text-left hover:bg-[#f6f5f5] hover:text-black cursor-pointer rounded-xl  ml-auto"
           >
-            Start a post . . . .
+           <p className="font-sans text-gray-700 text-xm">Start a post . . . .</p> 
           </button>
         </div>
 
