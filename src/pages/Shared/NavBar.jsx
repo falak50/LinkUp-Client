@@ -9,9 +9,8 @@ import { IoSettingsSharp } from "react-icons/io5";
 import dpImg from "../../assets/dpImg.jpg";
 import { IoIosLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-
 const pathLink = "http://localhost:5000/images/";
-
+import linkup from "../../assets/linkUp/linkup6.png";
 const NavBar = () => {
   const { logOut, curUser } = useContext(AuthContext);
   const owner = JSON.parse(localStorage.getItem("user"));
@@ -75,7 +74,7 @@ const NavBar = () => {
           </div>
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink
           to="/messaging"
           className={({ isActive }) =>
@@ -87,7 +86,7 @@ const NavBar = () => {
             <h1 className="text-sm hidden md:block">Messaging</h1>
           </div>
         </NavLink>
-      </li>
+      </li> */}
       <li>
         <NavLink
           to="/notifications"
@@ -167,10 +166,9 @@ const NavBar = () => {
   return (
     <div className="top-0 left-0 w-full bg-background-container px-3vw py-0 z-50 border-b border-border-faint navbar max-w-screen-xl m-auto bg-white text-black">
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl hidden sm:block">
-          LinkUp
-        </a>
-       
+    
+      <img className="w-24 sm:w-32 md:w-48 lg:w-64 xl:w-[350px]" src={linkup} alt="Linkup logo" />
+
       </div>
       <div className="navbar-center flex">
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
