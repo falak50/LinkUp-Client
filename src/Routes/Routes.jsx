@@ -8,12 +8,9 @@ import PrivateRoute from "./PrivateRoute";
 import Settings from "../pages/Settings/Settings";
 import MyNetwork from "../pages/MyNetwork/MyNetwork";
 import Messaging from "../pages/Messaging/Messaging";
-import MessagingPage from "../pages/Messaging/MessagingPage";
 import MessagingCom from "../pages/Messaging/MessagingCom";
-import Job from "../pages/Job/Job";
 import Joblist from "../pages/Job/Joblist";
-import JobBoard from "../not_includes/JobBoard";
-
+import Notifications from '../pages/Notifications/Notifications';
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -54,8 +51,11 @@ export const router = createBrowserRouter([
       {
         path: "job",
         element: <Joblist></Joblist>,
-        // element:<Job></Job>
       },
+{
+  path: "notifications",
+  element:  <Notifications></Notifications>,
+},
       {
         path: "messaging",
         element: <MessagingCom></MessagingCom>,
