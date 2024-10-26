@@ -5,8 +5,9 @@ import axios from "axios";
 import { Radio, Space } from "antd";
 import EditJob from "./EditJob";
 import Load from "../../components/Load";
-const { logOut, curUser } = useContext(AuthContext);
+
 export default function Joblist() {
+  
   const [list, setList] = useState([]); 
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
@@ -189,7 +190,7 @@ export default function Joblist() {
               {selectedJob.userInfo.last_name}
             </p>
             <p className="text-md  font-serif">
-              <strong>Email:</strong> {selectedJob.userInfo.email}
+              <strong>Email:</strong> {selectedJob.userInfo?.email}
             </p>
             <p className="text-md  font-serif">
               <strong>Posted on:</strong>{" "}

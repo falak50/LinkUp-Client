@@ -1,22 +1,11 @@
-
 import MidHome from "./MidHome";
 
 const Home = () => {
   return (
-    <div className="flex">
-      <div className="w-[20%]">
-        <div className=" p-4">
-          <h2 className="text-lg font-bold">Div 1</h2>
-          <p>Content for div 1</p>
-        </div>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-full lg:w-[55%]">
+        <MidHome />
       </div>
-      <div className="w-[55%]">
-      
-        <MidHome></MidHome>
-
-
-      </div>
-     
     </div>
   );
 };

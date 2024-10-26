@@ -12,7 +12,7 @@ const MessagingCom = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const owner = JSON.parse(localStorage.getItem('user'));
-  const ownEmail =owner.email;
+  const ownEmail =owner?.email;
   const [email,setEmail] = useState('NORMAL');
   // const [other,setOther] = useState(null)
   // const [isSelect,setIsSelect]= useState(false)
@@ -38,7 +38,7 @@ const MessagingCom = () => {
   const handleClick = (item) => {
     setLoading(true);
     console.log('Clicked item:', item);
-    setEmail(item.email)
+    setEmail(item?.email)
     setOther(item)
     setIsSelect(true)
 

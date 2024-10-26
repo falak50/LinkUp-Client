@@ -11,6 +11,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 const pathLink = "http://localhost:5000/images/";
 import linkup from "../../assets/linkUp/linkup7.png";
+
 const NavBar = () => {
   const { logOut, curUser } = useContext(AuthContext);
   const owner = JSON.parse(localStorage.getItem("user"));
@@ -80,19 +81,6 @@ const NavBar = () => {
           </div>
         </NavLink>
       </li>
-      {/* <li>
-        <NavLink
-          to="/messaging"
-          className={({ isActive }) =>
-            isActive ? "text-black border-b-2 border-black border-solid rounded-none" : "text-gray-500"
-          }
-        >
-          <div className="flex flex-col items-center">
-            <AiFillMessage className="text-2xl" />
-            <h1 className="text-sm hidden md:block">Messaging</h1>
-          </div>
-        </NavLink>
-      </li> */}
       <li>
         <NavLink
           to="/notifications"
@@ -108,25 +96,19 @@ const NavBar = () => {
           </div>
         </NavLink>
       </li>
-     
     </>
   );
 
   return (
-    <div className="top-0 left-0 w-full flex justify-between bg-background-container  py-0 z-50 border-b border-border-faint navbar max-w-screen-xl mx-auto  bg-white text-black">
-       <div>
-       {/* <img
-          className="w-[80px] h-[100%]"
-          src={linkup}
-          alt="Linkup logo"
-        /> */}
-        <p className="font-serif text-3xl text-[#102260] pl-3">LinkUp</p>
-       </div>
+    <div className="top-0 left-0 w-full flex justify-between bg-background-container py-0 z-50 border-b border-border-faint navbar max-w-screen-xl mx-auto bg-white text-black">
       
+      {/* Hide this div on small screens */}
+      <div className="hidden sm:block">
+        <p className="font-serif text-3xl text-[#102260] pl-3">LinkUp</p>
+      </div>
   
-      {/* <div className="navbar-center flex"> */}
-        <ul className="menu menu-horizontal">{navOptions}</ul>
-      {/* </div> */}
+      <ul className="menu menu-horizontal">{navOptions}</ul>
+      
       <div className="dropdown dropdown-end text-gray-500">
         <div
           tabIndex={0}
@@ -144,7 +126,6 @@ const NavBar = () => {
               alt="Profile"
             />
           </div>
-
           <FaSortDown />
         </div>
         {isDropdownOpen && (
