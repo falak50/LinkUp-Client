@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import dpImg from "../../assets/dpImg.jpg";
 import { AuthContext } from "../../providers/AuthProviders";
 import { SearchOutlined } from "@ant-design/icons";
+import Load from "../components/Load";
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -116,8 +117,7 @@ const ConnectionList = () => {
     //   setLoading(false);
     // }
   }
-  if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
+  if (loading) return <Load></Load>;
 
   const handleMessage = (e, connection) => {
     e.stopPropagation();

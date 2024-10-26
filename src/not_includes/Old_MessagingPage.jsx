@@ -4,6 +4,7 @@ import axios from 'axios';
 import Messaging from './Messaging';
 import ChatCard from '../../not_includes/ChatCard';
 import Chat from '../../not_includes/Chat';
+import Load from '../components/Load';
 
 const MessagingPage = () => {
   const [friends, setFriends] = useState([]);
@@ -29,7 +30,7 @@ const MessagingPage = () => {
     fetchFriends();
   }, [email]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Load></Load>;
   if (error) return <p>Error: {error}</p>;
 
   const handleClick = (item) => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Messaging from './Messaging';
 import ChatList from './ChatList';
 import { AuthContext } from '../../providers/AuthProviders';
+import Load from '../../components/Load';
 const MessagingCom = () => {
    const {   other,
     setOther , isSelect,
@@ -31,7 +32,7 @@ const MessagingCom = () => {
     fetchFriends();
   }, [email]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Load></Load>;
   if (error) return <p>Error: {error}</p>;
 
   const handleClick = (item) => {

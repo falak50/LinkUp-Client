@@ -16,8 +16,6 @@ export default function JobBoard() {
     // error,
   } = useJob();
 
-  //   if (loading) return <p>Loading jobs...</p>;
-  //   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="w-full rounded-lg">

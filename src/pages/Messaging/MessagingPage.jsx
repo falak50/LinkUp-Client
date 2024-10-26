@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Avatar, List } from 'antd';
 import axios from 'axios';
 import Messaging from './Messaging';
+import Load from '../../components/Load';
 
 const MessagingPage = () => {
   const [friends, setFriends] = useState([]);
@@ -27,7 +28,7 @@ const MessagingPage = () => {
     fetchFriends();
   }, [email]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Load></Load>;
   if (error) return <p>Error: {error}</p>;
 
   const handleClick = (item) => {

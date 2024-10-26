@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import dpImg from "../../assets/dpImg.jpg";
 import { AuthContext } from "../../providers/AuthProviders";
 import { SearchOutlined } from "@ant-design/icons";
+import Load from "../../components/Load";
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -86,7 +87,7 @@ const ConnectionList = () => {
     setPage((p) => p + 1);// for next call
     fetchFriends(page+1)
   }
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Load></Load>;
   // if (error) return <p>Error: {error}</p>;
 
   const handleMessage = (e, connection) => {

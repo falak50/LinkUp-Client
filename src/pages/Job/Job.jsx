@@ -2,8 +2,7 @@
 import  { useState } from 'react';
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import axios from 'axios';
-import { IoIosAdd, IoMdAdd } from 'react-icons/io';
-import { FaSearch } from 'react-icons/fa';
+import { IoMdAdd } from 'react-icons/io';
 
 export default function Job({ setList }) {
   const [open, setOpen] = useState(false);

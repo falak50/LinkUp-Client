@@ -15,6 +15,7 @@ import Messaging from '../../Messaging/Messaging';
 import MessagingPage from '../../Messaging/MessagingPage';
 import Dot from '../../../not_includes/Dot';
 import PostEdit from '../../../components/ProfileElement/Mypost/PostEidt';
+import Load from '../../../components/Load';
 
 const Profile = () => {
   const [owner, setOwner] = useState(JSON.parse(localStorage.getItem('user')));
@@ -60,7 +61,7 @@ const Profile = () => {
   }, [userInfo, owner, redender]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return  <Load></Load>;
   }
 
 
@@ -73,7 +74,7 @@ const Profile = () => {
      {/* <Dot></Dot> */}
      {/* <PostEdit open={open} setOpen={setOpen}></PostEdit> */}
      {/* <button onClick={()=>setOpen(true)}>clcik</button> */}
-     
+
       </div>
       <div className="md:flex">
         <div className="md:flex md:flex-col m-2 gap-4 w-[75%]">
