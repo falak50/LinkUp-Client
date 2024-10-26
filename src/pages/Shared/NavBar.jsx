@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom"; 
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import { FaHome, FaSortDown, FaUserFriends } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
@@ -10,7 +10,7 @@ import dpImg from "../../assets/dpImg.jpg";
 import { IoIosLogOut } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 const pathLink = "http://localhost:5000/images/";
-import linkup from "../../assets/linkUp/linkup6.png";
+import linkup from "../../assets/linkUp/linkup7.png";
 const NavBar = () => {
   const { logOut, curUser } = useContext(AuthContext);
   const owner = JSON.parse(localStorage.getItem("user"));
@@ -39,7 +39,9 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? "text-black border-b-2 border-black border-solid rounded-none" : "text-gray-500"
+            isActive
+              ? "text-black border-b-2 border-black border-solid rounded-none"
+              : "text-gray-500"
           }
         >
           <div className="flex flex-col items-center">
@@ -52,7 +54,9 @@ const NavBar = () => {
         <NavLink
           to="/mynetwork"
           className={({ isActive }) =>
-            isActive ? "text-black border-b-2 border-black border-solid rounded-none" : "text-gray-500"
+            isActive
+              ? "text-black border-b-2 border-black border-solid rounded-none"
+              : "text-gray-500"
           }
         >
           <div className="flex flex-col items-center">
@@ -65,7 +69,9 @@ const NavBar = () => {
         <NavLink
           to="/job"
           className={({ isActive }) =>
-            isActive ? "text-black border-b-2 border-black border-solid rounded-none" : "text-gray-500"
+            isActive
+              ? "text-black border-b-2 border-black border-solid rounded-none"
+              : "text-gray-500"
           }
         >
           <div className="flex flex-col items-center">
@@ -91,7 +97,9 @@ const NavBar = () => {
         <NavLink
           to="/notifications"
           className={({ isActive }) =>
-            isActive ? "text-black border-b-2 border-black border-solid rounded-none" : "text-gray-500"
+            isActive
+              ? "text-black border-b-2 border-black border-solid rounded-none"
+              : "text-gray-500"
           }
         >
           <div className="flex flex-col items-center">
@@ -100,6 +108,25 @@ const NavBar = () => {
           </div>
         </NavLink>
       </li>
+     
+    </>
+  );
+
+  return (
+    <div className="top-0 left-0 w-full flex justify-between bg-background-container  py-0 z-50 border-b border-border-faint navbar max-w-screen-xl mx-auto  bg-white text-black">
+       <div>
+       {/* <img
+          className="w-[80px] h-[100%]"
+          src={linkup}
+          alt="Linkup logo"
+        /> */}
+        <p className="font-serif text-3xl text-[#102260] pl-3">LinkUp</p>
+       </div>
+      
+  
+      {/* <div className="navbar-center flex"> */}
+        <ul className="menu menu-horizontal">{navOptions}</ul>
+      {/* </div> */}
       <div className="dropdown dropdown-end text-gray-500">
         <div
           tabIndex={0}
@@ -160,21 +187,6 @@ const NavBar = () => {
           </ul>
         )}
       </div>
-    </>
-  );
-
-  return (
-    <div className="top-0 left-0 w-full bg-background-container px-3vw py-0 z-50 border-b border-border-faint navbar max-w-screen-xl m-auto bg-white text-black">
-      <div className="navbar-start">
-    
-      <img className="w-24 sm:w-32 md:w-48 lg:w-64 xl:w-[350px]" src={linkup} alt="Linkup logo" />
-
-      </div>
-      <div className="navbar-center flex">
-        <ul className="menu menu-horizontal px-1">{navOptions}</ul>
-      </div>
-      <div className="divider lg:divider-horizontal"></div>
-      <div className="mx-20 navbar-end hidden md:block text-gray-500"></div>
     </div>
   );
 };
