@@ -5,23 +5,27 @@ import edu_Icon from "../../../assets/imgICON/edu_ICON.png"
 import useEduinfo from "../../../hooks/useEduinfo";
 // import { Divider } from "@mui/material";
 import EduEditModal from "./EduEditModal";
+import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProviders";
 // import { useEffect } from "react";
 
 const Education = () => {
     const [EduInfo, ,] = useEduinfo();
-  //  console.log('dasdad',EduInfo);
-    
-  
+  //  console.log('edu',EduInfo[0]);
+   const { email } = useParams();
+   const { curUser } = useContext(AuthContext);
     return (
     //  <div></div>
         <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6">
              <div className="flex mb-4">
              <h1 className="text-2xl font-semibold">Education</h1>
-             
-            <button className="btn btn-circle bg-white hover:bg-[#ededec] border-none  text-[#6a6a6a] text-3xl ml-auto">
-            <EduAddModal></EduAddModal>
-            {/* icon ai jaigat bnt bitor a modal call hove */}
-            </button>
+             {email == curUser?.email && 
+    <button className="btn btn-circle bg-white hover:bg-[#ededec] border-none  text-[#6a6a6a] text-3xl ml-auto">
+    <EduAddModal></EduAddModal>
+    </button>
+             }
+        
              </div>
            <div className="mappppppp">
            {EduInfo?.map((edu, index) => (
@@ -36,15 +40,17 @@ const Education = () => {
                      </span>
                  </div>
                </div>
-           
+               {email == curUser?.email && 
                 <button    
                 className="btn btn-circle border-none  bg-white hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto "
                 >
                 {/* <GrFormEdit className="text-3xl" /> */}
+                
                 <EduEditModal 
                 edu={edu}
                 ></EduEditModal>
                 </button>
+}
            </div>
            <div className="divider"></div> 
         </div>

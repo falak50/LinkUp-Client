@@ -98,12 +98,16 @@ const MypostAdd = (  ) => {
     return (
         <React.Fragment>
         
-      <button
-        onClick={handleClickOpen()}
-        className=" hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto "
-      >
-        Create a post
-      </button>
+        {false &&
+         <button
+         onClick={handleClickOpen()}
+         className=" hover:bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto "
+       >
+         Create a post
+       </button>
+
+        }
+     
          
 
       <Dialog

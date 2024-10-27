@@ -3,15 +3,17 @@ import bkimg from "../../../assets/bkImg.png";
 import dpImg from "../../../assets/dpImg.jpg";
 import IntroModal from "./IntroModal";
 import useUserinfo from "../../../hooks/useUserinfo";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ProfileImg from "./ProfileImg";
 import Swal from "sweetalert2";
 import BackgroudImg from "./BackgroudImg";
+import { AuthContext } from "../../../providers/AuthProviders";
 const pathLink = "http://localhost:5000/images/";
 const Intro = ({ owner, email, relation, setRelation }) => {
+  const { curUser } = useContext(AuthContext);
   const [userInfo] = useUserinfo();
-  console.log("cover  userInfo--------------->", userInfo);
-  console.log("relation ", relation);
+  // console.log("cover  userInfo--------------->", userInfo);
+  // console.log("relation ", relation);
   const [open, setOpen] = useState(false);
   const [openbg,setOpenbg] = useState(false);
 
@@ -310,14 +312,13 @@ const Intro = ({ owner, email, relation, setRelation }) => {
               </button>
             </div>
           </div>
-
-          {/* <button className="btn btn-circle  bg-[#ededec] text-[#6a6a6a] text-2xl ml-auto">
-    <Modalfrm></Modalfrm>
-     </button> */}
-          {/* <h1>here model start of intr</h1> */}
-          <button className="ml-auto">
+{userInfo?.email == curUser?.email &&
+  <button className="ml-auto">
             <IntroModal title="Edit intro"></IntroModal>
           </button>
+}
+     
+          
           {/* <h1>here model end of intr</h1> */}
         </div>
         <div className="flex p-2 mx-4 w-[70%] m-4  bg-opacity-20 bg-[#0a66c2]  rounded-xl  justify-between">

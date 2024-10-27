@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import bkimg from "../../../assets/bkImg.png";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,13 +10,16 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import useUserinfo from "../../../hooks/useUserinfo";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProviders";
 const pathLink = "http://localhost:5000/images/";
 
 const BackgroudImg = ({ open, setOpen }) => {
+  const { curUser } = useContext(AuthContext);
   const [userInfo, refetch, isFetchingIntro] = useUserinfo();
-  console.log('user Info ',userInfo)
+  // console.log('data curUser',curUser?.email)
+  // console.log('data user Info ',userInfo?.email)
   const [files, setFiles] = useState([]);
-  const [img, setImg] = useState(pathLink+userInfo?.CoverImgURL);
+  const [img, setImg] = useState(pathLink + userInfo?.CoverImgURL);
   const handleFileChange = (e) => {
     const fileList = Array.from(e.target.files);
 
@@ -103,9 +106,9 @@ const BackgroudImg = ({ open, setOpen }) => {
 
   useEffect(() => {
     if (userInfo && !isFetchingIntro) {
-      setImg(pathLink+userInfo?.CoverImgURL);
+      setImg(pathLink + userInfo?.CoverImgURL);
     }
-  }, [isFetchingIntro,open]);
+  }, [isFetchingIntro, open]);
 
   return (
     <React.Fragment>
@@ -146,55 +149,59 @@ const BackgroudImg = ({ open, setOpen }) => {
             <div className="">
               <div className="m-auto">
                 {/* <img className=" " src={img} alt="Avatar" /> */}
-                <img 
-  className=" " 
-  src={img} 
-  alt="Avatar" 
-  onError={(e) => { e.target.onerror = null; e.target.src = bkimg; }} 
-/>
-           
+                <img
+                  className=" "
+                  src={img}
+                  alt="Avatar"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = bkimg;
+                  }}
+                />
               </div>
             </div>
           </div>
 
           {/* body end  */}
         </DialogContent>
-        <DialogActions
-          className=" bg-[#1B1F23]"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "8px 24px",
-          }}
-        >
-          <label
-            htmlFor="fileInput"
-            className="flex flex-col items-center mx-4 cursor-pointer"
+        {userInfo?.email == curUser?.email && (
+          <DialogActions
+            className=" bg-[#1B1F23]"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "8px 24px",
+            }}
           >
-            <MdPhotoCamera className="text-white text-2xl mb-1" />
-            <h1 className="text-white">Add photo</h1>
-            <input
-              id="fileInput"
-              type="file"
-              onChange={handleFileChange}
-              multiple
-              style={{ display: "none" }}
-            />
-          </label>
-          <div
-            onClick={handledelete}
-            className="text-white  px-6 py-2 text-xl mr-2"
-          >
-            <RiDeleteBin6Fill className="mx-auto text-2xl" />
-            <h1 className="mx-auto ">Delete</h1>
-          </div>
-          <button
-            onClick={handleSubmit}
-            className="btn bg-[#0a66c2] text-white rounded-full  px-6 py-2 text-xl mr-2"
-          >
-            Save photo
-          </button>
-        </DialogActions>
+            <label
+              htmlFor="fileInput"
+              className="flex flex-col items-center mx-4 cursor-pointer"
+            >
+              <MdPhotoCamera className="text-white text-2xl mb-1" />
+              <h1 className="text-white">Add photo</h1>
+              <input
+                id="fileInput"
+                type="file"
+                onChange={handleFileChange}
+                multiple
+                style={{ display: "none" }}
+              />
+            </label>
+            <div
+              onClick={handledelete}
+              className="text-white  px-6 py-2 text-xl mr-2"
+            >
+              <RiDeleteBin6Fill className="mx-auto text-2xl" />
+              <h1 className="mx-auto ">Delete</h1>
+            </div>
+            <button
+              onClick={handleSubmit}
+              className="btn bg-[#0a66c2] text-white rounded-full  px-6 py-2 text-xl mr-2"
+            >
+              Save photo
+            </button>
+          </DialogActions>
+        )}
       </Dialog>
     </React.Fragment>
   );
