@@ -58,7 +58,7 @@ const Mypost = () => {
             <div className="flex mb-4">
                 <div>
                     <h1 className="text-2xl font-semibold">Activity</h1>
-                    <span className="text-[#3232b8] font-semibold">963 followers</span>
+                    {/* <span className="text-[#3232b8] font-semibold">963 followers</span> */}
                 </div>
                 <button className="btn btn-sm bg-white hover:bg-[#ededec] border-none text-[#6a6a6a] text-2xl ml-auto">
                     <MypostAdd />

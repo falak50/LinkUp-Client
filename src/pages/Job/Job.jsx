@@ -1,12 +1,14 @@
 
-import  { useState } from 'react';
+import  { useContext, useState } from 'react';
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import axios from 'axios';
 import { IoMdAdd } from 'react-icons/io';
+import { AuthContext } from '../../providers/AuthProviders';
 
 export default function Job({ setList }) {
   const [open, setOpen] = useState(false);
   const owner = JSON.parse(localStorage.getItem("user"));
+  const {  curUser } = useContext(AuthContext);
   const [form] = Form.useForm();
 
   const showModal = () => {
@@ -33,10 +35,10 @@ export default function Job({ setList }) {
               _id: res.data.insertedId, // Use the ID from the response
               createdAt: new Date().toISOString(), // Use current date as createdAt
               userInfo: {
-                email: owner.email,
-                first_name: owner.first_name,
-                last_name: owner.last_name,
-                ProfileImgURL: owner.ProfileImgURL || "https://via.placeholder.com/150"
+                email: curUser?.email,
+                first_name: curUser?.first_name,
+                last_name: curUser?.last_name,
+                ProfileImgURL: curUser?.ProfileImgURL || "https://via.placeholder.com/150"
               }
           }
          console.log('obj ',obj)
