@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc";
 import { IoMdShareAlt } from "react-icons/io";
@@ -9,8 +9,10 @@ import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MypostEdit from "../../../components/ProfileElement/Mypost/MypostEdit";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const Post = ({ post ,setResetCount }) => {
+  const { curUser } = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(true);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -139,6 +141,9 @@ const Post = ({ post ,setResetCount }) => {
   //   setIsEditModalOpen(false);
   // };
 
+  // console.log('post?.userInfo',post?.userInfo?.email)
+  // console.log('curUser?.email',curUser?.email)
+
   return (
     <div className="mx-auto bg-white shadow-md rounded-lg overflow-hidden py-2 my-5 pb-4">
        <MypostEdit post={post} open={open} setOpen={setOpen} setResetCount={setResetCount}></MypostEdit> 
@@ -160,34 +165,37 @@ const Post = ({ post ,setResetCount }) => {
             <div className="text-gray-600 text-sm">{timeAgoText}</div>
           </div>
 
-          <div className="flex-none ml-4">
-            <div className="" ref={dropdownRef}>
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost avatar text-gray-500"
-                onClick={toggleDropdown}
-              >
-                <MoreVertIcon />
-              </div>
-             
-              {isOpen && (
-                //  <MypostEdit post={post}></MypostEdit>
-                <ul
-                  className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
-                  onClick={closeDropdown}
-                >
-                  <li  onClick={()=>setOpen(true)}>
-                    <span className="justify-between">Edit</span>
-                  </li>
-                   {/* <MypostEdit post={post}></MypostEdit> */}
-                  <li onClick={handleDeletePost}>
-                    <span>Delete</span>
-                  </li>
-                </ul>
-              )}
-            </div>
-          </div>
+{post?.userInfo?.email == curUser?.email && 
+   <div className="flex-none ml-4">
+   <div className="" ref={dropdownRef}>
+     <div
+       tabIndex={0}
+       role="button"
+       className="btn btn-ghost avatar text-gray-500"
+       onClick={toggleDropdown}
+     >
+       <MoreVertIcon />
+     </div>
+    
+     {isOpen && (
+       //  <MypostEdit post={post}></MypostEdit>
+       <ul
+         className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
+         onClick={closeDropdown}
+       >
+         <li  onClick={()=>setOpen(true)}>
+           <span className="justify-between">Edit</span>
+         </li>
+          {/* <MypostEdit post={post}></MypostEdit> */}
+         <li onClick={handleDeletePost}>
+           <span>Delete</span>
+         </li>
+       </ul>
+     )}
+   </div>
+ </div>
+}
+       
         </div>
 
         <p className="text-gray-700">{post.description}</p>
@@ -240,7 +248,18 @@ const Post = ({ post ,setResetCount }) => {
         <div className="w-[10%]">
           <img src="https://as2.ftcdn.net/v2/jpg/05/88/10/25/1000_F_588102589_x5jlJUTfRCm0I5MLM9ESIQSck6wWZ56i.jpg" />
         </div>
-        <span className="text-sm text-[gray]">You and {likeCount} others</span>
+        {(isLiked && likeCount == 1) &&
+  <span className="text-sm text-[gray]">You react this post</span> 
+        }
+       {(isLiked && likeCount > 1) &&
+   <span className="text-sm text-[gray]">You and {likeCount-1} others react this post</span>
+        }
+        {(!isLiked) &&
+                <span className="text-sm text-[gray]">             
+                {likeCount} react this post</span> 
+
+        }
+       
       </div>
 
       <div className="divider mx-5 my-0"></div>
@@ -273,7 +292,7 @@ const Post = ({ post ,setResetCount }) => {
           <div className="avatar">
             <div className="w-9 rounded-full">
               <img
-                src={`http://localhost:5000/images/${post.userInfo?.ProfileImgURL}`}
+                src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
                 alt="Profile"
                 className="h-12 w-12 rounded-full"
               />

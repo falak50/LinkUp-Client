@@ -1,10 +1,12 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { AiFillLike } from "react-icons/ai";
 import Reply from "./Reply";
 import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { AuthContext } from "../../../providers/AuthProviders";
 
 const Comment = ({ comment, onDelete }) => {
+  const { curUser } = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
   const owner = JSON.parse(localStorage.getItem("user"));
   const [newComment, setNewComment] = useState("");
@@ -13,7 +15,7 @@ const Comment = ({ comment, onDelete }) => {
   const [editText, setEditText] = useState(comment?.text || "");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  console.log('comment ',comment?.commentUserInfo?.email,curUser?.email)
   const handlelike = () => {
     setIsLiked(!isLiked);
     const payload = {
@@ -161,29 +163,34 @@ const Comment = ({ comment, onDelete }) => {
         </div>
 
         {/* 3-dot icon for edit/delete options */}
-        <div className="relative" ref={dropdownRef}>
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost avatar text-gray-500"
-            onClick={toggleDropdown}
-          >
-            <MoreVertIcon />
-          </div>
-          {isOpen && (
-            <ul
-              className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
-              onClick={closeDropdown}
-            >
-              <li onClick={hanldeEditComment}>
-                <span className="justify-between">Edit</span>
-              </li>
-              <li onClick={hanldeDeleteComment}>
-                <span>Delete</span>
-              </li>
-            </ul>
-          )}
-        </div>
+        {comment?.commentUserInfo?.email==curUser?.email &&
+         <div className="relative" ref={dropdownRef}>
+         <div
+           tabIndex={0}
+           role="button"
+           className="btn btn-ghost avatar text-gray-500"
+           onClick={toggleDropdown}
+         >
+           <MoreVertIcon />
+         </div>
+
+         {isOpen && (
+           <ul
+             className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
+             onClick={closeDropdown}
+           >
+             <li onClick={hanldeEditComment}>
+               <span className="justify-between">Edit</span>
+             </li>
+             <li onClick={hanldeDeleteComment}>
+               <span>Delete</span>
+             </li>
+           </ul>
+         )}
+       </div>
+
+        }
+       
           {/*end 3-dot icon for edit/delete options */}
       </div>
 
@@ -209,7 +216,7 @@ const Comment = ({ comment, onDelete }) => {
             <div className="avatar">
               <div className="w-8 rounded-full">
                 <img
-                  src={`http://localhost:5000/images/${owner?.ProfileImgURL}`}
+                  src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
                   alt="Profile"
                   className="h-12 w-12 rounded-full"
                 />
@@ -229,7 +236,7 @@ const Comment = ({ comment, onDelete }) => {
           </form>
         </div>
 
-        <button onClick={handleReply}>Click to load replies</button>
+        {/* <button onClick={handleReply}>Click to load replies</button> */}
 
         <div>
           {replys.map((reply, index) => (

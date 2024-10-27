@@ -1,15 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { AiFillLike } from "react-icons/ai";
 import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { AuthContext } from "../../../providers/AuthProviders";
 
 export default function Reply({ reply, onReplyDelete }) {
-  const owner = JSON.parse(localStorage.getItem("user"));
+  const { curUser } = useContext(AuthContext);
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(reply?.text || "");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+ console.log('reply',reply?.
+  userInfo?.email)
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -93,7 +95,9 @@ export default function Reply({ reply, onReplyDelete }) {
       </div>
 
       {/* 3-dot icon for edit/delete options */}
-      <div ref={dropdownRef} className="">
+      {reply?.
+  userInfo?.email == curUser?.email && 
+        <div ref={dropdownRef} className="">
         <div
           tabIndex={0}
           role="button"
@@ -116,6 +120,8 @@ export default function Reply({ reply, onReplyDelete }) {
           </ul>
         )}
       </div>
+      }
+      
     </div>
   );
 }
