@@ -15,7 +15,7 @@ const SocialLogin = () => {
         googleSignIn()
         .then(result =>{
             const loggedInUser = result.user;
-            console.log(loggedInUser);
+            console.log("firebase user",loggedInUser);
             const saveUser = {first_name: loggedInUser.displayName,email: loggedInUser.email}
             fetch('http://localhost:5000/users',{
                 method:'POST',
@@ -27,7 +27,7 @@ const SocialLogin = () => {
               .then(res => res.json())
               .then( (res) => {
 
-                console.log('social log in done res',res)
+                // console.log('social log in done res',res)
                if(loggedInUser?.email){
                 fetch(`http://localhost:5000/users/${loggedInUser.email}`)
                 .then((response) => {
@@ -37,7 +37,7 @@ const SocialLogin = () => {
                   return response.json(); // Parse JSON response asynchronously
                 })
                 .then((user) => {
-                  console.log("User data: --- infolol", user); // Handle user data here
+                  // console.log("User data: --- infolol", user); // Handle user data here
                   // Perform additional actions if needed
                   Swal.fire({
                     position: "top-end",

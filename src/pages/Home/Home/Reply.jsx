@@ -10,8 +10,8 @@ export default function Reply({ reply, onReplyDelete }) {
   const [editText, setEditText] = useState(reply?.text || "");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
- console.log('reply',reply?.
-  userInfo?.email)
+//  console.log('reply',reply?.
+//   userInfo?.email)
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -36,7 +36,7 @@ export default function Reply({ reply, onReplyDelete }) {
 
     axios.post(`http://localhost:5000/comments/edit/${reply._id}`, payload)
       .then(res => {
-        console.log('Reply updated:', res.data);
+        // console.log('Reply updated:', res.data);
         setIsEdit(false);
         reply.text = editText; // Update the reply text in the UI
       })
@@ -46,7 +46,7 @@ export default function Reply({ reply, onReplyDelete }) {
   const handleReplyDelete = () => {
     axios.post(`http://localhost:5000/comments/delete/${reply._id}`)
       .then(res => {
-        console.log('Reply deleted:', res.data);
+        // console.log('Reply deleted:', res.data);
         onReplyDelete(reply._id); // Notify parent component about the deletion
       })
       .catch(err => console.log(err));

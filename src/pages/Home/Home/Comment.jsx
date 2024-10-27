@@ -15,7 +15,7 @@ const Comment = ({ comment, onDelete }) => {
   const [editText, setEditText] = useState(comment?.text || "");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  console.log('comment ',comment?.commentUserInfo?.email,curUser?.email)
+  // console.log('comment ',comment?.commentUserInfo?.email,curUser?.email)
   const handlelike = () => {
     setIsLiked(!isLiked);
     const payload = {

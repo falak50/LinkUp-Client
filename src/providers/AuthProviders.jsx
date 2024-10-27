@@ -42,7 +42,7 @@ const AuthProviders = ({children}) => {
          return signOut(auth);
        }
        const updateUserProfile =  (name) => {
-        console.log('in update function ',name)
+        // console.log('in update function ',name)
         return updateProfile(auth.currentUser, {
             displayName: name
           })
@@ -79,7 +79,7 @@ const AuthProviders = ({children}) => {
           return response.json(); // Parse JSON response asynchronously
         })
         .then((user) => {
-          console.log("User data: --- infolol", user); 
+          // console.log("User data: --- infolol", user); 
           setCurUser(user)
         })
         .catch((error) => {

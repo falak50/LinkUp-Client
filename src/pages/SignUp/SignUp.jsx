@@ -63,16 +63,16 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const onSubmit = data => {
-    console.log("data---->", data);
-    console.log('in submit');
+    // console.log("data---->", data);
+    // console.log('in submit');
 
     createUser(data.email, data.password)
       .then(results => {
-        console.log('in the createUSER');
+        // console.log('in the createUSER');
         const loggedUser = results.user;
-        console.log(loggedUser);
-        console.log('signup->createuser->then->name,url', data.name, data.photoURL);
-        console.log('in create user sign in');
+        console.log('firebase loggedUser singup---->',loggedUser);
+        // console.log('signup->createuser->then->name,url', data.name, data.photoURL);
+        // console.log('in create user sign in');
 
         // Update user profile with name and photoURL
         updateUserProfile(data.name, data.photoURL)

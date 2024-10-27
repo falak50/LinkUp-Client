@@ -19,7 +19,7 @@ const MessagingPage = () => {
       try {
         const response = await axios.get(`http://localhost:5000/chats/${ownEmail}`);
         setFriends(response.data.friends);
-        console.log("Fetched friends:", response.data.friends);
+        // console.log("Fetched friends:", response.data.friends);
       } catch (err) {
         setError(err.message);
       } finally {

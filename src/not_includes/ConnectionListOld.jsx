@@ -67,7 +67,7 @@ const ConnectionList = () => {
       }
       setTotal(data.total);
       setIsMoreLoading(false);
-      console.log("Fetched friends:", fetchedConnections);
+      // console.log("Fetched friends:", fetchedConnections);
     } catch (err) {
       setError(err.message);
     } finally {
