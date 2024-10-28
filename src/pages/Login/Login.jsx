@@ -24,7 +24,7 @@ const Login = () => {
     try {
       const result = await signIn(email, password);
       const user = result.user;
-      console.log('firebase user email singin')
+      console.log('firebase user email singin',user)
       if (user?.email) {
         const response = await fetch(`http://localhost:5000/users/${user.email}`);
         if (!response.ok) throw new Error("Network response was not ok");
