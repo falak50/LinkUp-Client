@@ -10,7 +10,9 @@ import MyNetwork from "../pages/MyNetwork/MyNetwork";
 import Messaging from "../pages/Messaging/Messaging";
 import MessagingCom from "../pages/Messaging/MessagingCom";
 import Joblist from "../pages/Job/Joblist";
-import Notifications from '../pages/Notifications/Notifications';
+import Notifications from "../pages/Notifications/Notifications";
+
+// Routes configuration
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -20,10 +22,6 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
-      // {
-      //     path:'profile',
-      //     element:<PrivateRoute><Profile></Profile></PrivateRoute>
-      // },
       {
         path: "profile/:email",
         element: (
@@ -52,31 +50,31 @@ export const router = createBrowserRouter([
         path: "job",
         element: <Joblist></Joblist>,
       },
-{
-  path: "notifications",
-  element:  <Notifications></Notifications>,
-},
+      {
+        path: "notifications",
+        element: <Notifications></Notifications>,
+      },
       {
         path: "messaging",
         element: <MessagingCom></MessagingCom>,
-        // element:<MessagingPage></MessagingPage>
       },
       {
         path: "messaging1",
         element: <Messaging></Messaging>,
       },
       {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "signup",
-        element: <SignUp></SignUp>,
-      },
-      {
         path: "settings",
         element: <Settings></Settings>,
       },
     ],
+  },
+  // Separate routes for login and signup (outside of Main layout)
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/signup",
+    element: <SignUp></SignUp>,
   },
 ]);
