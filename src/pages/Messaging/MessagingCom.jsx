@@ -30,9 +30,9 @@ const MessagingCom = () => {
     };
 
     fetchFriends();
-  }, [email]);
+  }, [owner?.email]);
 
-  if (loading) return <Load></Load>;
+  if (loading) return <p></p>;
   if (error) return <p>Error: {error}</p>;
 
   const handleClick = (item) => {

@@ -45,6 +45,12 @@ const SocialLogin = () => {
                     title: "User Login Successful.",
                     showConfirmButton: false,
                     timer: 1500,
+                    toast: true,
+                    customClass: {
+                      title: 'swal-title-custom', // Custom title class
+                      popup: 'swal-popup-custom', // Custom popup class
+                    },
+                    timerProgressBar: true,
                   });
                   setOwner(user);
                   localStorage.setItem('user', JSON.stringify(user));

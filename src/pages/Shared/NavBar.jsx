@@ -18,13 +18,20 @@ const NavBar = () => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+  // const handleLogOut = () => {
+  //   logOut()
+  //     .then(() => {})
+  //     .catch((e) => console.log(e));
+  //   navigate("login", { replace: true });
+  // };
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
-      .catch((e) => console.log(e));
-    navigate("login", { replace: true });
-  };
-
+        .then(() => {
+            localStorage.removeItem('user');
+            navigate("login", { replace: true });
+        })
+        .catch((e) => console.log(e));
+   };
   const handleDropdownToggle = () => {
     setDropdownOpen(!isDropdownOpen);
   };
