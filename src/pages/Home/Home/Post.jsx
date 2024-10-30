@@ -235,16 +235,18 @@ const Post = ({ post, setResetCount }) => {
         )}
       </div>
 
-      <div className="flex items-center ">
-        <div className="ml-8 mx-2">
-        <FcLike className="" />
-        </div>
-        <span className="text-sm text-[gray]">
-          {isLiked && likeCount === 1 ? "You reacted to this post" :
-          isLiked && likeCount > 1 ? `You and ${likeCount - 1} others reacted to this post` :
-          !isLiked ? `${likeCount} reacted to this post` : ""}
-        </span>
-      </div>
+      <div className="flex items-center">
+  <div className="ml-8 mx-2">
+    <FcLike />
+  </div>
+  <span className="text-sm text-gray-500">
+    {isLiked && likeCount === 1 
+      ? "You reacted to this post" 
+      : isLiked && likeCount > 1 
+      ? `You and ${likeCount - 1} others reacted to this post` 
+      : `${likeCount} ${likeCount === 1 ? "person has" : "people have"} reacted to this post`}
+  </span>
+</div>
 
       <div className="divider mx-5 my-0"></div>
 
@@ -270,14 +272,22 @@ const Post = ({ post, setResetCount }) => {
        <img src={`http://localhost:5000/images/${owner.ProfileImgURL}`} alt="Profile" className="h-9 w-9 rounded-full" />
      </div>
    </div>
-   <input
+   {/* <input
      type="text"
      className="input input-bordered w-full"
      placeholder="Add a comment..."
      value={newComment}
      onChange={handleCommentChange}
-   />
-   <button type="submit"  className="btn w-[18%] mr-2 btn-primary">Comment</button>
+   /> */}
+     <div className=" w-[90%]">
+              <input
+                className="form-control border-none bg-[#f6f6f6] rounded-lg px-3 py-2 w-full focus:outline-none"
+                placeholder="Write a comment"
+                value={newComment}
+                onChange={handleCommentChange}
+              />
+              </div>
+   <button type="submit"  className="btn w-[18%]  mr-2 btn-primary ">Comment</button>
  </form>
 </div>
 {/* } */}

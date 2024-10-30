@@ -4,7 +4,7 @@ import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AuthContext } from "../../../providers/AuthProviders";
 
-export default function Reply({ reply, onReplyDelete }) {
+export default function Reply({ reply, onReplyDelete,setReset }) {
   const { curUser } = useContext(AuthContext);
   const [isEdit, setIsEdit] = useState(false);
   const [editText, setEditText] = useState(reply?.text || "");
@@ -47,7 +47,8 @@ export default function Reply({ reply, onReplyDelete }) {
     axios.post(`http://localhost:5000/comments/delete/${reply._id}`)
       .then(res => {
         // console.log('Reply deleted:', res.data);
-        onReplyDelete(reply._id); // Notify parent component about the deletion
+        setReset(p=>p+1)
+        // onReplyDelete(reply._id); // Notify parent component about the deletion
       })
       .catch(err => console.log(err));
   };
@@ -86,11 +87,11 @@ export default function Reply({ reply, onReplyDelete }) {
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
             />
-            <button type="submit">Save</button>
-            <button type="button" onClick={() => setIsEdit(false)}>Cancel</button>
+            <button type="submit" className="p-1 font-semibold">Save</button>
+            <button type="button"className="p-1 font-semibold"  onClick={() => setIsEdit(false)}>Cancel</button>
           </form>
         ) : (
-          <div className="text-gray-600 text-sm">{reply?.text}</div>
+          <div className="text-gray-600 text-sm font-medium">{reply?.text}</div>
         )}
       </div>
 
@@ -111,10 +112,10 @@ export default function Reply({ reply, onReplyDelete }) {
             className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
             onClick={closeDropdown}
           >
-            <li onClick={handleReplyEdit}>
-              <span className="justify-between">Edit</span>
+            <li className="font-semibold" onClick={handleReplyEdit}>
+              <span className="justify-betwee ">Edit</span>
             </li>
-            <li onClick={handleReplyDelete}>
+            <li  className="font-semibold"  onClick={handleReplyDelete}>
               <span>Delete</span>
             </li>
           </ul>

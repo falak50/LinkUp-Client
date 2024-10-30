@@ -4,10 +4,12 @@ import Reply from "./Reply";
 import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AuthContext } from "../../../providers/AuthProviders";
+import { Button } from "antd";
 
 const Comment = ({ comment, onDelete }) => {
   const { curUser } = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
+  const [isLikedcnt, setIsLikedcnt] = useState(comment?.likes?.length || 0);
   const owner = JSON.parse(localStorage.getItem("user"));
   const [newComment, setNewComment] = useState("");
   const [replys, setReplys] = useState([]);
@@ -15,8 +17,12 @@ const Comment = ({ comment, onDelete }) => {
   const [editText, setEditText] = useState(comment?.text || "");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [reset,setReset] = useState(0);
+  const [isrepOpen,setIsrepOpen] = useState(false)
   // console.log('comment ',comment?.commentUserInfo?.email,curUser?.email)
   const handlelike = () => {
+    if(isLiked)setIsLikedcnt(p=>p-1);
+    else setIsLikedcnt(p=>p-1)
     setIsLiked(!isLiked);
     const payload = {
       comment_id: comment._id,
@@ -39,7 +45,7 @@ const Comment = ({ comment, onDelete }) => {
     } else {
       setIsLiked(false);
     }
-  }, [comment]);
+  }, [comment,reset]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -78,7 +84,7 @@ const Comment = ({ comment, onDelete }) => {
     if (comment) {
       handleReply();
     }
-  }, [comment]);
+  }, [comment?._id,reset]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -130,7 +136,7 @@ const Comment = ({ comment, onDelete }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
+ console.log('comment', comment)
   return (
     <div>
       <div className="flex items-center mx-4 mt-4 mb-4">
@@ -144,21 +150,21 @@ const Comment = ({ comment, onDelete }) => {
           </div>
         </div>
         {/* flex-grow */}
-        <div className="ml-4 bg-[#f6f6f6] p-2 rounded-[10px] ">
+        <div className="ml-4 bg-[#f6f6f6] px-2 pt-1 rounded-[10px] ">
           <div className="font-semibold">{comment?.commentUserInfo?.first_name} {comment?.commentUserInfo?.last_name}</div>
 
           {isEdit ? (
             <form onSubmit={handleCommentEditSubmit}>
               <input
-                className="form-control border-none bg-[#f6f6f6] rounded-lg py-2 w-full focus:outline-none"
+                className="text-sm font-medium form-control border-none bg-[#f6f6f6] rounded-lg py-2 w-full focus:outline-none"
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
               />
-              <button type="submit">Save</button>
-              <button type="button" onClick={() => setIsEdit(false)}>Cancel</button>
+              <button className="p-1 font-semibold" type="submit">Save</button>
+              <button className="p-1 font-semibold" type="button" onClick={() => setIsEdit(false)}>Cancel</button>
             </form>
           ) : (
-            <div className="text-gray-600 text-sm">{comment?.text}</div>
+            <div className=" text-sm font-medium py-2">{comment?.text}</div>
           )}
         </div>
 
@@ -180,10 +186,10 @@ const Comment = ({ comment, onDelete }) => {
              onClick={closeDropdown}
            >
              <li onClick={hanldeEditComment}>
-               <span className="justify-between">Edit</span>
+               <span className="justify-between font-semibold">Edit</span>
              </li>
              <li onClick={hanldeDeleteComment}>
-               <span>Delete</span>
+               <span className="font-semibold">Delete</span>
              </li>
            </ul>
          )}
@@ -195,20 +201,22 @@ const Comment = ({ comment, onDelete }) => {
       </div>
 
       <div className="_comment_reply_num mx-[60px]">
-        <ul className="_comment_reply_list flex">
-          <li onClick={handlelike} className="mr-0">
+        <ul className="_comment_reply_list flex gap-1 ">
+          {/* <p>{isLikedcnt}</p> */}
+          <button onClick={handlelike} className="mr-0 px-2">
             {isLiked ? (
-              <AiFillLike className="text-xl text-blue-500" style={{ fontSize: "1.25rem" }} />
+               <p className="font-semibold text-[blue]">Like</p>
             ) : (
-              <AiFillLike className="text-xl text-gray-500" style={{ fontSize: "1.25rem" }} />
+                <p  className="font-semibold">Like</p>
             )}
-          </li>
-          <li>
-            <span className="ml-1">Reply.</span>
-          </li>
+          </button>
+          <Button onClick={()=>setIsrepOpen(!isrepOpen)}>
+            <span className="ml-1 font-semibold">Reply</span>
+          </Button>
         </ul>
-
-        <div className="flex flex-col space-y-4 m-3 rounded-lg">
+{isrepOpen &&
+<>
+<div className="flex flex-col space-y-4 m-3 rounded-lg">
           <form
             onSubmit={handleCommentSubmit}
             className="flex items-start space-x-1"
@@ -240,9 +248,12 @@ const Comment = ({ comment, onDelete }) => {
 
         <div>
           {replys.map((reply, index) => (
-            <Reply key={index} reply={reply} />
+            <Reply key={index} reply={reply} setReset={setReset} />
           ))}
         </div>
+</>
+}
+       
       </div>
     </div>
   );
