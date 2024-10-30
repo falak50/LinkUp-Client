@@ -22,13 +22,13 @@ const Post = ({ post, setResetCount }) => {
   const [likeCount, setLikeCount] = useState(post.likes?.length || 0);
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  
+  const [isCmtOper,setIsCmtOper] = useState(false)
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     const likerIds = post.likes || [];
     setIsLiked(likerIds.includes(owner._id));
-    setComments(post.comments);
+   setComments(post.comments);
   }, [post, owner._id]);
 
   const handleCommentChange = (e) => setNewComment(e.target.value);
@@ -231,9 +231,9 @@ const Post = ({ post, setResetCount }) => {
         )}
       </div>
 
-      <div className="flex items-center mx-5">
-        <div className="w-[10%]">
-          <img src="https://as2.ftcdn.net/v2/jpg/05/88/10/25/1000_F_588102589_x5jlJUTfRCm0I5MLM9ESIQSck6wWZ56i.jpg" />
+      <div className="flex items-center ">
+        <div className="ml-8 mx-2">
+        <FcLike className="" />
         </div>
         <span className="text-sm text-[gray]">
           {isLiked && likeCount === 1 ? "You reacted to this post" :
@@ -245,40 +245,38 @@ const Post = ({ post, setResetCount }) => {
       <div className="divider mx-5 my-0"></div>
 
       <div className="flex justify-between items-center mb-4 mx-5">
-        <button className="btn flex gap-2 text-xl items-center" onClick={handleLike}>
+        <button className="btn w-[47%] flex gap-2 text-xl items-center" onClick={handleLike}>
           {isLiked ? <FcLike className="text-3xl" /> : <FcLikePlaceholder className="text-3xl" />}
           Love
         </button>
-        <button className="btn flex gap-2 text-xl items-center">
+        <button onClick={()=>setIsCmtOper(!isCmtOper)}  className="btn w-[47%] flex gap-2 text-xl items-center">
           <FaRegCommentDots className="text-2xl" /> Comment
         </button>
-        <button className="btn flex gap-2 text-xl items-center text-red">
+        {/* <button className="btn flex gap-2 text-xl items-center text-red">
           <IoMdShareAlt className="text-2xl" /> Share
-        </button>
+        </button> */}
       </div>
-
-      <div className="flex flex-col space-y-4 m-3 rounded-lg">
-        <form onSubmit={handleCommentSubmit} className="flex items-start space-x-1">
-          <div className="avatar">
-            <div className="w-9 rounded-full">
-              <img src={`http://localhost:5000/images/${owner.ProfileImgURL}`} alt="Profile" className="h-9 w-9 rounded-full" />
-            </div>
-          </div>
-          <input
-            type="text"
-            className="input input-bordered w-full"
-            placeholder="Add a comment..."
-            value={newComment}
-            onChange={handleCommentChange}
-          />
-          <button type="submit" className="btn btn-primary">Post</button>
-        </form>
-
-      
-        <div>
-        <Comments comments={comments} />
-      </div>
-      </div>
+{/* {isCmtOper &&  */}
+ <div className="flex flex-col space-y-4 m-3 rounded-lg">
+ <form onSubmit={handleCommentSubmit} className="flex items-start space-x-1">
+   <div className="avatar">
+     <div className="w-9 rounded-full">
+       <img src={`http://localhost:5000/images/${owner.ProfileImgURL}`} alt="Profile" className="h-9 w-9 rounded-full" />
+     </div>
+   </div>
+   <input
+     type="text"
+     className="input input-bordered w-full"
+     placeholder="Add a comment..."
+     value={newComment}
+     onChange={handleCommentChange}
+   />
+   <button type="submit"  className="btn w-[18%] mr-2 btn-primary">Comment</button>
+ </form>
+</div>
+{/* } */}
+<Comments comments={comments} />
+     
     </div>
   );
 };
