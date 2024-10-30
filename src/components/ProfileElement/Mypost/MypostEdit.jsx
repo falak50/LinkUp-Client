@@ -7,12 +7,13 @@ import { useForm } from 'react-hook-form';
 import { IoMdClose } from 'react-icons/io';
 import { IoImagesSharp } from "react-icons/io5";
 import axios from 'axios';
-import useUserinfo from '../../../hooks/useUserinfo';
-import useMypost from '../../../hooks/useMypost';
+// import useUserinfo from '../../../hooks/useUserinfo';
+// import useMypost from '../../../hooks/useMypost';
+import { Button, Image } from 'antd';
 
 const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
-    const [userInfo, ] = useUserinfo();
-    const [, Mypostsrefetch, , ] = useMypost();
+    // const [userInfo, ] = useUserinfo();
+    // const [, Mypostsrefetch, , ] = useMypost();
     const [files, setFiles] = useState([]);
     const [inputValue, setInputValue] = useState(post.description || '');
     // const [open, setOpen] = useState(false);
@@ -97,6 +98,75 @@ const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
         event.target.style.height = 'auto';
         event.target.style.height = event.target.scrollHeight + 'px';
     };
+    
+    const renderMedia = (fileObj) => {
+        const url = fileObj.file?.name;
+        const mediaType = url.split('.').pop().toLowerCase(); // Ensure the file type is in lowercase
+        console.log('edit url', url);
+        
+        // Determine mediaSrc dynamically
+        const mediaSrc = fileObj.isExisting 
+          ? `http://localhost:5000/images/${url}`
+          : URL.createObjectURL(fileObj.file);
+      
+        // List of accepted image file extensions
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+      
+        return (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100%' }}>
+            {(() => {
+              switch (mediaType) {
+                case 'pdf':
+                  return (
+                    <div style={{ position: 'relative', width: '100%', height: '300px' }}>
+                      <iframe
+                        src={mediaSrc}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 'none' }}
+                        title="PDF Preview"
+                      />
+                    </div>
+                  );
+                case 'txt':
+                  return (
+                    <a href={mediaSrc} target="_blank" rel="noopener noreferrer">
+                      <Button type="link">Download File</Button>
+                    </a>
+                  );
+                case 'mp4':
+                  return (
+                    <video controls className="w-full h-full">
+                      <source src={mediaSrc} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  );
+                default:
+                  if (imageExtensions.includes(mediaType)) {
+                    return (
+                      <Image
+                        src={mediaSrc}
+                        style={{ marginRight: '10px' }}
+                        alt="Post image"
+                        className="object-cover w-full h-full"
+                      />
+                    );
+                  } else {
+                    return (
+                      <div>
+                        <a href={mediaSrc} target="_blank" rel="noopener noreferrer">
+                          <Button type="link">Download File</Button>
+                        </a>
+                      </div>
+                    );
+                  }
+              }
+            })()}
+          </div>
+        );
+      };
+      
+    
 
     return (
         <React.Fragment>
@@ -161,14 +231,24 @@ const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
                             />
                         </div>
 
-                        <div>
+                     
+                      
+
+                        <div className="mt-2  justify-center bg-[#f7f7f6] rounded-lg p-2 w-full grid grid-cols-2 gap-2 ">
                             {files.map((fileObj, index) => (
                                 <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                                    <img
+                                    {/* <img
                                         src={fileObj.isExisting ? `http://localhost:5000/images/${fileObj.file?.name}` : URL.createObjectURL(fileObj.file)}
                                         alt={`Image ${index}`}
                                         style={{ marginRight: '10px' }}
-                                    />
+                                    /> */}
+                                    
+                                      <div key={index} className="w-full h-48 overflow-hidden rounded-lg">
+       {renderMedia(fileObj)}
+       
+       
+     </div>
+
                                     <button
                                         type='button'
                                         className='btn btn-circle btn-sm'
