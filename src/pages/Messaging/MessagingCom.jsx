@@ -14,12 +14,14 @@ const MessagingCom = () => {
   const owner = JSON.parse(localStorage.getItem('user'));
   const ownEmail =owner?.email;
   const [email,setEmail] = useState('NORMAL');
+  const {  curUser } = useContext(AuthContext);
   // const [other,setOther] = useState(null)
   // const [isSelect,setIsSelect]= useState(false)
+  
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/chats/${ownEmail}`);
+        const response = await axios.get(`http://localhost:5000/chats/${curUser?.email}`);
         setFriends(response.data.friends);
         // console.log("Fetched friends:", response.data.friends);
       } catch (err) {
@@ -29,8 +31,8 @@ const MessagingCom = () => {
       }
     };
 
-    fetchFriends();
-  }, [owner?.email]);
+   if(curUser?.email)fetchFriends();
+  }, [curUser?.email]);
 
   if (loading) return <p></p>;
   if (error) return <p>Error: {error}</p>;

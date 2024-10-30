@@ -42,7 +42,7 @@ export default function FriendsPost({ resetCount, setResetCount }) {
 
   return (
     <div>
-        posts={posts} setResetCount={setResetCount} />
+         <Posts posts={posts} setResetCount={setResetCount} />
       <div className="flex justify-center my-6">
         <Button
           onClick={() => {

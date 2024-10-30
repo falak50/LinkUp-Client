@@ -2,7 +2,7 @@ import { useState } from "react";
 import ConnectionList from "./ConnectionList";
 import ManageConnections from "./ManageConnections";
 export default function MyNetwork() {
-  const [isConnetion, setIsConnetion] = useState(true);
+  const [isConnetion, setIsConnetion] = useState(false);
   return (
     <div className=" mt-2 gap-4">
       <div className="p-4 bg-white rounded-lg w-[77%]">
