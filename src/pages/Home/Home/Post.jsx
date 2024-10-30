@@ -194,7 +194,11 @@ const Post = ({ post, setResetCount }) => {
           )}
         </div>
 
-        <p className="text-gray-700">{post.description}</p>
+       <div className="font-serif">
+       <p  style={{ whiteSpace: 'pre-line' }}>{post.description}</p>
+       </div>
+     
+       
 
         {post.imgUrls.length == 1 &&
  <div className="mt-2  flex justify-center bg-[#f7f7f6] rounded-lg p-2 w-full">

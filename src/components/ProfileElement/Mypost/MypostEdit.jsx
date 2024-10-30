@@ -201,7 +201,7 @@ const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
                 }}
             >
                 <DialogTitle id="scroll-dialog-title" className="flex justify-between">
-                    <div className="text-2xl mt-2 mx-6">Edit Post</div>
+                    <div className="text-2xl mt-2 mx-6 font-sans">Edit Post</div>
                     <button
                         onClick={handleClose}
                         className="btn btn-circle border-none bg-white hover:bg-[#ededec] text-[#6a6a6a] text-2xl"
@@ -215,7 +215,7 @@ const MypostEdit = ({ post ,open , setOpen ,setResetCount }) => {
                         onSubmit={handleSubmit(onSubmit)}
                         className="card-body mb-0 mt-0 top-[-20px] relative"
                     >
-                        <div className="form-control">
+                        <div className="form-control font-serif">
                             <textarea
                                 value={inputValue}
                                 onInput={handleInput}

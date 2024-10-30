@@ -205,7 +205,7 @@ const MypostHome = ({ open, setOpen, setResetCount }) => {
             onSubmit={handleSubmit(onSubmit)}
             className="mb-0"
           >
-            <div className="form-control p-auto ">
+            <div className="form-control p-auto font-serif">
               <textarea
                 placeholder="What do you want to talk about?"
                 {...register("description")}
