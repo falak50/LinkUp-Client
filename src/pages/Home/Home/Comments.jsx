@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import Comment from "./Comment";
 
-const Comments = ({ comments }) => {
-    const [commentsm, setCommentsm] = useState(comments);
+const Comments = ({ comments,setComments }) => {
+    // const [comments, setComments] = useState(comments);
 
-    useEffect(() => {
-        setCommentsm(comments);
-    }, [comments]);
+    // useEffect(() => {
+    //     setComments(comments);
+    // }, [comments]);
 
     const onDelete = (commentId) => {
-        // Filter out the deleted comment from the commentsm state
-        const updatedComments = commentsm.filter(comment => comment._id !== commentId);
-        setCommentsm(updatedComments);
+        // Filter out the deleted comment from the comments state
+        const updatedComments = comments.filter(comment => comment._id !== commentId);
+        setComments(updatedComments);
     };
 
     return (
         <div className="">
-            {commentsm.map((comment, index) => (
+            {comments.map((comment, index) => (
                 <Comment key={index} comment={comment} onDelete={onDelete} />
             ))}
         </div>

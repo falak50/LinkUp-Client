@@ -29,7 +29,7 @@ const Post = ({ post, setResetCount }) => {
     const likerIds = post.likes || [];
     setIsLiked(likerIds.includes(owner._id));
    setComments(post.comments);
-  }, [post, owner._id]);
+  }, [post._id]);
 
   const handleCommentChange = (e) => setNewComment(e.target.value);
 
@@ -261,7 +261,9 @@ const Post = ({ post, setResetCount }) => {
         </button> */}
       </div>
 {/* {isCmtOper &&  */}
- <div className="flex flex-col space-y-4 m-3 rounded-lg">
+{isCmtOper &&
+<>
+<div className="flex flex-col space-y-4 m-3 rounded-lg">
  <form onSubmit={handleCommentSubmit} className="flex items-start space-x-1">
    <div className="avatar">
      <div className="w-9 rounded-full">
@@ -279,7 +281,10 @@ const Post = ({ post, setResetCount }) => {
  </form>
 </div>
 {/* } */}
-<Comments comments={comments} />
+<Comments comments={comments} setComments={setComments} />
+</>
+}
+ 
      
     </div>
   );
