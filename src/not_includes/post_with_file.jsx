@@ -83,85 +83,25 @@ const Post = ({ post, setResetCount }) => {
   const closeDropdown = () => setIsOpen(false);
 
   const renderMedia = (url) => {
-  const mediaType = url.split('.').pop().toLowerCase(); // Ensure the file type is in lowercase
-  const mediaSrc = `http://localhost:5000/images/${url}`;
-  
-  // List of accepted image file extensions
-  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
-
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100%' }}>
-      {(() => {
-        switch (mediaType) {
-          case 'pdf':
-            return (
-              <div style={{ position: 'relative', width: '100%', height: '300px' }}>
-                <iframe
-                  src={mediaSrc}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 'none' }}
-                  title="PDF Preview"
-                />
-                <a
-                  href={mediaSrc}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    zIndex: 1,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textDecoration: 'none',
-                    color: 'transparent',
-                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  }}
-                >
-                  <Button type="link" style={{ color: 'black' }}>Open PDF</Button>
-                </a>
-              </div>
-            );
-          case 'txt':
-            return (
-              <a href={mediaSrc} target="_blank" rel="noopener noreferrer">
-                <Button type="link">Download File</Button>
-              </a>
-            );
-          case 'mp4':
-            return (
-              <video controls className="w-full h-full">
-                <source src={mediaSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            );
-          default:
-            if (imageExtensions.includes(mediaType)) {
-              return   <Image
-              width={post.imgUrls.length === 1 ? 500 : 290} 
-              src={mediaSrc}
-              alt={`Post image`}
-              className="object-cover w-full h-full"
-            />
-            } else {
-              return (
-                <div>
-                  <a href={mediaSrc} target="_blank" rel="noopener noreferrer">
-                    <Button type="link">Download File</Button> {/* Button for unknown file types */}
-                  </a>
-                </div>
-              );
-            }
-        }
-      })()}
-    </div>
-  );
-};
-  
+    const mediaType = url.split('.').pop();
+    const mediaSrc = `http://localhost:5000/images/${url}`;
+    
+    switch (mediaType) {
+      case 'pdf':
+        return <a href={mediaSrc} target="_blank" rel="noopener noreferrer"><Button type="link">View PDF</Button></a>;
+      case 'txt':
+        return <a href={mediaSrc} target="_blank" rel="noopener noreferrer"><Button type="link">Download TXT</Button></a>;
+      case 'mp4':
+        return (
+          <video controls className="w-full h-full">
+            <source src={mediaSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        );
+      default:
+        return <Image width={300} src={mediaSrc} alt={`Post image`} className="object-cover w-full h-full" />;
+    }
+  };
 
   return (
     <div className="w-full bg-white shadow-md rounded-lg overflow-hidden py-2 my-5 pb-4">
@@ -197,7 +137,7 @@ const Post = ({ post, setResetCount }) => {
         <p className="text-gray-700">{post.description}</p>
 
         {post.imgUrls.length == 1 &&
- <div className="mt-2  flex justify-center bg-[#f7f7f6] rounded-lg p-2 w-full">
+ <div className="mt-2 flex justify-center bg-[#f7f7f6] rounded-lg p-2 w-full">
  <div className="w-full">
    {displayedImages.map((url, index) => (
      <div key={index} className="w-full overflow-hidden rounded-lg flex justify-center">
@@ -274,10 +214,13 @@ const Post = ({ post, setResetCount }) => {
           <button type="submit" className="btn btn-primary">Post</button>
         </form>
 
-      
-        <div>
-        <Comments comments={comments} />
-      </div>
+        {/* {comments.length > 0 && (
+          <div className="flex flex-col">
+            {comments.map((comment) => (
+              <Comments key={comment._id} comment={comment} />
+            ))}
+          </div>
+        )} */}
       </div>
     </div>
   );
