@@ -9,16 +9,10 @@ import { IoImagesSharp } from "react-icons/io5";
 import axios from "axios";
 import useMypost from "../../hooks/useMypost";
 import {
-  CardActionArea,
-  CardContent,
-  CardHeader,
-  CardMedia,
   IconButton,
 } from "@mui/material";
-import { Avatar, Card, Typography } from "antd";
 import dpImg from "../../assets/dpImg.jpg";
 import { AuthContext } from "../../providers/AuthProviders";
-const pathLink = "http://localhost:5000/images/";
 const MypostHome = ({ open, setOpen, setResetCount }) => {
   // const [userInfo, ] = useUserinfo();
   const { curUser } = useContext(AuthContext);
@@ -130,11 +124,15 @@ const MypostHome = ({ open, setOpen, setResetCount }) => {
           <div className="flex items-center mb-2">
             <div className="avatar">
               <div className="w-12 rounded-full">
-                <img
-                  src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
-                  alt="Profile"
-                  className="h-12 w-12 rounded-full"
-                />
+                  <img
+             className="h-12 w-12 rounded-full"
+              src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = dpImg;
+              }}
+              alt="Profile"
+            />
               </div>
             </div>
             <div className="ml-4 flex-grow">
