@@ -11,6 +11,9 @@ import Messaging from "../pages/Messaging/Messaging";
 import MessagingCom from "../pages/Messaging/MessagingCom";
 import Joblist from "../pages/Job/Joblist";
 import Notifications from "../pages/Notifications/Notifications";
+import Marketplace from './../pages/Marketplace/Marketplace';
+import Category from "../pages/Marketplace/Category";
+import Product from "../pages/Marketplace/Product";
 
 // Routes configuration
 export const router = createBrowserRouter([
@@ -65,6 +68,18 @@ export const router = createBrowserRouter([
       {
         path: "settings",
         element: <Settings></Settings>,
+      },
+      {
+        path: "marketplace",
+        element: <Marketplace></Marketplace>,
+      },
+      {
+        path: "marketplace/category/:path", // Dynamic category route
+        element: <Category />,
+      },
+      {
+        path: "marketplace/product/:id", // Dynamic product route
+        element: <Product />,
       },
     ],
   },
