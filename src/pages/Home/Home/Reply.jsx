@@ -3,7 +3,8 @@ import { AiFillLike } from "react-icons/ai";
 import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AuthContext } from "../../../providers/AuthProviders";
-
+const pathLink = "http://localhost:5000/images/";
+import dpImg from "../../../assets/dpImg.jpg";
 export default function Reply({ reply, onReplyDelete,setReset }) {
   const { curUser } = useContext(AuthContext);
   const [isEdit, setIsEdit] = useState(false);
@@ -70,7 +71,12 @@ export default function Reply({ reply, onReplyDelete,setReset }) {
       <div className="avatar">
         <div className="w-8 rounded-full">
           <img
-            src={`http://localhost:5000/images/${reply?.userInfo?.ProfileImgURL}`}
+            // src={`http://localhost:5000/images/${reply?.userInfo?.ProfileImgURL}`}
+            src={pathLink + reply?.userInfo?.ProfileImgURL|| dpImg}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = dpImg;
+                  }}
             alt="Profile"
             className="h-12 w-12 rounded-full"
           />

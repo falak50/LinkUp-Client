@@ -5,8 +5,10 @@ import axios from "axios";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { AuthContext } from "../../../providers/AuthProviders";
 import { Button } from "antd";
-
+const pathLink = "http://localhost:5000/images/";
+import dpImg from "../../../assets/dpImg.jpg";
 const Comment = ({ comment, onDelete }) => {
+  console.log('comment M',comment)
   const { curUser } = useContext(AuthContext);
   const [isLiked, setIsLiked] = useState(false);
   const [isLikedcnt, setIsLikedcnt] = useState(comment?.likes?.length || 0);
@@ -143,7 +145,12 @@ const Comment = ({ comment, onDelete }) => {
         <div className="avatar">
           <div className="w-8 rounded-full">
             <img
-              src={`http://localhost:5000/images/${comment?.commentUserInfo?.ProfileImgURL}`}
+              // src={`http://localhost:5000/images/${comment?.commentUserInfo?.ProfileImgURL}`}
+              src={pathLink + comment?.commentUserInfo?.ProfileImgURL || dpImg}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = dpImg;
+              }}
               alt="Profile"
               className="h-12 w-12 rounded-full"
             />
@@ -224,7 +231,12 @@ const Comment = ({ comment, onDelete }) => {
             <div className="avatar">
               <div className="w-8 rounded-full">
                 <img
-                  src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
+                  // src={`http://localhost:5000/images/${curUser?.ProfileImgURL}`}
+                  src={pathLink + curUser?.ProfileImgURL || dpImg}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = dpImg;
+                  }}
                   alt="Profile"
                   className="h-12 w-12 rounded-full"
                 />

@@ -2,7 +2,8 @@ import { useState, useRef } from 'react';
 import { Button, Modal, Form, Input, Radio, Select } from 'antd';
 import axios from 'axios';
 import { IoMdAdd } from 'react-icons/io';
-
+import { useParams } from 'react-router-dom';
+const pathLink = "http://localhost:5000/images/";
 const { TextArea } = Input;
 const { Option } = Select;
 const categories = [
@@ -29,7 +30,6 @@ export default function SellPost() {
   const [form] = Form.useForm();
   const [images, setImages] = useState([]);
   const fileInputRef = useRef(null);
-
   const showModal = () => {
     setOpen(true);
   };
@@ -62,11 +62,11 @@ export default function SellPost() {
           formData.append(key, values[key]);
         });
   
-        axios.post('http://localhost:5000/products', formData)
+        axios.post('http://localhost:5000/products/addSellPost', formData)
           .then((res) => {
             console.log('Response:', res);
-            setOpen(false);
-            form.resetFields();
+            // setOpen(false);
+            // form.resetFields();
             setImages([]);
           })
           .catch((err) => console.error('Error:', err));
@@ -128,6 +128,7 @@ export default function SellPost() {
     ))}
   </Select>
 </Form.Item>
+
 
 
           <Form.Item
