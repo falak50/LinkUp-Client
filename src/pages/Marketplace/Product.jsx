@@ -8,10 +8,10 @@ const createThumbnailUrl = (originalUrl) => {
 };
 
 // Product object definition
+//   categoryCode : 'mobiles',
 const product = {
   title: "Samsung Galaxy S20 Ultra - 12/256GB 5G",
   category: "Mobile Phones",
-  categoryCode : 'mobiles',
   location: "Dhaka, Bangladesh",
   condition: "Used",
   brand: "Samsung",
@@ -21,9 +21,8 @@ const product = {
   features: "4G . 5G .     Micro SIM . USB Type-C Port, Fast Charging, Flash Charging, Android, Expandable Memory, 12 GB RAM, Dual Camera, Triple Camera, Dual LED Flash, Quad LED Flash, Bluetooth, WiFi, GPS, Fingerprint Sensor, Infrared Port",
   description: "Fresh set. No scratch. Like new looking.",
   specifications: "RAM: 12 GB, Internal Storage: 256 GB, 5G Version, Main Camera: 108 MP, Zoom: 100X, Front Camera: 40 MP, Latest updated version",
-  additionalNote: "Only Set & Cash memo will be given.",
   price: "Fixed",
-  priceAmount: 75000, // assuming the price is 75,000 in the relevant currency
+  priceAmount: 75000,
   status : "Available",
   images: [
     'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=600&q=60',
