@@ -26,6 +26,7 @@ export default function PrivateComents({post}) {
       post_id: post._id,
       parent_comment_id: null,
       uid: owner._id,
+      type:'product'
     };
 //   console.log('payload ',payload)
     // return 

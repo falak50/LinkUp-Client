@@ -14,6 +14,7 @@ import Notifications from "../pages/Notifications/Notifications";
 import Marketplace from './../pages/Marketplace/Marketplace';
 import Category from "../pages/Marketplace/Category";
 import Product from "../pages/Marketplace/Product";
+import SinglePost from "../pages/Home/Home/SinglePost";
 
 // Routes configuration
 export const router = createBrowserRouter([
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "marketplace/product/:id", // Dynamic product route
         element: <Product />,
+      },
+      {
+        path: "post/:id", // Dynamic product route
+        element: <SinglePost></SinglePost>,
       },
     ],
   },

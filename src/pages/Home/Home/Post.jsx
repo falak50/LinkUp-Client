@@ -62,6 +62,7 @@ const Post = ({ post, setResetCount }) => {
       post_id: post._id,
       parent_comment_id: null,
       uid: owner._id,
+      type:'post'
     };
 
     axios
