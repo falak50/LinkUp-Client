@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProviders";
 import { FaHome, FaSortDown, FaUserFriends } from "react-icons/fa";
 import { GiAchievement } from "react-icons/gi";
-import { MdNotificationsActive } from "react-icons/md";
+import { MdNotificationsActive, MdShoppingCart } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import dpImg from "../../assets/dpImg.jpg";
 import { IoIosLogOut } from "react-icons/io";
@@ -99,6 +99,22 @@ const NavBar = () => {
           <div className="flex flex-col items-center">
             <MdNotificationsActive className="text-2xl" />
             <h1 className="text-sm hidden md:block">Notifications</h1>
+          </div>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/marketplace"
+          className={({ isActive }) =>
+            isActive
+              ? "text-black border-b-2 border-black border-solid rounded-none"
+              : "text-gray-500"
+          }
+        >
+          <div className="flex flex-col items-center">
+            {/* <MdNotificationsActive className="text-2xl" /> */}
+            <MdShoppingCart className="text-2xl"  />
+            <h1 className="text-sm hidden md:block">Marketplace</h1>
           </div>
         </NavLink>
       </li>
