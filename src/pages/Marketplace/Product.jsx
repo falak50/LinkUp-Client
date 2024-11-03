@@ -11,6 +11,9 @@ import Swal from 'sweetalert2';
 const pathLink = "http://localhost:5000/images/";
 import SellPost from "./MarketplaceCom/SellPost";
 import EditSellPost from './MarketplaceCom/EditSellPost';
+import { timeAgo } from "../Home/Home/utils";
+import { useNavigate } from 'react-router-dom';
+
 const createThumbnailUrl = (originalUrl) => {
   return originalUrl.replace(/w=\d+/, 'w=100'); // Adjust width parameter to create a thumbnail
 };
@@ -26,7 +29,8 @@ const Product = () => {
   const [open, setOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const closeDropdown = () => setIsOpen(false);
-
+  const [timeAgoText,setTimeAgoText] = useState('')
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -41,6 +45,11 @@ const Product = () => {
         }));
         setImageItems(images);
         setIsLoading(false);
+        if(fetchedProduct?.createdAt){
+        const str = timeAgo(fetchedProduct?.createdAt);
+        setTimeAgoText(str);
+        console.log('str ',str)
+      }
       })
       .catch((error) => {
         console.error('Error fetching product:', error);
@@ -49,6 +58,11 @@ const Product = () => {
   }, [id,open]);
 
   const handleDeletePost = () => {
+    const pathname = product.category;
+
+    console.log('pathname',pathname);
+    // return
+    // /marketplace/category/${category.pathname}`
     Swal.fire({
       title: "Are you sure?",
       text: "You want to delete your post?",
@@ -58,15 +72,15 @@ const Product = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      return
-      // if (result.isConfirmed) {
-      //   axios
-      //     .post(`http://localhost:5000/posts/delete/${post._id}`)
-      //     .then(() => {
-      //       setResetCount((p) => p + 1);
-      //       Swal.fire("Deleted!", "Your post has been deleted.", "success");
-      //     });
-      // }
+      // return
+      if (result.isConfirmed) {
+        axios
+          .post(`http://localhost:5000/products/deleteSellPost/${id}`)
+          .then(() => {
+            Swal.fire("Deleted!", "Your post has been deleted.", "success");
+            navigate(`/marketplace/category/${pathname}`);
+          });
+      }
     });
   };
 
@@ -80,7 +94,8 @@ const Product = () => {
 
 console.log('pro ',product?.uid)
 console.log('pro cur ',curUser?._id)
-
+console.log('time ',product)
+console.log('str 2',timeAgoText)
   return (
    <>
    <EditSellPost open={open} setOpen={setOpen} product={product}></EditSellPost>
@@ -96,10 +111,11 @@ console.log('pro cur ',curUser?._id)
   </style>
 
 <dir>
-  <div>
-  <h1 className="text-2xl font-bold">{product.title}</h1>
-  <p className="text-sm text-gray-600">Posted on 01 Nov 9:34 pm, {product.location}</p>
-  </div>
+<div className='flex justify-between items-center '>
+<div>
+  <h1 className="text-2xl font-bold">{product?.title}</h1>
+  <p className="text-sm text-gray-600">{timeAgoText} {product.location}</p>
+</div>
   <div>
   {product?.uid === curUser?._id && (
             <div className="flex-none ml-4">
@@ -130,17 +146,22 @@ console.log('pro cur ',curUser?._id)
             </div>
           )}
   </div>
+</div>
+  
 </dir>
 
   {/* need dyanmic date */}
-
+  <br />
+  <br />
+  <br /><br />
+  <br />
   <ImageGallery 
     items={imageItems} 
     additionalClass="custom-image-gallery" 
     showFullscreenButton={false}
   />
 
-  <div className="mt-4">
+  <div className="mt-4 px-4">
     <h2 className="text-3xl font-semibold py-4">Tk {product.priceAmount}</h2>
     <p className="text-gray-700"><strong>Condition:</strong> {product.condition}</p>
     <p className="text-gray-700"><strong>Brand:</strong> {product.brand}</p>
@@ -149,7 +170,7 @@ console.log('pro cur ',curUser?._id)
     <p className="text-gray-700"><strong>Authenticity:</strong> {product.authenticity}</p>
   </div>
 
-  <div className="mt-4">
+  <div className="mt-4 px-4">
     <h3 className="text-lg font-semibold">Features:</h3>
     <ul className="list-disc list-inside text-gray-700">
       {product.features?.replace(/\. /g, ', ').split(', ').map((feature, index) => (
@@ -158,12 +179,12 @@ console.log('pro cur ',curUser?._id)
     </ul>
   </div>
 
-  <div className="mt-4">
+  <div className="mt-4 px-4">
     <h3 className="text-lg font-semibold">Description:</h3>
     <p className="text-gray-700">{product.description}</p>
   </div>
 
-  <div className="mt-4">
+  <div className="mt-4 px-4">
     <h3 className="text-lg font-semibold">Specifications:</h3>
     <p className="text-gray-700 " style={{ whiteSpace: "pre-line" }}>{product.specifications}</p>
     
