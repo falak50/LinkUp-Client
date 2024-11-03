@@ -1,23 +1,31 @@
 import { Spin } from 'antd';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import  { useContext, useEffect, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import { useParams } from 'react-router-dom';
 import PrivateComents from './MarketplaceCom/PrivateComents';
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { AuthContext } from '../../providers/AuthProviders';
+import Swal from 'sweetalert2';
 const pathLink = "http://localhost:5000/images/";
-
+import SellPost from "./MarketplaceCom/SellPost";
+import EditSellPost from './MarketplaceCom/EditSellPost';
 const createThumbnailUrl = (originalUrl) => {
   return originalUrl.replace(/w=\d+/, 'w=100'); // Adjust width parameter to create a thumbnail
 };
 
 const Product = () => {
+  const { curUser } = useContext(AuthContext);
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [imageItems, setImageItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(true); // State to track fullscreen mode
+  const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const toggleDropdown = () => setIsOpen(!isOpen);
+  const closeDropdown = () => setIsOpen(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,6 +48,28 @@ const Product = () => {
       });
   }, [id]);
 
+  const handleDeletePost = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete your post?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      return
+      // if (result.isConfirmed) {
+      //   axios
+      //     .post(`http://localhost:5000/posts/delete/${post._id}`)
+      //     .then(() => {
+      //       setResetCount((p) => p + 1);
+      //       Swal.fire("Deleted!", "Your post has been deleted.", "success");
+      //     });
+      // }
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -48,12 +78,13 @@ const Product = () => {
     );
   }
 
-
+console.log('pro ',product?.uid)
+console.log('pro cur ',curUser?._id)
 
   return (
    <>
+   <EditSellPost open={open} setOpen={setOpen} product={product}></EditSellPost>
    <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-lg">
-
 <div >
   <style>
     {`
@@ -64,8 +95,44 @@ const Product = () => {
     `}
   </style>
 
+<dir>
+  <div>
   <h1 className="text-2xl font-bold">{product.title}</h1>
   <p className="text-sm text-gray-600">Posted on 01 Nov 9:34 pm, {product.location}</p>
+  </div>
+  <div>
+  {product?.uid === curUser?._id && (
+            <div className="flex-none ml-4">
+              <div className="" ref={dropdownRef}>
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost avatar text-gray-500"
+                  onClick={toggleDropdown}
+                >
+                  <MoreVertIcon />
+                </div>
+                {isOpen && (
+                  <ul
+                    className="absolute mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-40"
+                    onClick={closeDropdown}
+                  >
+                    <li onClick={() => setOpen(true)}>
+                      <span className="justify-between">Edit</span>
+                      {/* <SellPost></SellPost> */}
+                    </li>
+                    <li onClick={handleDeletePost}>
+                      <span>Delete</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+          )}
+  </div>
+</dir>
+
+  {/* need dyanmic date */}
 
   <ImageGallery 
     items={imageItems} 

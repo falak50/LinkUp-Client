@@ -71,7 +71,7 @@ export default function PrivateComents({post}) {
     <div className="max-w-3xl mx-auto p-4 bg-white shadow-md rounded-lg my-4 ">
       <Alert
         message="Private Comment"
-        description="Only you  seller can see your comment."
+        description="Only seller can see your comment."
         type="info"
       />
 
