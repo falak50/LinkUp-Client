@@ -46,7 +46,7 @@ const Product = () => {
         console.error('Error fetching product:', error);
         setIsLoading(false);
       });
-  }, [id]);
+  }, [id,open]);
 
   const handleDeletePost = () => {
     Swal.fire({
@@ -165,7 +165,8 @@ console.log('pro cur ',curUser?._id)
 
   <div className="mt-4">
     <h3 className="text-lg font-semibold">Specifications:</h3>
-    <p className="text-gray-700">{product.specifications}</p>
+    <p className="text-gray-700 " style={{ whiteSpace: "pre-line" }}>{product.specifications}</p>
+    
   </div>
 </div>
 </div>

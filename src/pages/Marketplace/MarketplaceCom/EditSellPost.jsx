@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Button, Modal, Form, Input, Select } from 'antd';
+import { Button, Modal, Form, Input, Select, Radio } from 'antd';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
@@ -132,6 +132,79 @@ export default function EditSellPost({ open, setOpen, product }) {
         </Form.Item>
 
         {/* Remaining fields... */}
+        <Form.Item
+            name="location"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Location</span>}
+            rules={[{ required: true, message: 'Please input the location!' }]}
+          >
+            <Input placeholder="Enter location" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item
+            name="condition"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Condition</span>}
+            rules={[{ required: true, message: 'Please select the condition!' }]}
+          >
+            <Radio.Group>
+              <Radio value="New">New</Radio>
+              <Radio value="Used">Used</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="brand"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Brand</span>}
+          >
+            <Input placeholder="Enter brand" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item
+            name="model"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Model</span>}
+          >
+            <Input placeholder="Enter model" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item
+            name="edition"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Edition</span>}
+          >
+            <Input placeholder="Enter edition" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item
+            name="authenticity"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Authenticity</span>}
+          >
+            <Radio.Group>
+              <Radio value="Original">Original</Radio>
+              <Radio value="Replica">Replica</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item name="features" label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Features</span>}>
+            <TextArea rows={3} placeholder="Enter features separated by commas" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item name="specifications" label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Specifications</span>}>
+            <TextArea rows={3} placeholder="Enter specifications separated by commas" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item
+            name="priceAmount"
+            label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Price </span>}
+            rules={[{ required: true, message: 'Please input the price amount!' }]}
+          >
+            <Input type="number" placeholder="Enter price amount" className="rounded-md" />
+          </Form.Item>
+
+          <Form.Item name="price" label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Price Type</span>}>
+            <Radio.Group>
+              <Radio value="Fixed">Fixed</Radio>
+              <Radio value="Negotiable">Negotiable</Radio>
+            </Radio.Group>
+          </Form.Item>
+
         <Form.Item label={<span className="text-lg font-semibold text-gray-800 mb-2 block">Images</span>}>
           <input
             type="file"
