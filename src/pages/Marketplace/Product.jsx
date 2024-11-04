@@ -150,11 +150,11 @@ console.log('str 2',timeAgoText)
   
 </dir>
 
-  {/* need dyanmic date */}
-  <br />
+  {/* need dyanmic date editProblem may be ocucur*/}
+  {/* <br />
   <br />
   <br /><br />
-  <br />
+  <br /> */}
   <ImageGallery 
     items={imageItems} 
     additionalClass="custom-image-gallery" 

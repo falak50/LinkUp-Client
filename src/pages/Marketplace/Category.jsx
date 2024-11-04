@@ -81,7 +81,7 @@ export default function Category() {
               <Button onClick={handleBack} className="flex items-center mr-1"> {/* Added margin for spacing */}
                 <IoIosArrowBack className="mr-1" />Back {/* Added margin for icon */}
               </Button>
-              <h2 className="text-xl font-semibold pr-10">Products</h2>
+              <h2 className="text-xl font-semibold pr-10">{path}</h2>
             </div>
 
             <div className="flex flex-col md:flex-row md:space-x-4 flex-1"> {/* Responsive search inputs */}
