@@ -5,7 +5,7 @@ import Skills from '../../../components/ProfileElement/Skills/Skills';
 import Awards from '../../../components/ProfileElement/Awards/Awards';
 import Mypost from '../../../components/ProfileElement/Mypost/Mypost';
 import { Link, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useUserinfo from '../../../hooks/useUserinfo';
 import Swal from 'sweetalert2';
 import Check from '../../../not_includes/Check';
@@ -16,15 +16,17 @@ import MessagingPage from '../../Messaging/MessagingPage';
 import Dot from '../../../not_includes/Dot';
 import PostEdit from '../../../components/ProfileElement/Mypost/PostEidt';
 import Load from '../../../components/Load';
+import { AuthContext } from '../../../providers/AuthProviders';
 
 const Profile = () => {
   const [owner, setOwner] = useState(JSON.parse(localStorage.getItem('user')));
   const { email } = useParams(); 
-
+  const {  curUser } = useContext(AuthContext);
   const [relation, setRelation] = useState("");
   const [redender, setRedender] = useState(0);
   const [loading, setLoading] = useState(true);
   const [userInfo] = useUserinfo();
+  console.log('user info ',userInfo)
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (userInfo?.email && owner?.email) {
@@ -80,12 +82,13 @@ const Profile = () => {
         <div className="md:flex md:flex-col m-2 gap-4 w-[75%]">
           <div>
             <Intro owner={owner} email={email} relation={relation} setRelation={setRelation} setRedender={setRedender} />
+            
             <Education />
             <Skills />
             <Mypost className='' />
             <br />
-            <Awards className='mt-4' />
-            <br />
+            {/* <Awards className='mt-4' />
+            <br /> */}
             <br />
           </div>
         </div>
