@@ -8,13 +8,13 @@ import { Link, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import useUserinfo from '../../../hooks/useUserinfo';
 import Swal from 'sweetalert2';
-import Check from '../../../not_includes/Check';
-import ChatCard from '../../../not_includes/ChatCard';
-import Chat from '../../../not_includes/Chat';
-import Messaging from '../../Messaging/Messaging';
-import MessagingPage from '../../Messaging/MessagingPage';
-import Dot from '../../../not_includes/Dot';
-import PostEdit from '../../../components/ProfileElement/Mypost/PostEidt';
+// import Check from '../../../not_includes/Check';
+// import ChatCard from '../../../not_includes/ChatCard';
+// import Chat from '../../../not_includes/Chat';
+// import Messaging from '../../Messaging/Messaging';
+// import MessagingPage from '../../Messaging/MessagingPage';
+// import Dot from '../../../not_includes/Dot';
+// import PostEdit from '../../../components/ProfileElement/Mypost/PostEidt';
 import Load from '../../../components/Load';
 import { AuthContext } from '../../../providers/AuthProviders';
 
@@ -26,6 +26,8 @@ const Profile = () => {
   const [redender, setRedender] = useState(0);
   const [loading, setLoading] = useState(true);
   const [userInfo] = useUserinfo();
+  const [friends,Setfriends] = useState(userInfo?.
+    friends || [])
   console.log('user info ',userInfo)
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -66,9 +68,12 @@ const Profile = () => {
     return  <Load></Load>;
   }
 
-
+  // console.log('userInfo profile',userInfo?.
+  //   friends)
+  // console.log('userInfo frd',friends)
+  // console.log('isPrive ',userInfo?.isPrivate )
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen ">
       <Helmet>
         <title>LinkUp | Profile</title>
       </Helmet>
@@ -79,11 +84,11 @@ const Profile = () => {
 
       </div>
       <div className="md:flex">
-        <div className="md:flex md:flex-col m-2 gap-4 w-[75%]">
+        <div className="flex flex-col m-2 gap-4 w-full lg:w-[75%]">
           <div>
-            <Intro owner={owner} email={email} relation={relation} setRelation={setRelation} setRedender={setRedender} />
-            
-            <Education />
+            <Intro owner={owner} email={email} relation={relation} setRelation={setRelation} setRedender={setRedender}  />
+            <br />
+            <Education  />
             <Skills />
             <Mypost className='' />
             <br />

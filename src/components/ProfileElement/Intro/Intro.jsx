@@ -8,7 +8,9 @@ import ProfileImg from "./ProfileImg";
 import Swal from "sweetalert2";
 import BackgroudImg from "./BackgroudImg";
 import { AuthContext } from "../../../providers/AuthProviders";
+import { Modal } from "antd";
 const pathLink = "http://localhost:5000/images/";
+import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram ,FaEnvelope  } from 'react-icons/fa';
 const Intro = ({ owner, email, relation, setRelation }) => {
   const { curUser } = useContext(AuthContext);
   const [userInfo] = useUserinfo();
@@ -31,7 +33,7 @@ const Intro = ({ owner, email, relation, setRelation }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("res", res);
+        console.log("res data", res);
         setRelation(res.message);
         // setLoading(false); // Set loading to false after data is fetched
       })
@@ -193,8 +195,43 @@ const Intro = ({ owner, email, relation, setRelation }) => {
   };
   console.log('cover ',userInfo?.CoverImgURL)
   console.log('cover ',userInfo?.CoverImgURL)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className="md:w-[100%] bg-[white] rounded-lg relative">
+    <div className="md:w-[100%] bg-[white] rounded-lg relative pb-4">
+       <Modal title="Contact info" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+       <div className="flex items-center space-x-2 mb-4">
+        <FaEnvelope className="text-gray-600 text-lg" />
+        <p className="text-lg font-medium">Email: {email}</p>
+      </div>
+      
+      <div className="flex space-x-4 mt-4">
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+          <FaFacebook className="text-blue-600 text-2xl" />
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+          <FaTwitter className="text-blue-400 text-2xl" />
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+          <FaLinkedin className="text-blue-700 text-2xl" />
+        </a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <FaInstagram className="text-pink-600 text-2xl" />
+        </a>
+      </div>
+      </Modal>
       <ProfileImg open={open} setOpen={setOpen}></ProfileImg>
       <BackgroudImg open={openbg} setOpen={setOpenbg}></BackgroudImg>
       <div className="">
@@ -249,12 +286,12 @@ const Intro = ({ owner, email, relation, setRelation }) => {
               <span>
                 {userInfo?.city} {userInfo?.country}
               </span>
-              <div className="mx-4 font-[600] text-[#2779c9]">
-                <a href=""> Contact info</a>
+              <div onClick={showModal} className="mx-4 font-[600] text-[#2779c9]">
+                <p href=""> Contact info</p>
               </div>
             </div>
             <div className="font-[600] text-[#2779c9]">
-              <a href="">500+ connections</a>
+              {/* <a href="">{userInfo?.friend} connections</a> */}
             </div>
             <div className="mt-3 mx-0">
               {email !== owner?.email && (
@@ -304,12 +341,12 @@ const Intro = ({ owner, email, relation, setRelation }) => {
                   )}
                 </>
               )}
-              <button className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#0a66c2] text-[#0a66c2] hover:text-[#0a66c2] btn-ghost">
+              {/* <button className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#0a66c2] text-[#0a66c2] hover:text-[#0a66c2] btn-ghost">
                 Add profile section
               </button>
               <button className="btn btn-sm mx-2 rounded-[50px] btn-outline hover:bg-opacity-20 hover:bg-[#767676]  text-[#767676] hover:text-[#767676] btn-ghost">
                 More
-              </button>
+              </button> */}
             </div>
           </div>
 {userInfo?.email == curUser?.email &&
@@ -321,7 +358,7 @@ const Intro = ({ owner, email, relation, setRelation }) => {
           
           {/* <h1>here model end of intr</h1> */}
         </div>
-        <div className="flex p-2 mx-4 w-[70%] m-4  bg-opacity-20 bg-[#0a66c2]  rounded-xl  justify-between">
+        {/* <div className="flex p-2 mx-4 w-[70%] m-4  bg-opacity-20 bg-[#0a66c2]  rounded-xl  justify-between">
           <div className="mx-2">
             <h1>Open to work</h1>
             <p>
@@ -337,7 +374,7 @@ const Intro = ({ owner, email, relation, setRelation }) => {
               <MdOutlineModeEditOutline className="" />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

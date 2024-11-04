@@ -12,10 +12,9 @@ const MidHome = () => {
             {/* Post section */}
             <PostSectionHome setResetCount={setResetCount}></PostSectionHome>
 
-            {/* Toggle buttons for Public and Friends Feed */}
-            <div className="p-4 w-[100%] bg-white rounded-lg">
+
+            {/* <div className="p-4 w-[100%] bg-white rounded-lg">
                 <nav className="flex space-x-4 mt-2 text-gray-500">
-                    {/* Public Feed Button */}
                     <button
                         onClick={() => setIsPublic(true)}
                         className={`pb-1 font-semibold ${
@@ -26,7 +25,6 @@ const MidHome = () => {
                         Public Feed
                     </button>
 
-                    {/* Friends Feed Button */}
                     <button
                         onClick={() => setIsPublic(false)}
                         className={`pb-1 font-semibold ${
@@ -37,7 +35,7 @@ const MidHome = () => {
                         Friends Feed
                     </button>
                 </nav>
-            </div>
+            </div> */}
 
             {/* Conditionally render based on isPublic */}
             {!isPublic ? (

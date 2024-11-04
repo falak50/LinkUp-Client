@@ -17,7 +17,7 @@ const Education = () => {
    const { curUser } = useContext(AuthContext);
     return (
     //  <div></div>
-        <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6">
+        <div className="className='md:w-[100%] bg-[white] rounded-lg relative p-6 ">
              <div className="flex mb-4">
              <h1 className="text-2xl font-semibold">Education</h1>
              {email == curUser?.email && 
