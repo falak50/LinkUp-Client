@@ -65,8 +65,8 @@ export default function SellPost() {
         axios.post('http://localhost:5000/products/addSellPost', formData)
           .then((res) => {
             console.log('Response:', res);
-            // setOpen(false);
-            // form.resetFields();
+            setOpen(false);
+            form.resetFields();
             setImages([]);
           })
           .catch((err) => console.error('Error:', err));
