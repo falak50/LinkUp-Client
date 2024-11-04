@@ -8,7 +8,7 @@ const urlBg = "https://miro.medium.com/v2/resize:fit:1400/0*Eww7pEGuh5F3K8fm";
 const pathLink = 'http://localhost:5000/images/';
 import bkimg from "../../assets/bkImg.png";
 import dpImg from "../../assets/dpImg.jpg";
-export default function PersonCard({ userCard }) {
+export default function PersonCard({ userCard , setCnt}) {
     console.log('userCard ',userCard)
     const { owner } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -38,6 +38,7 @@ export default function PersonCard({ userCard }) {
             .then(res => res.json())
             .then(res => {
                 console.log('Friend request sent:', res);
+                setCnt(p=>p+1);
                 Swal.fire({
                     icon: 'success',
                     title: 'Friend request sent!',

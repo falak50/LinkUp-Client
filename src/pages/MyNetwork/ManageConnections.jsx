@@ -20,7 +20,7 @@ const ManageConnections = () => {
   const [makeFriendUsers, setMakeFriendUsers] = useState([]);
   const [activeSection, setActiveSection] = useState("makeFriends");
   const owner = JSON.parse(localStorage.getItem("user"));
-
+  const [cnt,setCnt] = useState(0)
   const fetchFriends = async (pagePera = 1) => {
     try {
       const response = await axios.get(
@@ -49,7 +49,7 @@ const ManageConnections = () => {
   // Run fetchFriends only once when component mounts
   useEffect(() => {
     fetchFriends(1);
-  }, []);
+  }, [cnt]);
 
   const more = async () => {
     setIsMoreLoading(true);
@@ -109,7 +109,7 @@ const ManageConnections = () => {
                 enterButton={<SearchOutlined />}
               />
 
-              <Button type="link" onClick={() => console.log("Filter clicked")}>
+              <Button type="link" onClick={() =>  handleSearch()}>
                 Search with filters
               </Button>
             </div>
@@ -122,7 +122,7 @@ const ManageConnections = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {makeFriendUsers.length > 0 ? (
               makeFriendUsers.map((user) => (
-                <PersonCard key={user._id} userCard={user} />
+                <PersonCard setCnt={setCnt} key={user._id} userCard={user} />
               ))
             ) : (
               <p>No friends available</p>
